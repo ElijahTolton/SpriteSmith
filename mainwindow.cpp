@@ -1,23 +1,56 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "spriteeditor.h"  // Include the sprite editor
 
-MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
+
+/**
+ * @brief MainWindow::MainWindow
+ * Main controller for SpriteSmith which makes connections between the model
+ * UI and setUp icons.
+ *
+ * SpirteSmith UI contains the following tools:
+ * pencil, eraser, undo, redo, mirror, rotate, save and load.
+ *
+ * It displays a image preview of all frames in the current sprite.
+ */
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setUpIcons();
 
-    connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+    setUpIcons();
+
+    // Todo get the inputs from the user
+    setUpCanvas(25, 25);
+
+    connect(ui->canvas,
+            &QTableWidget::itemEntered,
+            this,
+            &MainWindow::cellHover
+            );
+
+    // TODO when send info to model adjust and send back color
+    // to the view.
+    connect(ui->canvas,
+            &QTableWidget::cellPressed,
+            this,
+            &MainWindow::displayColor
+            );
+
 }
 
+<<<<<<< HEAD
 void MainWindow::initEditor(int canvasDim) {
     //editor = new SpriteEditor(this);
     ui->canvas->setCanvasSize(canvasDim, canvasDim);
 }
 
 MainWindow::~MainWindow() {
+=======
+MainWindow::~MainWindow()
+{
+>>>>>>> c5be859 (Revert "Merge branch 'main' of https://github.com/UofU-CS3505/cs3505-assignment8-deanasmith into Landon")
     delete ui;
 }
 

@@ -215,13 +215,6 @@
    </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>SpriteEditor</class>
-   <extends>QTableWidget</extends>
-   <header location="global">spriteeditor.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

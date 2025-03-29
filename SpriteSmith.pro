@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp \
     sizedialog.cpp \
     spriteeditor.cpp \
+    tool.cpp
     layer.cpp \
     layermodel.cpp
 
@@ -20,12 +21,12 @@ HEADERS += \
     mainwindow.h \
     sizedialog.h \
     spriteeditor.h \
+    tool.h
     layer.h \
     layermodel.h
 
 FORMS += \
-    mainwindow.ui \
-    sizedialog.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
