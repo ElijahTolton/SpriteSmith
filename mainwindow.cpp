@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "layerdelegate.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 
@@ -52,6 +53,8 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setRowCount(canvasDim);
     ui->canvas->setColumnCount(canvasDim);
     ui->canvas->setCanvasSize();
+    ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
+
 }
 
 MainWindow::~MainWindow() {

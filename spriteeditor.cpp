@@ -39,9 +39,18 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             item = new QTableWidgetItem();
             setItem(index.row(), index.column(), item);
         }
+
+        // Set background color
         item->setBackground(currentColor);
+
+        // Store border color
+        item->setData(Qt::UserRole, currentColor);  // Store as QColor
+
+        update();  // Refresh UI to apply changes
     }
 }
+
+
 
 void SpriteEditor::calculateCanvasSizeAdjustment() {
 
