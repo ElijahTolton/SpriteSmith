@@ -13,12 +13,9 @@
 
 #include "tool.h"
 
-Tool::Tool(QMainWindow* window, Layer* activeLayer) : window(window), activeLayer(activeLayer) {
-
-
-
+Tool::Tool(SpriteEditor* canvas, LayerModel* activeLayer) {
+    connect(canvas, &SpriteEditor::pixelCLicked, this, &Tool::setPixelPos);
 }
-
 
 
 void Tool::onEdit(QColor color, int x, int y) {
@@ -26,11 +23,16 @@ void Tool::onEdit(QColor color, int x, int y) {
 }
 
 void Tool::onMirror() {
-
+    emit mirrorSignal();
 }
 
 void Tool::onRotate() {
+    emit rotateSignal();
+}
 
+void Tool::setPixelPos(const QPoint& point) {
+    x = point.x();
+    y = point.y();
 }
 
 Tool::~Tool() { }

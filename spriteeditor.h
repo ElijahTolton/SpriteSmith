@@ -14,6 +14,9 @@ public:
     explicit SpriteEditor(QWidget *parent = nullptr);
     void setCanvasSize();
 
+signals:
+    void pixelCLicked(const QPoint& point);
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;

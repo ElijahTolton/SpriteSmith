@@ -40,6 +40,7 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
         item->setBackground(currentColor);
+        emit pixelCLicked(event->pos());
     }
 }
 

@@ -23,12 +23,12 @@
 class Tool : QWidget
 {
 public:
-    Tool(SpriteEditor canvas, LayerModel* activeLayer);
+    Tool(SpriteEditor* canvas, LayerModel* activeLayer);
     ~Tool();
 
 private:
     QColor color;
-    QMainWindow* window;
+    SpriteEditor* canvas;
     LayerModel* activeLayer;
     int x, y;
 
@@ -39,7 +39,9 @@ signals:
 
 public slots:
     void onEdit(QColor color, int x, int y);
-
+    void onMirror();
+    void onRotate();
+    void setPixelPos(const QPoint& point);
 };
 
 #endif // TOOL_H
