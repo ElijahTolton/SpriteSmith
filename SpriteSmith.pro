@@ -13,13 +13,17 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
-    spriteeditor.cpp
+    spriteeditor.cpp \
+    layer.cpp \
+    layermodel.cpp
 
 HEADERS += \
     framemodel.h \
     mainwindow.h \
     sizedialog.h \
-    spriteeditor.h
+    spriteeditor.h \
+    layer.h \
+    layermodel.h
 
 FORMS += \
     mainwindow.ui \
