@@ -216,7 +216,7 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>580</x>
       <y>350</y>
       <width>211</width>
       <height>81</height>
@@ -252,44 +252,6 @@ QWidget:selected {
         </property>
         <property name="text">
          <string>Layer 0</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>10</y>
-          <width>41</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-    background-color: #2E2E2E;  /* Dark gray background */
-    color: #FFFFFF;  /* White text */
-    border: 2px solid #444444;  /* Slightly lighter border */
-    border-radius: 6px;  /* Rounded corners */
-}
-
-QPushButton:hover {
-    background-color: #3A3A3A;  /* Slightly lighter on hover */
-    border: 2px solid #555555;  /* Lighter border */
-}
-
-QPushButton:pressed {
-    background-color: #1F1F1F;  /* Even darker when clicked */
-    border: 2px solid #666666;
-}
-
-QPushButton:disabled {
-    background-color: #444444;  /* Disabled state */
-    color: #777777;
-    border: 2px solid #555555;
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Hide</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_3">
@@ -329,6 +291,32 @@ QPushButton:disabled {
         </property>
         <property name="text">
          <string>X</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>10</y>
+          <width>21</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>10</y>
+          <width>41</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Show</string>
         </property>
        </widget>
       </widget>
