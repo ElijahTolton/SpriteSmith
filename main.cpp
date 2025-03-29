@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include "sizedialog.h"
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
