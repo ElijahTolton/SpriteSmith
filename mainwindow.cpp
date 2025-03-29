@@ -1,12 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QColorDialog>
+#include <tool.h>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    colorSelect = new QColorDialog(ui->colorPicker);
+    editTools = new Tool;
+
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
@@ -16,6 +21,15 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setRowCount(canvasDim);
     ui->canvas->setColumnCount(canvasDim);
     ui->canvas->setCanvasSize();
+
+    setUpConnections(canvasDim);
+}
+
+void MainWindow::setUpConnections(const int canvasDim) {
+    editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
+
+    connect(ui->pencil, &QPushButton::pressed, editTools, &Tool::onEdit);
+
 }
 
 MainWindow::~MainWindow() {

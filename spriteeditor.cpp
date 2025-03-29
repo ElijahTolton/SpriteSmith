@@ -31,6 +31,10 @@ void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
+void SpriteEditor::setColor(QColor color) {
+    currentColor = color;
+}
+
 void SpriteEditor::changeCellColor(QMouseEvent *event) {
     QModelIndex index = indexAt(event->pos());
     if (index.isValid()) {

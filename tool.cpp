@@ -13,12 +13,16 @@
 
 #include "tool.h"
 
-Tool::Tool(SpriteEditor* canvas, LayerModel* activeLayer) {
+Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
+    : canvas(canvas), layers(layers)
+{
     connect(canvas, &SpriteEditor::pixelCLicked, this, &Tool::setPixelPos);
+
+    //connect(this, &Tool::editSignal, layers, LayerModel::)
+
 }
 
-
-void Tool::onEdit(QColor color, int x, int y) {
+void Tool::onEdit() {
     emit editSignal(color, x, y);
 }
 

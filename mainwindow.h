@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "sizedialog.h"
+#include <QColorDialog>
+#include <tool.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,10 +22,12 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    QColorDialog* colorSelect;
+    Tool* editTools;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();
-
+    void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
 };
 

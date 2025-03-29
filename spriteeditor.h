@@ -23,6 +23,7 @@ protected:
 
 private:
     QColor currentColor = Qt::red;  // Default drawing color
+    void setColor(QColor color);
     void changeCellColor(QMouseEvent *event);
     void calculateCanvasSizeAdjustment();
 };

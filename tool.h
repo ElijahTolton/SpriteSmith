@@ -20,16 +20,18 @@
 #include <layermodel.h>
 #include <spriteeditor.h>
 
-class Tool : QWidget
+class Tool : public QObject
 {
 public:
-    Tool(SpriteEditor* canvas, LayerModel* activeLayer);
+    Tool() {};
+    Tool(SpriteEditor* canvas, LayerModel* layers);
     ~Tool();
 
 private:
     QColor color;
     SpriteEditor* canvas;
-    LayerModel* activeLayer;
+    LayerModel* layers;
+    QColorDialog* colorSelect;
     int x, y;
 
 signals:
@@ -38,7 +40,7 @@ signals:
     void mirrorSignal();
 
 public slots:
-    void onEdit(QColor color, int x, int y);
+    void onEdit();
     void onMirror();
     void onRotate();
     void setPixelPos(const QPoint& point);
