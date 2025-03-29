@@ -68,10 +68,7 @@ int LayerModel::getHeight() {
 }
 
 <<<<<<< HEAD
-void LayerModel::drawPixel(QColor color, int x, int y){
-    activeLayer.drawPixel(color, x, y);
 =======
-
 QJsonObject LayerModel::toJSON() const {
     QJsonObject jsonObj;
 
@@ -91,6 +88,6 @@ QJsonObject LayerModel::toJSON() const {
     jsonObj["layers"] = layersArray;
 
     return jsonObj;
->>>>>>> 2f864a70f6484f68bd8f7ab94f9e014ef514e9dc
 }
 
+>>>>>>> 894591f464638231b6be4941683c1ed48cae10f4

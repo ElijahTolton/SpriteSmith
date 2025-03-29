@@ -1,9 +1,5 @@
 #include "layermodel.h"
 #include <algorithm>  // for std::find
-#include "layermodel.h"
-#include <QJsonObject>
-#include <QJsonArray>
-
 
 LayerModel::LayerModel(int width, int height) : width(width), height(height) {
     layers.push_back(Layer(width, height));  // Initialize with one layer
@@ -55,7 +51,7 @@ Layer& LayerModel::getLayer(int layerIndex) {
     return layers[layerIndex];
 }
 
-const std::vector<Layer>& LayerModel::getLayers() const {
+std::vector<Layer>& LayerModel::getLayers() {
     return layers;  // Return reference to layers vector
 }
 
@@ -66,31 +62,3 @@ int LayerModel::getWidth() {
 int LayerModel::getHeight() {
     return height;
 }
-
-<<<<<<< HEAD
-void LayerModel::drawPixel(QColor color, int x, int y){
-    activeLayer.drawPixel(color, x, y);
-=======
-
-QJsonObject LayerModel::toJSON() const {
-    QJsonObject jsonObj;
-
-    // Add width and height to the JSON object
-    jsonObj["width"] = width;
-    jsonObj["height"] = height;
-
-    // Create a JSON array to store all layers
-    QJsonArray layersArray;
-
-    // Iterate through each layer and convert it to JSON
-    for (const auto& layer : layers) {
-        layersArray.append(layer.toJSON());
-    }
-
-    // Add the layers array to the JSON object
-    jsonObj["layers"] = layersArray;
-
-    return jsonObj;
->>>>>>> 2f864a70f6484f68bd8f7ab94f9e014ef514e9dc
-}
-

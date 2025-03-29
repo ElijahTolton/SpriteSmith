@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+#include "layermodel.h"
+#include "qtablewidget.h"
 #include <QMainWindow>
 #include "sizedialog.h"
 
@@ -20,6 +23,9 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+
+    SpriteEditor *editor;  // Pointer to the sprite editor
+    LayerModel *layerModel;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();

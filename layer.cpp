@@ -1,4 +1,5 @@
 #include "layer.h"
+#include "qjsonarray.h"
 #include <QImage>
 
 Layer::Layer(int width, int height) :
@@ -43,3 +44,48 @@ void Layer::setShown(bool active){
     this->active = active;
 }
 
+
+void Layer::drawPixel(QColor color, int x, int y) {
+    if (x >= 0 && x < width && y >= 0 && y < height) {
+        image.setPixelColor(x, y, color);
+    }
+}
+
+QJsonObject Layer::toJSON() const {
+    // Create a JSON object to hold the layer data
+    QJsonObject jsonObj;
+
+    // Add width, height, and active status to the JSON object
+    jsonObj["width"] = width;
+    jsonObj["height"] = height;
+    jsonObj["active"] = active;
+
+    // Create a JSON array to hold pixel data
+    QJsonArray pixelArray;
+
+    // Iterate through each pixel in the image and add its RGBA values to the array
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            QColor pixelColor(image.pixel(x, y));
+
+            // Create a JSON object for each pixel with its RGBA values
+            QJsonObject pixelObj;
+            pixelObj["r"] = pixelColor.red();
+            pixelObj["g"] = pixelColor.green();
+            pixelObj["b"] = pixelColor.blue();
+            pixelObj["a"] = pixelColor.alpha();
+
+            // Add the pixel object to the array
+            pixelArray.append(pixelObj);
+        }
+    }
+
+    // Add the pixel array to the JSON object
+    jsonObj["pixels"] = pixelArray;
+
+    return jsonObj;
+}
+
+void Layer::setActive(bool active){
+    this->active = active;
+}
