@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>pencil.png</file>
+        <file>eraser.png</file>
+        <file>undo.png</file>
+        <file>redo.png</file>
+        <file>mirror.png</file>
+        <file>rotate.png</file>
+        <file>save.png</file>
+        <file>load.png</file>
+    </qresource>
+</RCC>
