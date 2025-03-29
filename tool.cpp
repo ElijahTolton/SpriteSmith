@@ -21,4 +21,4 @@ Tool::Tool(QMainWindow* window, Layer* activeLayer) : window(window), activeLaye
 
 }
 
-Tool::~Tool() {}
+Tool::~Tool() { }
