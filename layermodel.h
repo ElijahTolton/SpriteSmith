@@ -38,11 +38,17 @@ public:
     // Get the height
     int getHeight();
 
-private:
+    //draws a pixel in the active layer
+    void drawPixel(QColor color, int x, int y);
+
     // Vector containing all layers in the LayerModel
     std::vector<Layer> layers;
+
+private:
+
     int width;
     int height;
+    Layer& activeLayer;
 };
 
 #endif // LAYERMODEL_H

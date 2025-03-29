@@ -1,4 +1,5 @@
 #include "layer.h"
+#include "qjsonarray.h"
 #include <QImage>
 
 Layer::Layer(int width, int height) :
@@ -43,6 +44,13 @@ void Layer::setShown(bool active){
     this->active = active;
 }
 
+
+void Layer::drawPixel(QColor color, int x, int y) {
+    if (x >= 0 && x < width && y >= 0 && y < height) {
+        image.setPixelColor(x, y, color);
+    }
+}
+
 QJsonObject Layer::toJSON() const {
     // Create a JSON object to hold the layer data
     QJsonObject jsonObj;
@@ -76,4 +84,8 @@ QJsonObject Layer::toJSON() const {
     jsonObj["pixels"] = pixelArray;
 
     return jsonObj;
+}
+
+void Layer::setActive(bool active){
+    this->active = active;
 }
