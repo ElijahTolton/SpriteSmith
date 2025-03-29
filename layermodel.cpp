@@ -55,7 +55,7 @@ Layer& LayerModel::getLayer(int layerIndex) {
     return layers[layerIndex];
 }
 
-std::vector<Layer>& LayerModel::getLayers() {
+const std::vector<Layer>& LayerModel::getLayers() const {
     return layers;  // Return reference to layers vector
 }
 
@@ -66,6 +66,7 @@ int LayerModel::getWidth() {
 int LayerModel::getHeight() {
     return height;
 }
+
 
 QJsonObject LayerModel::toJSON() const {
     QJsonObject jsonObj;

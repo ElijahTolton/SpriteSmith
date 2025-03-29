@@ -31,7 +31,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Canvas Dimension</string>
+       <string>Sprite Dimension</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -47,7 +47,10 @@
        <number>4</number>
       </property>
       <property name="maximum">
-       <number>150</number>
+       <number>50</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
       </property>
       <property name="value">
        <number>10</number>
@@ -67,7 +70,7 @@
     <item row="1" column="0" colspan="2">
      <widget class="QLabel" name="dimnsionDescription">
       <property name="text">
-       <string>Dimension: row or colum length</string>
+       <string>Enter Sprite Dimensions (Width or Height)</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>

@@ -2,19 +2,22 @@
 
 SpriteEditor::SpriteEditor(QWidget *parent) : QTableWidget(parent) { }
 
-void SpriteEditor::setCanvasSize(int rows, int cols) {
+void SpriteEditor::setCanvasSize() {
 
-    // TODO - FIX BUG WITH HIGHER PIXEL COUNT AND CANVAS SIZE
-    int pixelSize = CANVAS_SIZE / rows;
+    // height or width / rowCount or columnCount can be exchanged since canvas should be square
+    calculateCanvasSizeAdjustment();
 
-    setRowCount(rows);
-    setColumnCount(cols);
+    int pixelSize = height() / rowCount();
+
+    // Allows cells to "stretch" to the canvas size
+    verticalHeader()->setMinimumSectionSize(0);
+    horizontalHeader()->setMinimumSectionSize(0);
 
     // Must manually set the size of each row and col
-    for (int row = 0; row < rows; row++)
+    for (int row = 0; row < rowCount(); row++)
         setRowHeight(row, pixelSize);
 
-    for (int col = 0; col < cols; col++)
+    for (int col = 0; col < columnCount(); col++)
         setColumnWidth(col, pixelSize);
 }
 
@@ -37,5 +40,17 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
         item->setBackground(currentColor);
+    }
+}
+
+void SpriteEditor::calculateCanvasSizeAdjustment() {
+
+    double pixelSize = (double)height() / (double)rowCount();
+    double fractionalPart = pixelSize - (int)pixelSize; // Get the decimal part
+    double canvasSizeAdjustment = 1.0 - fractionalPart; // Compute 1 - fractional part
+
+    if(fractionalPart != 0) {
+        int newCanvasSize = height() + canvasSizeAdjustment * rowCount();
+        resize(newCanvasSize, newCanvasSize);
     }
 }

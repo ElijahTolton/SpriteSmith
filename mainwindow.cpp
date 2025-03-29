@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "spriteeditor.h"  // Include the sprite editor
+#include <QMessageBox>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -13,8 +13,9 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 }
 
 void MainWindow::initEditor(int canvasDim) {
-    //editor = new SpriteEditor(this);
-    ui->canvas->setCanvasSize(canvasDim, canvasDim);
+    ui->canvas->setRowCount(canvasDim);
+    ui->canvas->setColumnCount(canvasDim);
+    ui->canvas->setCanvasSize();
 }
 
 MainWindow::~MainWindow() {
@@ -55,56 +56,14 @@ void MainWindow::setUpIcons(){
     ui->load->setToolTip("Load");
 }
 
-void MainWindow::cellHover(QTableWidgetItem* item){
-    // Intially set cell color to black
-    // TODO: We will need to query the model for the cells color
-    // to make it lighter
-    QColor color(Qt::gray);
-
-    // Make cell 1.5 times lighter
-    item->setBackground(color.lighter(150));
-}
-
-void MainWindow::setUpCanvas(int canvasWidth, int canvasHeight){
-    auto canvas = ui->canvas;
-
-    canvas->setShowGrid(false);
-    canvas->horizontalHeader()->setVisible(false);
-    canvas->verticalHeader()->setVisible(false);
-    canvas->setStyleSheet(
-        "QTableWidget::item { border: none;}"
-        "QTableView { border: none;}"
-        );
-    canvas->setMouseTracking(true);
-
-    canvas->setRowCount(canvasWidth);
-    canvas->setColumnCount(canvasHeight);
-    canvas->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    for(int i = 0; i < canvas->columnCount(); i++){
-        canvas->setColumnWidth(i, 20);
+void MainWindow::closeEvent(QCloseEvent *event) {
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Quit", "Are you sure you want to quit?",
+                                                              QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        QApplication::quit();
     }
-    for(int i = 0; i < canvas->columnCount(); i++){
-        canvas->setColumnWidth(i, 20);
-    }
-}
 
-void MainWindow::displayColor(int row, int col){
-    QColor color(255, 0, 0);
-    QBrush brush(color);
-
-    qDebug() << brush.color();
-
-    QTableWidgetItem* item = ui->canvas->item(row, col);
-    qDebug() << "entered";
-    if(item){
-        item->setBackground(brush);
-        qDebug() << "Item not Null";
-    }else{
-        QTableWidgetItem* item = new QTableWidgetItem();
-        item->setBackground(brush);
-        ui->canvas->setItem(row, col, item);
-        item->setText("Hello World");
-        qDebug() << item->background().color();
+    else {
+        event->ignore();
     }
 }

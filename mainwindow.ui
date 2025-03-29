@@ -158,7 +158,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>30</y>
+      <y>10</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -182,7 +182,13 @@
      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
     </property>
     <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
+     <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+    </property>
+    <property name="autoScroll">
+     <bool>true</bool>
+    </property>
+    <property name="autoScrollMargin">
+     <number>16</number>
     </property>
     <property name="editTriggers">
      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
@@ -198,6 +204,9 @@
     </attribute>
     <attribute name="verticalHeaderVisible">
      <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>14</number>
     </attribute>
    </widget>
    <widget class="QPushButton" name="colorPicker">
