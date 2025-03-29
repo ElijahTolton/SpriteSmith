@@ -15,6 +15,7 @@ public:
     QImage& getImage();
 
     void setShown(bool active);
+    void setActive(bool active);
 
     void mirror();
     void rotate();
@@ -26,6 +27,8 @@ public:
     bool operator==(const Layer &layer) const;
 
     QJsonObject toJSON() const;
+
+    void drawPixel(QColor color, int x, int y);
 
 private:
     QImage image;

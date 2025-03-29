@@ -41,8 +41,14 @@ public:
     //draws a pixel in the active layer
     void drawPixel(QColor color, int x, int y);
 
+    //activates the given layer
+    void setActiveLayer(int layer);
+
     // Vector containing all layers in the LayerModel
     std::vector<Layer> layers;
+
+    // JSON Serializer
+    QJsonObject ToJSON() const;
 
 private:
 
