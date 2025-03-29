@@ -9,7 +9,7 @@ Frame::Frame(int layerCount, int width, int height) : layers(width, height){
     }
 }
 
-Frame::Frame(Frame& other) : layers(0, 0) {
+Frame::Frame(const Frame& other) : layers(0, 0) {
     for(const Layer& layer : other.layers.getLayers()) {
         layers.duplicateLayer(layer);
     }
@@ -18,7 +18,7 @@ Frame::Frame(Frame& other) : layers(0, 0) {
 Frame::~Frame() {
 }
 
-Frame& Frame::operator=(Frame& other) {
+Frame& Frame::operator=(const Frame& other) {
     for(const Layer& layer : other.layers.getLayers()) {
         layers.duplicateLayer(layer);
     }
