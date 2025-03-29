@@ -1,35 +1,21 @@
 #include "spriteeditor.h"
 
+SpriteEditor::SpriteEditor(QWidget *parent) : QTableWidget(parent) { }
 
-SpriteEditor::SpriteEditor(QWidget *parent)
-    : SpriteEditor(100, 100, parent)
-{
-}
+void SpriteEditor::setCanvasSize(int rows, int cols) {
 
-SpriteEditor::SpriteEditor(int rows, int cols, QWidget *parent)
-    : QTableWidget(rows, cols, parent)
-{
-    //setFixedSize(cols * 20, rows * 20);
+    // TODO - FIX BUG WITH HIGHER PIXEL COUNT AND CANVAS SIZE
+    int pixelSize = CANVAS_SIZE / rows;
 
-    horizontalHeader()->setVisible(false);
-    verticalHeader()->setVisible(false);
-    setShowGrid(true);
-    setEditTriggers(QAbstractItemView::NoEditTriggers);
-    setSelectionMode(QAbstractItemView::NoSelection);
-    setMouseTracking(true);
+    setRowCount(rows);
+    setColumnCount(cols);
 
-    // Disable scrollbars
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    // Must manually set the size of each row and col
+    for (int row = 0; row < rows; row++)
+        setRowHeight(row, pixelSize);
 
-    //setStyleSheet("QTableWidget::item { border: none; }");
-    verticalHeader()->setMinimumSectionSize(0);
-    horizontalHeader()->setMinimumSectionSize(0);
-
-    for (int i = 0; i < rows; ++i)
-        setRowHeight(i, 10);
-    for (int j = 0; j < cols; ++j)
-        setColumnWidth(j, 10);
+    for (int col = 0; col < cols; col++)
+        setColumnWidth(col, pixelSize);
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {

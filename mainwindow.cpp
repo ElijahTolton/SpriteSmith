@@ -7,12 +7,14 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
 }
 
 void MainWindow::initEditor(int canvasDim) {
-    editor = new SpriteEditor(canvasDim, canvasDim, this);
+    //editor = new SpriteEditor(this);
+    ui->canvas->setCanvasSize(canvasDim, canvasDim);
 }
 
 MainWindow::~MainWindow() {
