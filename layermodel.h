@@ -30,7 +30,7 @@ public:
     Layer& getLayer(int layerIndex);
 
     // Gives the full vector of layers in the LayerModel
-    std::vector<Layer>& getLayers();
+    const std::vector<Layer>& getLayers() const;
 
     // Get the width
     int getWidth();

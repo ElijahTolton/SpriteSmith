@@ -39,7 +39,7 @@ public:
      * @brief Copy constructor for Frame
      * @param other - the frame to copy information from
      */
-    Frame(Frame& other);
+    Frame(const Frame& other);
 
     /**
      * @brief Frame
@@ -57,7 +57,7 @@ public:
      * @param other - the other frame to copy information from
      * @return Reference to modified frame.
      */
-    Frame& operator=(Frame& other);
+    Frame& operator=(const Frame& other);
 
     /**
      * @brief Adds an empty layer to the LayerModel
