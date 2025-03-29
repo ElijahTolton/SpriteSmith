@@ -17,24 +17,27 @@
 #include <QMainWindow>
 #include <QString>
 #include <QColor>
-#include <layer.h>
+#include <layermodel.h>
+#include <spriteeditor.h>
 
 class Tool : QWidget
 {
 public:
-    Tool(QMainWindow* window, Layer* activeLayer);
+    Tool(SpriteEditor canvas, LayerModel* activeLayer);
     ~Tool();
 
 private:
-    QString name;
     QColor color;
     QMainWindow* window;
-    Layer* activeLayer;
+    LayerModel* activeLayer;
+    int x, y;
 
 signals:
     void editSignal(QColor color, int x, int y);
+    void rotateSignal();
+    void mirrorSignal();
 
-private slots:
+public slots:
     void onEdit(QColor color, int x, int y);
 
 };

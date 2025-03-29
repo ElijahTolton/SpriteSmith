@@ -15,9 +15,21 @@
 
 Tool::Tool(QMainWindow* window, Layer* activeLayer) : window(window), activeLayer(activeLayer) {
 
-    //TO DO: Add connections between window signals and tool slots
 
-    //TO DO: Add connections between tool slots and tool signals
+
+}
+
+
+
+void Tool::onEdit(QColor color, int x, int y) {
+    emit editSignal(color, x, y);
+}
+
+void Tool::onMirror() {
+
+}
+
+void Tool::onRotate() {
 
 }
 
