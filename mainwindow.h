@@ -19,10 +19,11 @@ public:
 
 public slots:
     void initEditor(int canvasDim);
+    void selectColor();
 
 private:
     Ui::MainWindow *ui;
-    QColorDialog* colorSelect;
+    QColorDialog* colorWindow;
     Tool* editTools;
 
     // Get the tool tips and the icons for each of the buttons.
