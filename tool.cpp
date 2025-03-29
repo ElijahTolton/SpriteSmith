@@ -18,7 +18,6 @@ Tool::Tool(QMainWindow* window, Layer* activeLayer) : window(window), activeLaye
     //TO DO: Add connections between window signals and tool slots
 
     //TO DO: Add connections between tool slots and tool signals
-
 }
 
 Tool::~Tool() { }
