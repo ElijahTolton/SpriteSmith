@@ -6,6 +6,7 @@
 #include "qtablewidget.h"
 #include <QMainWindow>
 #include "sizedialog.h"
+#include "spriteeditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

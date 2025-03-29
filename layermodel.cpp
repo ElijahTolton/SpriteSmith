@@ -5,8 +5,9 @@
 #include <QJsonArray>
 
 
-LayerModel::LayerModel(int width, int height) : width(width), height(height) {
-    layers.push_back(Layer(width, height));  // Initialize with one layer
+LayerModel::LayerModel(int width, int height)
+    : width(width), height(height), activeLayer(layers[0]) {
+    layers.emplace_back(width, height);
 }
 
 void LayerModel::addLayer() {
@@ -59,6 +60,12 @@ const std::vector<Layer>& LayerModel::getLayers() const {
     return layers;  // Return reference to layers vector
 }
 
+void LayerModel::setActiveLayer(int index){
+    if (index >= 0 && index < static_cast<int>(layers.size())) {
+        layers[index].setActive(true);  // Set visibility to true
+    }
+}
+
 int LayerModel::getWidth() {
     return width;
 }
@@ -67,12 +74,12 @@ int LayerModel::getHeight() {
     return height;
 }
 
-<<<<<<< HEAD
+
 void LayerModel::drawPixel(QColor color, int x, int y){
     activeLayer.drawPixel(color, x, y);
-=======
+}
 
-QJsonObject LayerModel::toJSON() const {
+QJsonObject LayerModel::ToJSON() const {
     QJsonObject jsonObj;
 
     // Add width and height to the JSON object
@@ -91,6 +98,5 @@ QJsonObject LayerModel::toJSON() const {
     jsonObj["layers"] = layersArray;
 
     return jsonObj;
->>>>>>> 2f864a70f6484f68bd8f7ab94f9e014ef514e9dc
 }
 
