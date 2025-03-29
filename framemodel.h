@@ -2,55 +2,75 @@
 #define FRAMEMODEL_H
 
 #include <vector>
-#include<QJsonObject>
+#include "frame.h"
 
 /**
  * @brief Class representing a frame object for animation timeline.
  *
- * @author Canon Curtis
+ * @author Canon Curtis & Dean Smith
  * @date March 29, 2025
  */
 class FrameModel
 {
 private:
-    //Vector of layers contained by frame.
-    std::vector<int> layers;
+    // Container for all frames in sprite
+    std::vector<Frame> frames;
+
+    // Framerate/Time for preview to send information
+    int framerate;
+
+    // size of frame canvas
+    int width;
+    int height;
 public:
     /**
-     * @brief Constructor to create instance of model for Frame.
+     * @brief Constructs model with empty frame.
+     * @param width - the width of each layer in the frames
+     * @param height - the height of each layer in the frames
      */
-    FrameModel();
+    FrameModel(int width, int height);
 
     /**
-     * @brief Constructor for FrameModel that initializes with number of empty layers.
-     * @param layerCount - the number of empty layers to intialize vector with.
+     * @brief Constructor that deserializes JSON and reconstructs model
+     * @param JSON - JSON containing information on how to reconstruct model.
      */
-    FrameModel(int layerCount);
+    FrameModel(QJsonObject JSON);
 
     /**
-     * @brief Copy constructor for FrameModel.
-     * @param other - Frame model to copy from.
+     * @brief Adds a frame to the model
      */
-    FrameModel(const FrameModel& other);
+    void addFrame();
 
     /**
-     * @brief Deletes given layer inside frame vector at index.
-     * @param layerIndex - The index of the layer to be deleted.
+     * @brief Copies given frame to the model
+     * @param frame - The frame to be copied
      */
-    void deleteLayer(int layerIndex);
+    void duplicateFrame(Frame frame);
 
     /**
-     * @brief Overridden = operator to copy information into this object.
-     * @param other - the frame to be copied into this model.
-     * @return Reference to the modified FrameModel Instance.
+     * @brief Removes frame at given index from model.
+     * @param frameIndex - the index to remove the frame from.
      */
-    FrameModel& operator=(const FrameModel& other);
+    void removeFrame(int frameIndex);
 
     /**
-     * @brief Converts current instance into Json Object.
-     * @return QJsonObject representation of the model.
+     * @brief Returns frame reference at index.
+     * @param frameIndex - index Frame is located at.
+     * @return Reference to frame at that index.
      */
-    QJsonObject toJson();
+    Frame& getFrame(int frameIndex);
+
+    /**
+     * @brief Returns reference to vector containing all frames in sprite.
+     * @return Reference to vector containing frames.
+     */
+    std::vector<Frame>& getFrames();
+
+    /**
+     * @brief Returns JSON representation of FrameModel.
+     * @return JSON representation of model.
+     */
+    QJsonObject toJSON();
 };
 
 #endif // FRAMEMODEL_H
