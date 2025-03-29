@@ -22,6 +22,8 @@
 
 class Tool : public QObject
 {
+    Q_OBJECT
+
 public:
     Tool() {};
     Tool(SpriteEditor* canvas, LayerModel* layers);
