@@ -43,3 +43,37 @@ void Layer::setShown(bool active){
     this->active = active;
 }
 
+QJsonObject Layer::toJSON() const {
+    // Create a JSON object to hold the layer data
+    QJsonObject jsonObj;
+
+    // Add width, height, and active status to the JSON object
+    jsonObj["width"] = width;
+    jsonObj["height"] = height;
+    jsonObj["active"] = active;
+
+    // Create a JSON array to hold pixel data
+    QJsonArray pixelArray;
+
+    // Iterate through each pixel in the image and add its RGBA values to the array
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            QColor pixelColor(image.pixel(x, y));
+
+            // Create a JSON object for each pixel with its RGBA values
+            QJsonObject pixelObj;
+            pixelObj["r"] = pixelColor.red();
+            pixelObj["g"] = pixelColor.green();
+            pixelObj["b"] = pixelColor.blue();
+            pixelObj["a"] = pixelColor.alpha();
+
+            // Add the pixel object to the array
+            pixelArray.append(pixelObj);
+        }
+    }
+
+    // Add the pixel array to the JSON object
+    jsonObj["pixels"] = pixelArray;
+
+    return jsonObj;
+}
