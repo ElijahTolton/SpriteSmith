@@ -163,9 +163,6 @@
       <height>400</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
     <property name="frameShape">
      <enum>QFrame::Shape::Box</enum>
     </property>
@@ -215,7 +212,7 @@
       <x>30</x>
       <y>490</y>
       <width>80</width>
-      <height>18</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">

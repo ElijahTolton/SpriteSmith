@@ -22,12 +22,14 @@ SOURCES += \
 HEADERS += \
     frame.h \
     framemodel.h \
+    layerdelegate.h \
     mainwindow.h \
     sizedialog.h \
     spriteeditor.h \
     layer.h \
     layermodel.h \
-    tool.h
+    tool.h \
+    layerdelegate.h
 
 FORMS += \
     mainwindow.ui \
