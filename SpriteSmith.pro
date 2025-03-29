@@ -9,12 +9,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    framemodel.cpp \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
     spriteeditor.cpp
 
 HEADERS += \
+    framemodel.h \
     mainwindow.h \
     sizedialog.h \
     spriteeditor.h
