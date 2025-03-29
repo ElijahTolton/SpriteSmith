@@ -37,3 +37,7 @@ void Frame::addLayer(const Layer& layer) {
 void Frame::removeLayer(int layerIndex) {
     layers.removeLayer(layerIndex);
 }
+
+QJsonObject Frame:: toJSON() const{
+    return layers.toJson();
+}
