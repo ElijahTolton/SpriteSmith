@@ -1,4 +1,5 @@
 #include "framemodel.h"
+#include <QJsonArray>
 
 FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     frames.push_back(Frame(width, height));
@@ -27,4 +28,23 @@ Frame& FrameModel::getFrame(int frameIndex) {
 
 std::vector<Frame>& FrameModel::getFrames() {
     return this->frames;
+}
+
+QJsonObject FrameModel::toJSON(){
+    QJsonObject json;
+    QJsonArray jsonArray;
+    int numberFrames = frames.size();
+
+    for( int i = 0; i < numberFrames; i++){
+        jsonArray.append(frames[i].toJSON());
+    }
+
+    json.insert("frames", jsonArray);
+
+    return json;
+}
+
+FrameModel::FrameModel(QJsonObject JSON){
+    //TODO create from Json
+    JSON.insert("", "hello");
 }
