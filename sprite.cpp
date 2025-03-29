@@ -1,6 +1,8 @@
 #include "sprite.h"
 #include "qevent.h"
 #include "qjsonobject.h"
+#include <QFile>
+#include <QJsonDocument>
 
 
 Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
@@ -8,12 +10,12 @@ Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
 {}
 
 void Sprite::save(){
-    // TODO Call FrameModel Json Create QJSONDocument
-    QJsonObject placeholder;
-    QJsonDocument doc;  // Create a QJsonDocument from the QJsonObject
+    QJsonObject json = frames.toJSON();
+
+    QJsonDocument doc(json);
 
     // Create File and load.
-    QFile file("data.json");
+    QFile file("sprite.json");
     if (file.open(QIODevice::WriteOnly)) {
         file.write(doc.toJson());
         file.close();
