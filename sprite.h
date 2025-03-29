@@ -13,7 +13,6 @@ class Sprite : public QObject
 {
     Q_OBJECT
 public:
-    explicit Sprite(QObject *parent = nullptr);
 
     Sprite(int canvasSize, int layerCount, QObject *parent = nullptr);
 

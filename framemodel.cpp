@@ -43,3 +43,8 @@ QJsonObject FrameModel::toJSON(){
 
     return json;
 }
+
+FrameModel::FrameModel(QJsonObject JSON){
+    //TODO create from Json
+    JSON.insert("", "hello");
+}
