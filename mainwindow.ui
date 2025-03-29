@@ -222,118 +222,17 @@
      <string>pick color</string>
     </property>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <widget class="QPushButton" name="addLayer">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>350</y>
-      <width>211</width>
-      <height>81</height>
+      <x>589</x>
+      <y>400</y>
+      <width>201</width>
+      <height>40</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QWidget" name="widget" native="true">
-       <property name="styleSheet">
-        <string notr="true">QWidget {
-    background-color: #3A3A3A;  /* Dark background for layers */
-    border-radius: 8px;  /* Rounded corners */
-}
-
-QWidget:!selected {
-    background-color: #3A3A3A;  /* Dark background when not selected */
-}
-
-QWidget:selected {
-    background-color: #555555;  /* Lighter background when selected */
-    border: 2px solid #888888;  /* Optional border to indicate selection */
-}
-</string>
-       </property>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>63</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Layer 0</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>180</x>
-          <y>10</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-    background-color: #2E2E2E;  /* Dark gray background */
-    color: #FFFFFF;  /* White text */
-    border: 2px solid #444444;  /* Slightly lighter border */
-    border-radius: 6px;  /* Rounded corners */
-    font-size: 10px;  /* Readable text */
-}
-
-QPushButton:hover {
-    background-color: #3A3A3A;  /* Slightly lighter on hover */
-    border: 2px solid #555555;  /* Lighter border */
-}
-
-QPushButton:pressed {
-    background-color: #1F1F1F;  /* Even darker when clicked */
-    border: 2px solid #666666;
-}
-
-QPushButton:disabled {
-    background-color: #444444;  /* Disabled state */
-    color: #777777;
-    border: 2px solid #555555;
-}
-</string>
-        </property>
-        <property name="text">
-         <string>X</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>10</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>10</y>
-          <width>41</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Show</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
     background-color: #2E2E2E;  /* Dark gray background */
     color: #FFFFFF;  /* White text */
     border: 2px solid #444444;  /* Slightly lighter border */
@@ -358,13 +257,168 @@ QPushButton:disabled {
     border: 2px solid #555555;
 }
 </string>
-       </property>
-       <property name="text">
-        <string>Add Layer</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    </property>
+    <property name="text">
+     <string>Add Layer</string>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>219</y>
+      <width>200</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollView">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>198</width>
+       <height>169</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="layerView">
+        <item>
+         <widget class="QWidget" name="layerWidget" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QWidget {
+    background-color: #3A3A3A;  /* Dark background for layers */
+    border-radius: 8px;  /* Rounded corners */
+}
+
+QWidget:!selected {
+    background-color: #3A3A3A;  /* Dark background when not selected */
+}
+
+QWidget:selected {
+    background-color: #555555;  /* Lighter background when selected */
+    border: 2px solid #888888;  /* Optional border to indicate selection */
+}
+</string>
+          </property>
+          <widget class="QLabel" name="layerName">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>41</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Layer 0</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="deleteLayer">
+           <property name="geometry">
+            <rect>
+             <x>140</x>
+             <y>10</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #2E2E2E;  /* Dark gray background */
+    color: #FFFFFF;  /* White text */
+    border: 2px solid #444444;  /* Slightly lighter border */
+    border-radius: 6px;  /* Rounded corners */
+    font-size: 10px;  /* Readable text */
+}
+
+QPushButton:hover {
+    background-color: #3A3A3A;  /* Slightly lighter on hover */
+    border: 2px solid #555555;  /* Lighter border */
+}
+
+QPushButton:pressed {
+    background-color: #1F1F1F;  /* Even darker when clicked */
+    border: 2px solid #666666;
+}
+
+QPushButton:disabled {
+    background-color: #444444;  /* Disabled state */
+    color: #777777;
+    border: 2px solid #555555;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>X</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="layerCheckBox">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>10</y>
+             <width>16</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QLabel" name="showLayer">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>10</y>
+             <width>31</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Show</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>10</y>
+      <width>200</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
    </widget>
   </widget>
  </widget>
