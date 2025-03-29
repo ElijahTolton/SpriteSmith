@@ -154,51 +154,18 @@
      </item>
     </layout>
    </widget>
-   <widget class="SpriteEditor" name="canvas">
+   <widget class="QTableWidget" name="canvas">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>30</y>
-      <width>400</width>
-      <height>400</height>
+      <x>100</x>
+      <y>60</y>
+      <width>571</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Plain</enum>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
-    </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-    </property>
-    <property name="selectionMode">
-     <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
-    </property>
-    <property name="gridStyle">
-     <enum>Qt::PenStyle::SolidLine</enum>
-    </property>
-    <attribute name="horizontalHeaderVisible">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderVisible">
-     <bool>false</bool>
-    </attribute>
    </widget>
    <widget class="QPushButton" name="colorPicker">
     <property name="geometry">
@@ -214,6 +181,17 @@
     </property>
    </widget>
   </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>

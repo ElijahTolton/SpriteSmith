@@ -7,6 +7,7 @@ int main(int argc, char *argv[]) {
     SizeDialog setSizeWindow;
     MainWindow window(&setSizeWindow);
     setSizeWindow.exec();
+    //setSizeWindow.show();
     window.show();
     return app.exec();
 }
