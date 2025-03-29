@@ -51,7 +51,7 @@ Layer& LayerModel::getLayer(int layerIndex) {
     return layers[layerIndex];
 }
 
-const std::vector<Layer>& LayerModel::getLayers() const {
+std::vector<Layer>& LayerModel::getLayers() {
     return layers;  // Return reference to layers vector
 }
 
@@ -62,8 +62,3 @@ int LayerModel::getWidth() {
 int LayerModel::getHeight() {
     return height;
 }
-
-void LayerModel::drawPixel(QColor color, int x, int y){
-    activeLayer.drawPixel(color, x, y);
-}
-

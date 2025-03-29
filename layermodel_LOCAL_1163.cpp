@@ -63,7 +63,3 @@ int LayerModel::getHeight() {
     return height;
 }
 
-void LayerModel::drawPixel(QColor color, int x, int y){
-    activeLayer.drawPixel(color, x, y);
-}
-
