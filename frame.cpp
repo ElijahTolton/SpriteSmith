@@ -1,4 +1,5 @@
 #include "frame.h"
+#include "layermodel.h"
 
 Frame::Frame(int width, int height) : layers(width, height) {
 }
@@ -36,4 +37,8 @@ void Frame::addLayer(const Layer& layer) {
 
 void Frame::removeLayer(int layerIndex) {
     layers.removeLayer(layerIndex);
+}
+
+QJsonObject Frame:: toJSON() const{
+    return layers.ToJSON();
 }

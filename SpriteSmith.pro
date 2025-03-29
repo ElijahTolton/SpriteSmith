@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
+    sprite.cpp \
     spriteeditor.cpp \
     layer.cpp \
     layermodel.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     framemodel.h \
     mainwindow.h \
     sizedialog.h \
+    sprite.h \
     spriteeditor.h \
     layer.h \
     layermodel.h \
