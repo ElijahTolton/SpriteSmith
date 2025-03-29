@@ -31,7 +31,6 @@ private:
     QColor color;
     SpriteEditor* canvas;
     LayerModel* layers;
-    QColorDialog* colorSelect;
     int x, y;
 
 signals:

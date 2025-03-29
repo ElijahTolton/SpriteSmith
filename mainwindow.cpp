@@ -9,12 +9,14 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    colorSelect = new QColorDialog(ui->colorPicker);
+    colorWindow = new QColorDialog(this);
     editTools = new Tool;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+
+    connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::selectColor);
 }
 
 void MainWindow::initEditor(int canvasDim) {
@@ -68,6 +70,10 @@ void MainWindow::setUpIcons(){
     ui->load->setIcon(QIcon(":/icons/load"));
     ui->load->setIconSize(ui->rotate->size() * 2);
     ui->load->setToolTip("Load");
+}
+
+void MainWindow::selectColor() {
+    colorWindow->open();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
