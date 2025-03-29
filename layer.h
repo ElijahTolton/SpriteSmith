@@ -23,6 +23,7 @@ public:
     int getHeight() const;
 
     void setImage(const QImage& newImage);
+    bool operator==(const Layer &layer) const;
 
     QJsonObject toJSON() const;
 

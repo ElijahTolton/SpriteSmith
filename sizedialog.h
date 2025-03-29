@@ -21,9 +21,10 @@ public slots:
 signals:
     void setSize(int canvasSize);
 
-
 private:
     Ui::SizeDialog *ui;
+    void closeEvent(QCloseEvent *event) override;
+
 };
 
 #endif // SIZEDIALOG_H

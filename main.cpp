@@ -5,7 +5,11 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     SizeDialog setSizeWindow;
+    setSizeWindow.setWindowTitle("Sprite Dimensions");
+
     MainWindow window(&setSizeWindow);
+    window.setWindowTitle("SpriteSmith");
+
     setSizeWindow.exec();
     window.show();
     return app.exec();

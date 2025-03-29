@@ -31,3 +31,15 @@ void Layer::rotate() {
     transform.rotate(90);
     image = image.transformed(transform);
 }
+
+bool Layer::operator==(const Layer &layer) const {
+    // Compare width, height, and image for equality
+    return (this->width == layer.width) &&
+           (this->height == layer.height) &&
+           (this->image == layer.image);
+}
+
+void Layer::setShown(bool active){
+    this->active = active;
+}
+

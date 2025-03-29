@@ -5,8 +5,6 @@
 #include <QMouseEvent>
 #include <QHeaderView>
 
-const int CANVAS_SIZE = 400;
-
 class QHeaderView;
 
 class SpriteEditor : public QTableWidget {
@@ -14,8 +12,7 @@ class SpriteEditor : public QTableWidget {
 
 public:
     explicit SpriteEditor(QWidget *parent = nullptr);
-    //explicit SpriteEditor(int rows, int cols, QWidget *parent = nullptr);
-    void setCanvasSize(int rows, int cols);
+    void setCanvasSize();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -24,6 +21,7 @@ protected:
 private:
     QColor currentColor = Qt::red;  // Default drawing color
     void changeCellColor(QMouseEvent *event);
+    void calculateCanvasSizeAdjustment();
 };
 
 #endif // SPRITEEDITOR_H
