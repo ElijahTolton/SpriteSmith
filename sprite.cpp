@@ -2,12 +2,9 @@
 #include "qevent.h"
 #include "qjsonobject.h"
 
-Sprite::Sprite(QObject *parent)
-    : QObject{parent}
-{}
 
 Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
-    : QObject{parent}, layerCount(layerCount), canvasDimension(canvasSize)
+    : QObject{parent}, frames(canvasSize, canvasSize), layerCount(layerCount), canvasDimension(canvasSize)
 {}
 
 void Sprite::save(){
@@ -23,6 +20,6 @@ void Sprite::save(){
     }
 }
 
-void Sprite::load(QJsonDocument){
-    // Calls FrameModel JsonDeserialization
+void Sprite::load(QJsonObject json){
+    frames = FrameModel(json);
 }
