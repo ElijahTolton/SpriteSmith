@@ -13,6 +13,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 {
     ui->setupUi(this);
     colorWindow = new QColorDialog(this);
+    colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
     lastFrameIndex = 0;
 
