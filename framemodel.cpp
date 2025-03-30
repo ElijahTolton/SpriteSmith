@@ -1,6 +1,13 @@
 #include "framemodel.h"
 #include <QJsonArray>
 
+/**
+ * @brief Class representing a frame object for animation timeline.
+ *
+ * @authors Canon Curtis and Elijah Tolton
+ * @date March 29, 2025
+ */
+
 FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     frames.push_back(Frame(width, height));
 }

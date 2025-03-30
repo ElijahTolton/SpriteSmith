@@ -7,7 +7,7 @@
 /**
  * @brief Class representing a frame object for animation timeline.
  *
- * @author Canon Curtis & Dean Smith
+ * @authors Canon Curtis and Elijah Tolton
  * @date March 29, 2025
  */
 class FrameModel

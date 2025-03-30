@@ -1,6 +1,13 @@
 #include "frame.h"
 #include "layermodel.h"
 
+/**
+ * @brief Class representing a single instance of an animation Frame
+ *
+ * @author Canon Curtis
+ * @date March 29, 2025
+ */
+
 Frame::Frame(int width, int height) : layers(width, height) {
 }
 
