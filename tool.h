@@ -17,26 +17,36 @@
 #include <QMainWindow>
 #include <QString>
 #include <QColor>
-#include <layer.h>
+#include <layermodel.h>
+#include <spriteeditor.h>
 
-class Tool : QWidget
+class Tool : public QObject
 {
+    Q_OBJECT
+
 public:
-    Tool(QMainWindow* window, Layer* activeLayer);
+    Tool() {};
+    Tool(SpriteEditor* canvas, LayerModel* layers);
     ~Tool();
 
 private:
-    QString name;
     QColor color;
-    QMainWindow* window;
-    Layer* activeLayer;
+    SpriteEditor* canvas;
+    LayerModel* layers;
+    int x, y;
 
 signals:
     void editSignal(QColor color, int x, int y);
+    void rotateSignal();
+    void mirrorSignal();
 
-private slots:
-    void onEdit(QColor color, int x, int y);
-
+public slots:
+    void onEdit();
+    void onMirror();
+    void onRotate();
+    void setPixelPos(const QPoint& point);
+    void setColor(QColor color);
+    void setErase();
 };
 
 #endif // TOOL_H

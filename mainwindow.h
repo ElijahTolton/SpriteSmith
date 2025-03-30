@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include "sizedialog.h"
 #include "spriteeditor.h"
+#include <QColorDialog>
+#include <tool.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,17 +23,21 @@ public:
 public slots:
     void initEditor(int canvasDim);
     void cloneLayer();
+    void openColor();
+    void setColor();
 
 
 private:
     Ui::MainWindow *ui;
+    QColorDialog* colorWindow;
+    Tool* editTools;
 
     SpriteEditor *editor;  // Pointer to the sprite editor
     LayerModel *layerModel;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();
-
+    void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
 };
 
