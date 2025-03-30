@@ -2,8 +2,8 @@
 #define LAYERMODEL_H
 #include "layer.h"
 
-class LayerModel : public QObject
-{
+class LayerModel : public QObject{
+    Q_OBJECT
 public:
     // Creates a new LayerModel with one layer.
     LayerModel(int width, int height);
@@ -51,6 +51,13 @@ public:
     QJsonObject ToJSON() const;
 
     LayerModel(QJsonObject json);
+
+public slots:
+    void mirrorLayer();
+    void rotateLayer();
+
+signals:
+    void layerChanged();
 
 private:
 

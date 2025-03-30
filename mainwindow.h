@@ -28,6 +28,9 @@ public slots:
     void cloneFrame();
     void removeFrame();
 
+signals:
+    void requestMirror(int layerIndex);
+
 private:
     Ui::MainWindow *ui;
     QColorDialog* colorWindow;
@@ -40,6 +43,7 @@ private:
     void setUpIcons();
     void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
+    void mirror();
     int lastFrameIndex;
 
 };
