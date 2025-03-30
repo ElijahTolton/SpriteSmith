@@ -1,6 +1,10 @@
 #include "spriteeditor.h"
+#include "layermodel.h"
 
-SpriteEditor::SpriteEditor(QWidget *parent) : QTableWidget(parent) { }
+SpriteEditor::SpriteEditor(QWidget *parent)
+    : QTableWidget(parent) { }
+
+
 
 void SpriteEditor::setCanvasSize() {
 
@@ -19,16 +23,15 @@ void SpriteEditor::setCanvasSize() {
 
     for (int col = 0; col < columnCount(); col++)
         setColumnWidth(col, pixelSize);
+
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
-    setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
-        setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
         changeCellColor(event);
     }
 }
@@ -46,32 +49,19 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
 
-        // Set background color
-        item->setBackground(currentColor);
-        // Store border color
-        item->setData(Qt::UserRole, currentColor);  // Store as QColor
+        layers->drawPixel(currentColor, index.column(), index.row());
+
+        setCanvasContents(layers->getLayer(0).getImage());
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
     }
 }
 
-void SpriteEditor::setCanvasContents(QImage t_image) {
-    int t_width = t_image.width();
-    int t_height = t_image.height();
-
-    QImage image(t_width, t_height, QImage::Format_RGBA8888);
+void SpriteEditor::setCanvasContents(QImage image) {
 
     int width = image.width();
     int height = image.height();
-
-    // Fill the image with alternating colors (red and blue for simplicity)
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            QColor color = ((x + y) % 2 == 0) ? QColor(255, 255, 0) : QColor(0, 255, 255);
-            image.setPixelColor(x, y, color);
-        }
-    }
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
@@ -91,8 +81,24 @@ void SpriteEditor::setCanvasContents(QImage t_image) {
             item->setData(Qt::UserRole, color);
         }
     }
+}
 
-    //update();  // Refresh the UI to apply the changes
+void SpriteEditor::repaint() {
+    qDebug() << "Refreshing...";
+    // Refresh the contents of the canvas based on the current image in the layer model
+    setCanvasContents(layers->getLayer(0).getImage());
+
+    // After setting the contents, trigger the widget to repaint itself
+    update();
+}
+
+void SpriteEditor::mirrorLayer() {
+    layers->getLayer(0).mirror();
+    repaint();
+}
+
+void SpriteEditor::setLayerModel(LayerModel *model) {
+    layers.reset(model);
 }
 
 

@@ -26,6 +26,8 @@ public slots:
     void openColor();
     void setColor();
 
+signals:
+    void requestMirror(int layerIndex);
 
 private:
     Ui::MainWindow *ui;
@@ -39,6 +41,7 @@ private:
     void setUpIcons();
     void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
+    void mirror();
 };
 
 #endif // MAINWINDOW_H
