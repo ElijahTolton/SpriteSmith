@@ -6,12 +6,9 @@
 #include "qtablewidget.h"
 #include <QMainWindow>
 #include "sizedialog.h"
-<<<<<<< HEAD
 #include "spriteeditor.h"
-=======
 #include <QColorDialog>
 #include <tool.h>
->>>>>>> Landon
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,12 +23,9 @@ public:
 
 public slots:
     void initEditor(int canvasDim);
-<<<<<<< HEAD
     void cloneLayer();
-=======
     void openColor();
     void setColor();
->>>>>>> Landon
 
 private:
     Ui::MainWindow *ui;

@@ -43,6 +43,7 @@ void Tool::setColor(QColor color) {
 
 void Tool::setErase() {
     this->color = QColor(0,0,0,0);
+    canvas->setColor(QColor(0,0,0,0));
 }
 
 Tool::~Tool() { }

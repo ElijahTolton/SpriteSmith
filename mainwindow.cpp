@@ -17,8 +17,9 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
-<<<<<<< HEAD
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
+    connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
+    connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
 }
 
 void MainWindow::cloneLayer() {
@@ -54,21 +55,13 @@ void MainWindow::cloneLayer() {
 
     // Add the cloned widget to the `layerView` layout
     ui->layerView->addWidget(newLayer);
-=======
-
-    connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
-    connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
->>>>>>> Landon
 }
 
 void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setRowCount(canvasDim);
     ui->canvas->setColumnCount(canvasDim);
     ui->canvas->setCanvasSize();
-<<<<<<< HEAD
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
-
-=======
 
     setUpConnections(canvasDim);
 }
@@ -78,7 +71,6 @@ void MainWindow::setUpConnections(const int canvasDim) {
 
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
->>>>>>> Landon
 }
 
 MainWindow::~MainWindow() {
