@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
+#include <QPalette>
 #include <tool.h>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
@@ -16,7 +17,8 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
 
-    connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::selectColor);
+    connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
+    connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
 }
 
 void MainWindow::initEditor(int canvasDim) {
@@ -30,8 +32,8 @@ void MainWindow::initEditor(int canvasDim) {
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
 
-    connect(ui->pencil, &QPushButton::pressed, editTools, &Tool::onEdit);
-
+    connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
+    connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
 }
 
 MainWindow::~MainWindow() {
@@ -72,8 +74,19 @@ void MainWindow::setUpIcons(){
     ui->load->setToolTip("Load");
 }
 
-void MainWindow::selectColor() {
+void MainWindow::openColor() {
     colorWindow->open();
+}
+
+void MainWindow::setColor() {
+    ui->canvas->setColor(colorWindow->currentColor());
+    editTools->setColor(colorWindow->currentColor());
+
+    QPalette pal = ui->colorPreview->palette();
+    pal.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
+    ui->colorPreview->setAutoFillBackground(true); // Important to fill the background
+    ui->colorPreview->setPalette(pal);
+    ui->colorPreview->update(); // Refresh the button
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

@@ -18,7 +18,7 @@ Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
 {
     connect(canvas, &SpriteEditor::pixelCLicked, this, &Tool::setPixelPos);
 
-    //connect(this, &Tool::editSignal, layers, LayerModel::)
+    //connect(this, &Tool::editSignal, layers, &LayerModel::)
 
 }
 
@@ -37,6 +37,14 @@ void Tool::onRotate() {
 void Tool::setPixelPos(const QPoint& point) {
     x = point.x();
     y = point.y();
+}
+
+void Tool::setColor(QColor color) {
+    this->color = color;
+}
+
+void Tool::setErase() {
+    this->color = QColor(0,0,0,0);
 }
 
 Tool::~Tool() { }

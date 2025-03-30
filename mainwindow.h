@@ -19,7 +19,8 @@ public:
 
 public slots:
     void initEditor(int canvasDim);
-    void selectColor();
+    void openColor();
+    void setColor();
 
 private:
     Ui::MainWindow *ui;

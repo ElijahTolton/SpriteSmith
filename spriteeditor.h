@@ -17,13 +17,16 @@ public:
 signals:
     void pixelCLicked(const QPoint& point);
 
+public slots:
+    void setColor(QColor color);
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     QColor currentColor = Qt::red;  // Default drawing color
-    void setColor(QColor color);
+
     void changeCellColor(QMouseEvent *event);
     void calculateCanvasSizeAdjustment();
 };

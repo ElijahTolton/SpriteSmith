@@ -45,6 +45,8 @@ public slots:
     void onMirror();
     void onRotate();
     void setPixelPos(const QPoint& point);
+    void setColor(QColor color);
+    void setErase();
 };
 
 #endif // TOOL_H
