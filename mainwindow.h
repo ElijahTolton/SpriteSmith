@@ -20,6 +20,7 @@ public:
 
 public slots:
     void initEditor(int canvasDim);
+    void cloneLayer();
 
 
 private:

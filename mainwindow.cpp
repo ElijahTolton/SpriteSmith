@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "layerdelegate.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 
@@ -10,13 +11,50 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+    connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
+}
 
+void MainWindow::cloneLayer() {
+    // Find the original `layerWidget` in the UI
+    QWidget *originalLayer = ui->layerWidget;
+
+    if (!originalLayer) {
+        qDebug() << "Error: layerWidget not found!";
+        return;
+    }
+
+    // Clone the widget by creating a new instance and copying properties
+    QWidget *newLayer = new QWidget();
+    newLayer->setMinimumSize(originalLayer->minimumSize());
+    newLayer->setMaximumSize(originalLayer->maximumSize());
+    newLayer->setStyleSheet(originalLayer->styleSheet());
+
+    // Copy the child widgets (labels, buttons, checkboxes)
+    for (QObject *child : originalLayer->children()) {
+        if (QLabel *label = qobject_cast<QLabel *>(child)) {
+            QLabel *newLabel = new QLabel(label->text(), newLayer);
+            newLabel->setGeometry(label->geometry());
+        } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
+            QPushButton *newButton = new QPushButton(button->text(), newLayer);
+            newButton->setGeometry(button->geometry());
+            newButton->setStyleSheet(button->styleSheet());
+        } else if (QCheckBox *checkBox = qobject_cast<QCheckBox *>(child)) {
+            QCheckBox *newCheckBox = new QCheckBox(newLayer);
+            newCheckBox->setGeometry(checkBox->geometry());
+            newCheckBox->setChecked(checkBox->isChecked());
+        }
+    }
+
+    // Add the cloned widget to the `layerView` layout
+    ui->layerView->addWidget(newLayer);
 }
 
 void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setRowCount(canvasDim);
     ui->canvas->setColumnCount(canvasDim);
     ui->canvas->setCanvasSize();
+    ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
+
 }
 
 MainWindow::~MainWindow() {
