@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     frame.cpp \
     framemodel.cpp \
+    frameview.cpp \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     frame.h \
     framemodel.h \
+    frameview.h \
     layerdelegate.h \
     mainwindow.h \
     sizedialog.h \
