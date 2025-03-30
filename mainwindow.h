@@ -25,12 +25,13 @@ public slots:
     void cloneLayer();
     void openColor();
     void setColor();
+    void cloneFrame();
 
 
 private:
     Ui::MainWindow *ui;
     QColorDialog* colorWindow;
-    Tool* editTools;
+    //Tool* editTools;
 
     SpriteEditor *editor;  // Pointer to the sprite editor
     LayerModel *layerModel;
@@ -39,6 +40,7 @@ private:
     void setUpIcons();
     void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
+
 };
 
 #endif // MAINWINDOW_H

@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
-#include <tool.h>
+//#include "tool.h"
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -12,24 +12,21 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 {
     ui->setupUi(this);
     colorWindow = new QColorDialog(this);
-    editTools = new Tool;
+    //editTools = new Tool;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
+    connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
+
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
 }
 
 void MainWindow::cloneLayer() {
-    // Find the original `layerWidget` in the UI
-    QWidget *originalLayer = ui->layerWidget;
 
-    if (!originalLayer) {
-        qDebug() << "Error: layerWidget not found!";
-        return;
-    }
+    QWidget *originalLayer = ui->layerWidget;
 
     // Clone the widget by creating a new instance and copying properties
     QWidget *newLayer = new QWidget();
@@ -53,8 +50,20 @@ void MainWindow::cloneLayer() {
         }
     }
 
-    // Add the cloned widget to the `layerView` layout
     ui->layerView->addWidget(newLayer);
+}
+
+void MainWindow::cloneFrame() {
+
+    QWidget *originalWidget = ui->frameWidget;
+
+    // Create a new QWidget and copy properties
+    QWidget *newWidget = new QWidget();
+    newWidget->setMinimumSize(originalWidget->minimumSize());
+    newWidget->setMaximumSize(originalWidget->maximumSize());
+    newWidget->setStyleSheet(originalWidget->styleSheet());
+
+    ui->frameView->addWidget(newWidget);
 }
 
 void MainWindow::initEditor(int canvasDim) {
@@ -67,10 +76,10 @@ void MainWindow::initEditor(int canvasDim) {
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
-    editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
+    //editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
 
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
-    connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
+    //connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
 }
 
 MainWindow::~MainWindow() {
@@ -117,7 +126,7 @@ void MainWindow::openColor() {
 
 void MainWindow::setColor() {
     ui->canvas->setColor(colorWindow->currentColor());
-    editTools->setColor(colorWindow->currentColor());
+    //editTools->setColor(colorWindow->currentColor());
 
     QPalette pal = ui->colorPreview->palette();
     pal.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
