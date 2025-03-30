@@ -84,9 +84,9 @@ void SpriteEditor::setCanvasContents(QImage image) {
             item->setData(Qt::UserRole, color);
         }
     }
+}
 
 void SpriteEditor::repaint() {
-    qDebug() << "Refreshing...";
     // Refresh the contents of the canvas based on the current image in the layer model
     setCanvasContents(layers->getLayer(0).getImage());
 

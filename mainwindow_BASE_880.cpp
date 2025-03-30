@@ -4,8 +4,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
-#include "tool.h"
-#include "frameview.h"
+#include <tool.h>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -13,26 +12,24 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 {
     ui->setupUi(this);
     colorWindow = new QColorDialog(this);
-    colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
-    lastFrameIndex = 0;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
-    connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
-    connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
-    connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
-
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
-
 }
 
 void MainWindow::cloneLayer() {
-
+    // Find the original `layerWidget` in the UI
     QWidget *originalLayer = ui->layerWidget;
+
+    if (!originalLayer) {
+        qDebug() << "Error: layerWidget not found!";
+        return;
+    }
 
     // Clone the widget by creating a new instance and copying properties
     QWidget *newLayer = new QWidget();
@@ -56,32 +53,8 @@ void MainWindow::cloneLayer() {
         }
     }
 
+    // Add the cloned widget to the `layerView` layout
     ui->layerView->addWidget(newLayer);
-}
-
-void MainWindow::cloneFrame() {
-    lastFrameIndex++;
-
-    //Create a new QWidget and copy properties
-    FrameView *newWidget = new FrameView(lastFrameIndex);
-
-    connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
-    ui->frameView->addWidget(newWidget);
-}
-
-void MainWindow::removeFrame(){
-    if (ui->frameView->count() > 1) {
-        QLayoutItem *item = ui->frameView->takeAt(ui->frameView->count() - 1); // Get the last item
-
-        delete item->widget(); // Delete the widget
-
-        lastFrameIndex--;
-    }
-}
-
-void MainWindow::mirror(){
-    qDebug() << "Emitting Mirror layer";
-    emit requestMirror(0);
 }
 
 void MainWindow::initEditor(int canvasDim) {
@@ -90,21 +63,14 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim);
-    ui->canvas->setLayerModel(layerModel);
-
     setUpConnections(canvasDim);
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
-    connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
+
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
-    connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
-    connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
-
-
 }
 
 MainWindow::~MainWindow() {

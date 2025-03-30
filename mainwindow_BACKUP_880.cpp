@@ -59,6 +59,7 @@ void MainWindow::cloneLayer() {
     ui->layerView->addWidget(newLayer);
 }
 
+<<<<<<< HEAD
 void MainWindow::cloneFrame() {
     lastFrameIndex++;
 
@@ -77,11 +78,11 @@ void MainWindow::removeFrame(){
 
         lastFrameIndex--;
     }
-}
-
+=======
 void MainWindow::mirror(){
     qDebug() << "Emitting Mirror layer";
     emit requestMirror(0);
+>>>>>>> MirrorRotate
 }
 
 void MainWindow::initEditor(int canvasDim) {

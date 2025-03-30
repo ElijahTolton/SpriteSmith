@@ -27,7 +27,6 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
-
 }
 
 void MainWindow::cloneLayer() {
@@ -79,32 +78,20 @@ void MainWindow::removeFrame(){
     }
 }
 
-void MainWindow::mirror(){
-    qDebug() << "Emitting Mirror layer";
-    emit requestMirror(0);
-}
-
 void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setRowCount(canvasDim);
     ui->canvas->setColumnCount(canvasDim);
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim);
-    ui->canvas->setLayerModel(layerModel);
-
     setUpConnections(canvasDim);
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
-    connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
+
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
-    connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
-    connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
-
-
 }
 
 MainWindow::~MainWindow() {
