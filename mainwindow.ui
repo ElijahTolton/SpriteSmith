@@ -157,7 +157,7 @@
    <widget class="SpriteEditor" name="canvas">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>200</x>
       <y>10</y>
       <width>400</width>
       <height>400</height>

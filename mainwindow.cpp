@@ -10,6 +10,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+
 }
 
 void MainWindow::initEditor(int canvasDim) {

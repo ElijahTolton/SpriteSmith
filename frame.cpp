@@ -42,3 +42,10 @@ void Frame::removeLayer(int layerIndex) {
 QJsonObject Frame:: toJSON() const{
     return layers.ToJSON();
 }
+
+Frame::Frame(QJsonObject jsonInformation)
+    : layers(jsonInformation)  // Initialize layers using the constructor of LayerModel that accepts QJsonObject
+{
+    frameIndex = 0;  // Initialize frameIndex after layers has been initialized
+}
+
