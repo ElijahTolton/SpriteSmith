@@ -50,11 +50,13 @@ public:
     // JSON Serializer
     QJsonObject ToJSON() const;
 
+    LayerModel(QJsonObject json);
+
 private:
 
     int width;
     int height;
-    Layer& activeLayer;
+    Layer* activeLayer;
 };
 
 #endif // LAYERMODEL_H

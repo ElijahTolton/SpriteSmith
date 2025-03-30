@@ -30,6 +30,8 @@ public:
 
     void drawPixel(QColor color, int x, int y);
 
+    Layer(QJsonObject);
+
 private:
     QImage image;
     bool active;

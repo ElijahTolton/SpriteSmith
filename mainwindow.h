@@ -3,7 +3,6 @@
 
 
 #include "layermodel.h"
-#include "qtablewidget.h"
 #include <QMainWindow>
 #include "sizedialog.h"
 #include "spriteeditor.h"
@@ -22,6 +21,7 @@ public:
 public slots:
     void initEditor(int canvasDim);
     void cloneLayer();
+
 
 private:
     Ui::MainWindow *ui;

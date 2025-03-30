@@ -89,3 +89,39 @@ QJsonObject Layer::toJSON() const {
 void Layer::setActive(bool active){
     this->active = active;
 }
+
+
+Layer::Layer(QJsonObject json){
+    try{
+
+        width = json["width"].toInt();
+        height = json["height"].toInt();
+        active = json["active"].toBool();
+        image = QImage(width, height, QImage::Format_RGBA8888);
+
+        // Ensure the image is filled with transparent color initially
+        image.fill(Qt::transparent);
+
+        // Parse the pixels array from the JSON object and set the pixel colors
+        QJsonArray pixelArray = json["pixels"].toArray();
+
+        int index = 0;
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                if (index < pixelArray.size()) {
+                    QJsonObject pixelObj = pixelArray[index].toObject();
+                    QColor pixelColor(
+                        pixelObj["r"].toInt(),
+                        pixelObj["g"].toInt(),
+                        pixelObj["b"].toInt(),
+                        pixelObj["a"].toInt()
+                    );
+                    image.setPixelColor(x, y, pixelColor);
+                }
+                ++index;
+            }
+        }
+    } catch(std::exception){
+        qWarning() << "Error parsing LayerJson";
+    }
+}

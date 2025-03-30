@@ -6,7 +6,7 @@
 
 
 LayerModel::LayerModel(int width, int height)
-    : width(width), height(height), activeLayer(layers[0]) {
+    : width(width), height(height), activeLayer(&layers[0]) {
     layers.emplace_back(width, height);
 }
 
@@ -76,7 +76,7 @@ int LayerModel::getHeight() {
 
 
 void LayerModel::drawPixel(QColor color, int x, int y){
-    activeLayer.drawPixel(color, x, y);
+    activeLayer->drawPixel(color, x, y);
 }
 
 QJsonObject LayerModel::ToJSON() const {
@@ -99,4 +99,30 @@ QJsonObject LayerModel::ToJSON() const {
 
     return jsonObj;
 }
+
+LayerModel::LayerModel::LayerModel(QJsonObject json)
+    : width(json["width"].toInt()), height(json["width"].toInt()), activeLayer(nullptr) // Set a default layer
+    // Your constructor body
+{
+    try{
+        width = json["width"].toInt();
+        height = json["height"].toInt();
+
+        // Ensure the JSON object has a "frames" key and it's an array
+        QJsonArray layersArray = json["layers"].toArray();
+
+        // Loop through each frame in the array and reconstruct each frame
+        for (const QJsonValue &value : layersArray) {
+            if (value.isObject()) {
+                Layer layer(value.toObject());
+                layers.push_back(layer);
+                activeLayer = &layer;
+            }
+        }
+    } catch(std::exception e) {
+        // Handle the case where the "frames" key is missing or is not an array
+        qWarning() << "Invalid or missing 'layers' array in JSON";
+    }
+}
+
 

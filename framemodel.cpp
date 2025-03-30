@@ -45,6 +45,19 @@ QJsonObject FrameModel::toJSON(){
 }
 
 FrameModel::FrameModel(QJsonObject JSON){
-    //TODO create from Json
-    JSON.insert("", "hello");
+    // Ensure the JSON object has a "frames" key and it's an array
+    if (JSON.contains("frames") && JSON["frames"].isArray()) {
+        QJsonArray framesArray = JSON["frames"].toArray();
+
+        // Loop through each frame in the array and reconstruct each frame
+        for (const QJsonValue &value : framesArray) {
+            if (value.isObject()) {
+                Frame frame(value.toObject());
+                frames.push_back(frame);
+            }
+        }
+    } else {
+        // Handle the case where the "frames" key is missing or is not an array
+        qWarning() << "Invalid or missing 'frames' array in JSON";
+    }
 }
