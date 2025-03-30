@@ -2,7 +2,7 @@
 #define LAYERMODEL_H
 #include "layer.h"
 
-class LayerModel
+class LayerModel : public QObject
 {
 public:
     // Creates a new LayerModel with one layer.
@@ -50,11 +50,13 @@ public:
     // JSON Serializer
     QJsonObject ToJSON() const;
 
+    LayerModel(QJsonObject json);
+
 private:
 
     int width;
     int height;
-    Layer& activeLayer;
+    Layer* activeLayer;
 };
 
 #endif // LAYERMODEL_H

@@ -14,12 +14,19 @@ public:
     explicit SpriteEditor(QWidget *parent = nullptr);
     void setCanvasSize();
 
+signals:
+    void pixelCLicked(const QPoint& point);
+
+public slots:
+    void setColor(QColor color);
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     QColor currentColor = Qt::red;  // Default drawing color
+
     void changeCellColor(QMouseEvent *event);
     void calculateCanvasSizeAdjustment();
     void setCanvasContents(QImage image);
