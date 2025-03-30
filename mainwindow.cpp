@@ -5,6 +5,7 @@
 #include <QColorDialog>
 #include <QPalette>
 #include "tool.h"
+#include "frameview.h"
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -13,12 +14,15 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     ui->setupUi(this);
     colorWindow = new QColorDialog(this);
     editTools = new Tool;
+    lastFrameIndex = 0;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
+    connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
+    connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
 
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
@@ -54,16 +58,23 @@ void MainWindow::cloneLayer() {
 }
 
 void MainWindow::cloneFrame() {
-
-    QWidget *originalWidget = ui->frameWidget;
+    lastFrameIndex++;
 
     //Create a new QWidget and copy properties
-    QWidget *newWidget = new QWidget();
-    newWidget->setMinimumSize(originalWidget->minimumSize());
-    newWidget->setMaximumSize(originalWidget->maximumSize());
-    newWidget->setStyleSheet(originalWidget->styleSheet());
+    FrameView *newWidget = new FrameView(lastFrameIndex);
 
+    connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
     ui->frameView->addWidget(newWidget);
+}
+
+void MainWindow::removeFrame(){
+    if (ui->frameView->count() > 1) {
+        QLayoutItem *item = ui->frameView->takeAt(ui->frameView->count() - 1); // Get the last item
+
+        delete item->widget(); // Delete the widget
+
+        lastFrameIndex--;
+    }
 }
 
 void MainWindow::initEditor(int canvasDim) {

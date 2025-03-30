@@ -26,7 +26,7 @@ public slots:
     void openColor();
     void setColor();
     void cloneFrame();
-
+    void removeFrame();
 
 private:
     Ui::MainWindow *ui;
@@ -40,6 +40,7 @@ private:
     void setUpIcons();
     void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
+    int lastFrameIndex;
 
 };
 
