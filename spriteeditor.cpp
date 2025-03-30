@@ -22,11 +22,13 @@ void SpriteEditor::setCanvasSize() {
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
+    setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
+        setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
         changeCellColor(event);
     }
 }
@@ -48,6 +50,45 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
 
         update();  // Refresh UI to apply changes
     }
+}
+
+void SpriteEditor::setCanvasContents(QImage t_image) {
+    int t_width = t_image.width();
+    int t_height = t_image.height();
+
+    QImage image(t_width, t_height, QImage::Format_RGBA8888);
+
+    int width = image.width();
+    int height = image.height();
+
+    // Fill the image with alternating colors (red and blue for simplicity)
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            QColor color = ((x + y) % 2 == 0) ? QColor(255, 255, 0) : QColor(0, 255, 255);
+            image.setPixelColor(x, y, color);
+        }
+    }
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            QColor color = image.pixelColor(x, y);  // Get the pixel color
+
+            QModelIndex index = model()->index(y, x);
+
+            // Ensure there is an item at this index
+            QTableWidgetItem *item = itemFromIndex(index);
+            if (!item) {
+                item = new QTableWidgetItem();
+                setItem(index.row(), index.column(), item);
+            }
+
+            // Set the background color of the item to match the pixel color
+            item->setBackground(color);
+            item->setData(Qt::UserRole, color);
+        }
+    }
+
+    //update();  // Refresh the UI to apply the changes
 }
 
 

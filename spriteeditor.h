@@ -22,6 +22,7 @@ private:
     QColor currentColor = Qt::red;  // Default drawing color
     void changeCellColor(QMouseEvent *event);
     void calculateCanvasSizeAdjustment();
+    void setCanvasContents(QImage image);
 };
 
 #endif // SPRITEEDITOR_H
