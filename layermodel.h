@@ -2,7 +2,7 @@
 #define LAYERMODEL_H
 #include "layer.h"
 
-class LayerModel
+class LayerModel : public QObject
 {
 public:
     // Creates a new LayerModel with one layer.

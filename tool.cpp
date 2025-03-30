@@ -8,7 +8,7 @@
  *
  * @date
  * Created:         3/25/25
- * Last modified:   3/27/25
+ * Last modified:   3/29/25
  */
 
 #include "tool.h"
@@ -17,7 +17,7 @@ Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
     : canvas(canvas), layers(layers)
 {
     connect(canvas, &SpriteEditor::pixelCLicked, this, &Tool::setPixelPos);
-    //connect(this, &Tool::editSignal, layers, &LayerModel::)
+    connect(this, &Tool::editSignal, layers, &LayerModel::drawPixel);
 }
 
 void Tool::onEdit() {
