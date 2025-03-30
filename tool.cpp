@@ -13,11 +13,36 @@
 
 #include "tool.h"
 
-Tool::Tool(QMainWindow* window, Layer* activeLayer) : window(window), activeLayer(activeLayer) {
+Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
+    : canvas(canvas), layers(layers)
+{
+    connect(canvas, &SpriteEditor::pixelCLicked, this, &Tool::setPixelPos);
+    //connect(this, &Tool::editSignal, layers, &LayerModel::)
+}
 
-    //TO DO: Add connections between window signals and tool slots
+void Tool::onEdit() {
+    emit editSignal(color, x, y);
+}
 
-    //TO DO: Add connections between tool slots and tool signals
+void Tool::onMirror() {
+    emit mirrorSignal();
+}
+
+void Tool::onRotate() {
+    emit rotateSignal();
+}
+
+void Tool::setPixelPos(const QPoint& point) {
+    x = point.x();
+    y = point.y();
+}
+
+void Tool::setColor(QColor color) {
+    this->color = color;
+}
+
+void Tool::setErase() {
+    this->color = QColor(0,0,0,0);
 }
 
 Tool::~Tool() { }

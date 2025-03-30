@@ -10,8 +10,20 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -19,8 +31,8 @@
      <rect>
       <x>130</x>
       <y>450</y>
-      <width>581</width>
-      <height>111</height>
+      <width>620</width>
+      <height>116</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="toolBar">
@@ -206,6 +218,7 @@
      <number>14</number>
     </attribute>
    </widget>
+<<<<<<< HEAD
    <widget class="QPushButton" name="colorPicker">
     <property name="geometry">
      <rect>
@@ -220,6 +233,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="addLayer">
+=======
+   <widget class="QWidget" name="verticalLayoutWidget">
+>>>>>>> Landon
     <property name="geometry">
      <rect>
       <x>589</x>
@@ -416,6 +432,50 @@ QPushButton:disabled {
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>450</y>
+      <width>131</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QPushButton" name="colorPicker">
+       <property name="text">
+        <string>pick color</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="colorPreview">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>2</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>5</width>
+         <height>5</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
