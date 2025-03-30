@@ -1,4 +1,5 @@
 #include "spriteeditor.h"
+#include <QApplication>
 
 SpriteEditor::SpriteEditor(QWidget *parent) : QTableWidget(parent) { }
 
@@ -53,6 +54,8 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
+
+        QApplication::processEvents();
     }
 }
 
