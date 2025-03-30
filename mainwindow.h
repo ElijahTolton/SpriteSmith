@@ -31,7 +31,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QColorDialog* colorWindow;
-    //Tool* editTools;
+    Tool* editTools;
 
     SpriteEditor *editor;  // Pointer to the sprite editor
     LayerModel *layerModel;
