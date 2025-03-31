@@ -12,6 +12,7 @@ SOURCES += \
     frame.cpp \
     framemodel.cpp \
     frameview.cpp \
+    layerview.cpp \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     framemodel.h \
     frameview.h \
     layerdelegate.h \
+    layerview.h \
     mainwindow.h \
     sizedialog.h \
     sprite.h \
