@@ -144,6 +144,9 @@ void MainWindow::setUpConnections(const int canvasDim) {
         ui->canvas->repaint();
     });
 
+    connect(ui->undo, &QPushButton::pressed, ui->canvas, &SpriteEditor::undo);
+    connect(ui->redo, &QPushButton::pressed, ui->canvas, &SpriteEditor::redo);
+
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);

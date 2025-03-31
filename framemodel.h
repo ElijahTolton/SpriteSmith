@@ -8,7 +8,7 @@
 /**
  * @brief Class representing a frame object for animation timeline.
  *
- * @author Canon Curtis, Dean Smith, & Alex Lancaster
+ * @authors Canon Curtis, Elijah Tolton & Alex Lancaster
  * @date March 29, 2025
  */
 class FrameModel : public QObject

@@ -1,5 +1,6 @@
 #include "spriteeditor.h"
 #include <QApplication>
+#include "layereditcommand.h"
 #include "layermodel.h"
 
 SpriteEditor::SpriteEditor(QWidget *parent)
@@ -31,6 +32,10 @@ void SpriteEditor::mousePressEvent(QMouseEvent *event) {
         qDebug() << "Error: getImage() returned a null image!";
         return;
     }
+
+    //copy current JSON for undo stack
+    uneditedJSON = sprite->frames->getFrame(0).layers.getLayer(0).toJSON();
+
     setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
     changeCellColor(event);
 
@@ -42,6 +47,24 @@ void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
         setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
         changeCellColor(event);
     }
+}
+
+void SpriteEditor::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() & Qt::LeftButton) {
+        Layer& tempLayer = sprite->frames->getFrame(0).layers.getLayer(0);
+        LayerEditCommand* undoCommand = new LayerEditCommand(tempLayer, uneditedJSON, tempLayer.toJSON());
+        undoStack.push(undoCommand);
+    }
+}
+
+void SpriteEditor::undo() {
+    undoStack.undo();
+    repaint();
+}
+
+void SpriteEditor::redo() {
+    undoStack.redo();
+    repaint();
 }
 
 void SpriteEditor::setColor(QColor color) {

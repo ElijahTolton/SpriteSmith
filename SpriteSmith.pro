@@ -9,10 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addframecommand.cpp \
+    addlayercommand.cpp \
     frame.cpp \
     framemodel.cpp \
     frameview.cpp \
     layerview.cpp \
+    layereditcommand.cpp \
     main.cpp \
     mainwindow.cpp \
     sizedialog.cpp \
@@ -23,11 +26,14 @@ SOURCES += \
     tool.cpp
 
 HEADERS += \
+    addframecommand.h \
+    addlayercommand.h \
     frame.h \
     framemodel.h \
     frameview.h \
     layerdelegate.h \
     layerview.h \
+    layereditcommand.h \
     mainwindow.h \
     sizedialog.h \
     sprite.h \
