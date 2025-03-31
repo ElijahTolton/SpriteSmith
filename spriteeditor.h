@@ -5,6 +5,8 @@
 #include <QTableWidget>
 #include <QMouseEvent>
 #include <QHeaderView>
+#include <QJsonObject>
+#include <QUndoStack>
 
 class QHeaderView;
 
@@ -18,6 +20,8 @@ public:
     void repaint();
     void mirrorLayer();
     void setSprite(Sprite *sprite);
+    void undo();
+    void redo();
 
 
 signals:
@@ -29,9 +33,13 @@ public slots:
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     QColor currentColor = Qt::red;  // Default drawing color
+
+    QJsonObject uneditedJSON; // Unedited JSON of layer that was edited
+    QUndoStack undoStack; // Stack of undo commands
 
     void changeCellColor(QMouseEvent *event);
     void calculateCanvasSizeAdjustment();
