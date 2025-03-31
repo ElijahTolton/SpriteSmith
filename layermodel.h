@@ -45,7 +45,7 @@ public:
     void setActiveLayer(int layer);
 
     //returns activeLayer
-    Layer& getActiveLayer();
+    Layer& getTopLayer();
 
     // Vector containing all layers in the LayerModel
     std::vector<Layer> layers;

@@ -75,7 +75,7 @@ public:
      * @brief Gets layer that is shown
      * @return the layer to be displayed
      */
-    Layer& getActiveLayer();
+    Layer& getTopLayer();
 
     /**
      * @brief Removes layer at given index from model

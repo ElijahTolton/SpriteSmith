@@ -67,8 +67,8 @@
         }
     }
 
-    Layer& LayerModel::getActiveLayer() {
-        return *activeLayer;
+    Layer& LayerModel::getTopLayer() {
+        return getLayer(layers.size() - 1);
     }
 
     int LayerModel::getWidth() {
