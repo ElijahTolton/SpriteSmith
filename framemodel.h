@@ -24,7 +24,7 @@ private:
     // Framerate/Time for preview to send information
     int framerate = 0;
 
-    unsigned int nextFrameIndex = 0;
+    uint nextFrameIndex = 0;
 
     // size of frame canvas
     int width;

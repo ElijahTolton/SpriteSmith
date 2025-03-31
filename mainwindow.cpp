@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
+#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
@@ -51,10 +52,12 @@ void MainWindow::cloneLayer() {
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
 
+    QLabel *newLabel = nullptr;
+
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            QLabel *newLabel = new QLabel(label->text(), newLayer);
+            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
             newButton = new QPushButton(button->text(), newLayer);
@@ -69,12 +72,20 @@ void MainWindow::cloneLayer() {
 }
 
 void MainWindow::removeLayer(int layerIndex) {
-    lastLayerIndex--;
-
     if (ui->layerView->count() > 1) {
-        QLayoutItem *item = ui->layerView->takeAt(layerIndex);
+        QLayoutItem *layer = ui->layerView->takeAt(layerIndex);
 
-        delete item->widget();
+        for (; layerIndex < ui->layerView->count(); layerIndex++) {
+            QLayoutItem *item = ui->layerView->itemAt(layerIndex);
+            LayerView *layerView = qobject_cast<LayerView *>(item->widget());
+            layerView->layerIndex = layerIndex;
+
+            QLabel *label = layerView->findChild<QLabel *>();
+            label->setText(QString("Layer %1").arg(layerIndex));
+        }
+
+        delete layer->widget();
+        lastLayerIndex = ui->layerView->count() - 1;
     }
 }
 
@@ -94,9 +105,12 @@ void MainWindow::removeFrame(){
 
         delete item->widget(); // Delete the widget
 
+
         lastFrameIndex--;
     }
 }
+
+
 
 void MainWindow::mirror(){
     emit requestMirror(0);
