@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
+#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
@@ -65,12 +66,17 @@ void MainWindow::cloneLayer() {
 }
 
 void MainWindow::removeLayer(int layerIndex) {
-    lastLayerIndex--;
-
     if (ui->layerView->count() > 1) {
-        QLayoutItem *item = ui->layerView->takeAt(layerIndex);
+        QLayoutItem *layer = ui->layerView->takeAt(layerIndex);
 
-        delete item->widget();
+        for (; layerIndex < ui->layerView->count(); layerIndex++) {
+            QLayoutItem *item = ui->layerView->itemAt(layerIndex);
+            LayerView *layerView = qobject_cast<LayerView *>(item->widget());
+            layerView->layerIndex = layerIndex;
+        }
+
+        delete layer->widget();
+        lastLayerIndex = ui->layerView->count() - 1;
     }
 }
 
@@ -90,9 +96,12 @@ void MainWindow::removeFrame(){
 
         delete item->widget(); // Delete the widget
 
+
         lastFrameIndex--;
     }
 }
+
+
 
 void MainWindow::mirror(){
     emit requestMirror(0);

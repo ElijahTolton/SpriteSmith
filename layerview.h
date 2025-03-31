@@ -12,8 +12,6 @@ public:
     // initilize the first layer to 0
     explicit LayerView(QWidget *parent = nullptr);
     explicit LayerView(int index, QWidget *parent = nullptr);
-
-private:
     int layerIndex;
 
 signals:
