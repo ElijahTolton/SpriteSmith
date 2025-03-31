@@ -8,7 +8,7 @@
 /**
  * @brief Class representing a frame object for animation timeline.
  *
- * @author Canon Curtis & Dean Smith
+ * @author Canon Curtis, Dean Smith, & Alex Lancaster
  * @date March 29, 2025
  */
 class FrameModel : public QObject
@@ -16,18 +16,35 @@ class FrameModel : public QObject
     Q_OBJECT
 
 private:
-    // Container for all frames in sprite
+    /**
+     * @brief Container for all frames in sprite
+     */
     std::vector<Frame> frames;
 
+    /**
+     * @brief timer to update frames in animation preview
+     */
     QTimer* timer;
 
-    // Framerate/Time for preview to send information
+    /**
+     * @brief Framerate/Time for preview to send information
+     */
     int framerate = 0;
 
+    /**
+     * @brief nextFrameIndex contains the next frame to be displayed
+     * in the animation preview
+     */
     uint nextFrameIndex = 0;
 
-    // size of frame canvas
+    /**
+     * @brief width of frame canvas
+     */
     int width;
+
+    /**
+     * @brief height of frame canvas
+     */
     int height;
 
 public:
@@ -45,8 +62,11 @@ public:
     FrameModel(QJsonObject JSON);
 
 signals:
-
-    void nextFrame(Frame& fame);
+    /**
+     * @brief nextFrame to be displayed in the animation preview
+     * @param frame payload to be displayed
+     */
+    void nextFrame(Frame& frame);
 
 public slots:
     /**
@@ -79,8 +99,15 @@ public slots:
      */
     std::vector<Frame>& getFrames();
 
+    /**
+     * @brief Updates framerate member and framerate of timer
+     * @param framerate - new animation framerate
+     */
     void updateFramerate(int framerate);
 
+    /**
+     * @brief Slot timer calls to send next frame
+     */
     void sendNextFrame();
 
     /**

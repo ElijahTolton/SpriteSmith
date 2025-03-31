@@ -17,6 +17,7 @@
 class Layer
 {
 public:
+    Layer() = delete;
     /**
      * @brief Constructs a Layer of specificed width and height
      *

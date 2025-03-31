@@ -1,22 +1,28 @@
 #include "frameview.h"
+#include <QDebug>
 
-FrameView::FrameView(int index, QWidget *parent)
+FrameView::FrameView(QWidget *parent, int index)
     : QPushButton{parent}, frameIndex(index)
 {
     setMinimumSize(QSize(100, 100));
     setMaximumSize(QSize(100, 100));
-    setStyleSheet("background-color: rgb(255, 0, 0);");
-}
+    setStyleSheet("background-color: rgb(0, 0, 0);");
 
-FrameView::FrameView(QWidget *parent)
-    : QPushButton{parent}, frameIndex(0)
-{
-    setMinimumSize(QSize(100, 100));
-    setMaximumSize(QSize(100, 100));
-    setStyleSheet("background-color: rgb(255, 0, 0);");
+    preview = new QLabel(this);
+    preview->setGeometry(0, 0, width(), height());
+    preview->setAlignment(Qt::AlignCenter);
+    preview->setAttribute(Qt::WA_TransparentForMouseEvents);
 }
 
 void FrameView::changeIndex(){
     emit getIndex(frameIndex);
-    qDebug() << frameIndex;
+}
+
+void FrameView::requestRepaint() {
+    qDebug() << "requesting " << frameIndex;
+    emit repaintSignal(frameIndex);
+}
+
+void FrameView::displayPreview(QPixmap image) {
+    preview->setPixmap(image.scaled(preview->size()));
 }

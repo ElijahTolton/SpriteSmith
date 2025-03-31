@@ -6,7 +6,6 @@ FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     timer = new QTimer;
 
     connect(timer, &QTimer::timeout, this, &FrameModel::sendNextFrame);
-
     timer->start();
 }
 

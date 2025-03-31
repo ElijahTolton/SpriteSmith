@@ -19,6 +19,7 @@
 #include <QColor>
 #include <layermodel.h>
 #include <spriteeditor.h>
+#include <frameview.h>
 
 class Tool : public QObject
 {
@@ -37,6 +38,7 @@ private:
 
 signals:
     void editSignal(QColor color, int x, int y);
+    void repaintSignal();
     void rotateSignal();
     void mirrorSignal();
 

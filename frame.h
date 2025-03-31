@@ -8,18 +8,22 @@
 /**
  * @brief Class representing a single instance of an animation Frame
  *
- * @author Canon Curtis
+ * @author Canon Curtis & Alex Lancaster
  * @date March 29, 2025
  */
 class Frame
 {
 private:
-    // Container for all layers in a frame
-    LayerModel layers;
-
-    // Place frame is located in animation timeline.
+    /**
+     * @brief Place frame is located in animation timeline
+     */
     int frameIndex;
 public:
+    /**
+     * @brief Container for all layers in a frame
+     */
+    LayerModel layers;
+
     /**
      * @brief Constructs Frame with 1 empty layer
      * @param width - width of layer

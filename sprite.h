@@ -20,12 +20,11 @@ public:
     // This is a collection of all of the frames associated with this sprite.
     FrameModel* frames;
 
+    // The width or height of the canvas
+    int canvasDimension;
 private:
     // The number of layers across each frame.
     int layerCount;
-
-    // The width or height of the canvas
-    int canvasDimension;
 
     int currentFrame = 0;
 
@@ -38,6 +37,8 @@ public slots:
 
     void sendFrame(Frame& frame);
 
+    void sendFramePreview(int frameIndex);
+
     void updateFramerate(int framerate);
 
 signals:
@@ -49,6 +50,8 @@ signals:
 
     // Displays frame in animation preview
     void displayFrame(QPixmap pixmap);
+
+    void updateFrame(QPixmap pixmap);
 
     void newFramerateSignal(int framerate);
 };
