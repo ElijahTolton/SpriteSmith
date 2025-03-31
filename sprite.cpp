@@ -32,7 +32,7 @@ void Sprite::load(QJsonObject json) {
 
 void Sprite::sendFrame(Frame& frame) {
 
-    QImage image  = frame.getActiveLayer().getImage();
+    QImage image  = frame.getTopLayer().getImage();
 
     emit displayFrame(QPixmap::fromImage(image));
 }
