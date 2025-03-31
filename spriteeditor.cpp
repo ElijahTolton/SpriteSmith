@@ -103,8 +103,6 @@ void SpriteEditor::setLayerModel(LayerModel *model) {
     layers.reset(model);
 }
 
-
-
 void SpriteEditor::calculateCanvasSizeAdjustment() {
 
     double pixelSize = (double)height() / (double)rowCount();
