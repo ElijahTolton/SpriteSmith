@@ -13,6 +13,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     colorWindow = new QColorDialog(this);
     colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
@@ -164,13 +165,12 @@ void MainWindow::openColor() {
 }
 
 void MainWindow::setColor() {
-    ui->canvas->setColor(colorWindow->currentColor());
     editTools->setColor(colorWindow->currentColor());
 
-    QPalette pal = ui->colorPreview->palette();
-    pal.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
+    QPalette color = ui->colorPreview->palette();
+    color.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
     ui->colorPreview->setAutoFillBackground(true); // Important to fill the background
-    ui->colorPreview->setPalette(pal);
+    ui->colorPreview->setPalette(color);
     ui->colorPreview->update(); // Refresh the button
 }
 

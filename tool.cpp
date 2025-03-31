@@ -39,6 +39,7 @@ void Tool::setPixelPos(const QPoint& point) {
 
 void Tool::setColor(QColor color) {
     this->color = color;
+    canvas->setColor(color);
 }
 
 void Tool::setErase() {
