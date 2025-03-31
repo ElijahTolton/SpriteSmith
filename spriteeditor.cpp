@@ -33,6 +33,8 @@ void SpriteEditor::mousePressEvent(QMouseEvent *event) {
     }
     setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
     changeCellColor(event);
+
+    emit updatePreviews();
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {

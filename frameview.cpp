@@ -1,4 +1,5 @@
 #include "frameview.h"
+#include <QDebug>
 
 FrameView::FrameView(QWidget *parent, int index)
     : QPushButton{parent}, frameIndex(index)
@@ -15,6 +16,11 @@ FrameView::FrameView(QWidget *parent, int index)
 
 void FrameView::changeIndex(){
     emit getIndex(frameIndex);
+}
+
+void FrameView::requestRepaint() {
+    qDebug() << "requesting " << frameIndex;
+    emit repaintSignal(frameIndex);
 }
 
 void FrameView::displayPreview(QPixmap image) {

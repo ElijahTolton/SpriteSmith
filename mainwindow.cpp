@@ -149,6 +149,7 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
     connect(sprite, &Sprite::displayFrame, this, &MainWindow::setAnimationPreview);
 
+    connect(ui->canvas, &SpriteEditor::updatePreviews, ui->frame1, &FrameView::requestRepaint);
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
 }
