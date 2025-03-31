@@ -37,6 +37,7 @@ private:
 
 signals:
     void editSignal(QColor color, int x, int y);
+    void repaintSignal();
     void rotateSignal();
     void mirrorSignal();
 

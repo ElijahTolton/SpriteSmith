@@ -22,6 +22,7 @@ Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
 
 void Tool::onEdit() {
     emit editSignal(color, x, y);
+    emit repaintSignal();
 }
 
 void Tool::onMirror() {

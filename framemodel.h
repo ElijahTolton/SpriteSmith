@@ -46,7 +46,8 @@ public:
 
 signals:
 
-    void nextFrame(Frame& fame);
+    void nextFrame(Frame& frame);
+    void updateFrame(Frame& frame);
 
 public slots:
     /**
@@ -82,6 +83,8 @@ public slots:
     void updateFramerate(int framerate);
 
     void sendNextFrame();
+
+    void updateFrame(int index);
 
     /**
      * @brief Returns JSON representation of FrameModel.

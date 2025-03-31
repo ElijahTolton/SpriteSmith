@@ -7,6 +7,7 @@
 class Layer
 {
 public:
+    Layer() = delete;
     Layer(int width, int height);
     Layer(Layer const &layer);
     Layer& operator=(const Layer &other);

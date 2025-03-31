@@ -5,6 +5,7 @@
 #include "layermodel.h"
 #include <QMainWindow>
 #include "sizedialog.h"
+#include "sprite.h"
 #include "spriteeditor.h"
 #include <QColorDialog>
 #include <tool.h>
@@ -30,6 +31,7 @@ public slots:
     void setColor();
     void cloneFrame();
     void removeFrame();
+    void setAnimationPreview(QPixmap image);
 
 signals:
     void requestMirror(int layerIndex);
@@ -50,8 +52,9 @@ private:
     void closeEvent(QCloseEvent *event) override;
     void mirror();
     int lastFrameIndex;
+    int activeFrameIndex = 0;
     int lastLayerIndex;
-
+    QSize animationPreviewDimensions;
 };
 
 #endif // MAINWINDOW_H

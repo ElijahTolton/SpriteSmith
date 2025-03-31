@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
+#include "sprite.h"
 #include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
+#include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
 
@@ -57,7 +59,7 @@ void MainWindow::cloneLayer() {
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
+            QLabel *newLabel = new QLabel(label->text(), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
             newButton = new QPushButton(button->text(), newLayer);
@@ -72,9 +74,12 @@ void MainWindow::cloneLayer() {
 }
 
 void MainWindow::removeLayer(int layerIndex) {
-    if (ui->layerView->count() > 1) {
-        QLayoutItem *layer = ui->layerView->takeAt(layerIndex);
+    lastLayerIndex--;
 
+    if (ui->layerView->count() > 1) {
+        QLayoutItem *item = ui->layerView->takeAt(layerIndex);
+
+        delete item->widget();
         for (; layerIndex < ui->layerView->count(); layerIndex++) {
             QLayoutItem *item = ui->layerView->itemAt(layerIndex);
             LayerView *layerView = qobject_cast<LayerView *>(item->widget());
@@ -84,7 +89,6 @@ void MainWindow::removeLayer(int layerIndex) {
             label->setText(QString("Layer %1").arg(layerIndex));
         }
 
-        delete layer->widget();
         lastLayerIndex = ui->layerView->count() - 1;
     }
 }
@@ -93,9 +97,10 @@ void MainWindow::cloneFrame() {
     lastFrameIndex++;
 
     //Create a new QWidget and copy properties
-    FrameView *newWidget = new FrameView(lastFrameIndex);
+    FrameView *newWidget = new FrameView(nullptr, lastFrameIndex);
 
     connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
+
     ui->frameView->addWidget(newWidget);
 }
 
@@ -105,12 +110,9 @@ void MainWindow::removeFrame(){
 
         delete item->widget(); // Delete the widget
 
-
         lastFrameIndex--;
     }
 }
-
-
 
 void MainWindow::mirror(){
     emit requestMirror(0);
@@ -122,24 +124,28 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim);
-    ui->canvas->setLayerModel(layerModel);
+    layerModel = new LayerModel(canvasDim, canvasDim); //TODO remove
+    sprite = new Sprite(canvasDim, lastLayerIndex, this);
 
+    ui->canvas->setSprite(sprite);
     setUpConnections(canvasDim);
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
-    sprite = new Sprite(canvasDim, canvasDim);
 
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
-    connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
+    connect(ui->rotate, &QPushButton::pressed, [this]() {
+        sprite->frames->getFrame(0).layers.rotateLayer();
+        ui->canvas->repaint();
+    });
+
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
-    connect(sprite, &Sprite::displayFrame, ui->animationPreview, &QLabel::setPixmap);
+    connect(sprite, &Sprite::displayFrame, this, &MainWindow::setAnimationPreview);
 }
 
 MainWindow::~MainWindow() {
@@ -185,6 +191,7 @@ void MainWindow::openColor() {
 }
 
 void MainWindow::setColor() {
+    ui->canvas->setColor(colorWindow->currentColor());
     editTools->setColor(colorWindow->currentColor());
 
     QPalette color = ui->colorPreview->palette();
@@ -192,6 +199,18 @@ void MainWindow::setColor() {
     ui->colorPreview->setAutoFillBackground(true); // Important to fill the background
     ui->colorPreview->setPalette(color);
     ui->colorPreview->update(); // Refresh the button
+}
+
+void MainWindow::setAnimationPreview(QPixmap image) {
+    if (ui->checkBox->isChecked()) {
+        animationPreviewDimensions = image.size();
+    }
+
+    else {
+        animationPreviewDimensions = ui->animationPreview->size();
+    }
+
+    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions, Qt::KeepAspectRatio));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -205,3 +224,4 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore();
     }
 }
+

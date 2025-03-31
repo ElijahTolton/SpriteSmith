@@ -7,8 +7,10 @@ Layer::Layer(int width, int height) :
     image.fill(Qt::transparent);
 }
 
+
 Layer::Layer(Layer const &layer) :
     image(layer.image), width(layer.width), height(layer.height){
+    image.fill(Qt::transparent);
 }
 
 Layer& Layer::operator=(const Layer &layer) {
@@ -21,7 +23,7 @@ Layer& Layer::operator=(const Layer &layer) {
 }
 
 bool Layer::isActive() const{ return active; }
-QImage& Layer::getImage() { return image; }
+QImage& Layer::getImage() { return image;}
 
 void Layer::mirror() {
     image = image.mirrored(true, false); //"(true, false)" means horizontal mirroring
@@ -30,7 +32,6 @@ void Layer::mirror() {
 void Layer::rotate() {
     QTransform transform;
     transform.rotate(90);
-    // Use a transformation mode (e.g., Qt::FastTransformation or Qt::SmoothTransformation)
     QImage rotated = image.transformed(transform, Qt::FastTransformation);
     image = rotated;
 }
