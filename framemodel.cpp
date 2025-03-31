@@ -3,6 +3,10 @@
 
 FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     frames.push_back(Frame(width, height));
+    timer = new QTimer;
+
+    connect(timer, &QTimer::timeout, this, &FrameModel::sendNextFrame);
+    timer->start();
 }
 
 void FrameModel::addFrame() {
@@ -30,7 +34,19 @@ std::vector<Frame>& FrameModel::getFrames() {
     return this->frames;
 }
 
-QJsonObject FrameModel::toJSON(){
+void FrameModel::updateFramerate(int framerate) {
+    this->framerate = framerate;
+    timer->setInterval(framerate);
+}
+
+void FrameModel::sendNextFrame() {
+    if (nextFrameIndex > frames.size() - 1)
+        nextFrameIndex = 0;
+
+    emit nextFrame(getFrame(nextFrameIndex));
+}
+
+QJsonObject FrameModel::toJSON() {
     QJsonObject json;
     QJsonArray jsonArray;
     int numberFrames = frames.size();
@@ -60,4 +76,6 @@ FrameModel::FrameModel(QJsonObject JSON){
         // Handle the case where the "frames" key is missing or is not an array
         qWarning() << "Invalid or missing 'frames' array in JSON";
     }
+
+    timer = new QTimer;
 }
