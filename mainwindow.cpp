@@ -80,7 +80,6 @@ void MainWindow::removeFrame(){
 }
 
 void MainWindow::mirror(){
-    qDebug() << "Emitting Mirror layer";
     emit requestMirror(0);
 }
 

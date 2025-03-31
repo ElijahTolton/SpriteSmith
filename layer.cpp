@@ -28,12 +28,10 @@ void Layer::mirror() {
 }
 
 void Layer::rotate() {
-    qDebug() << "Rotating layer, original size:" << image.size();
     QTransform transform;
     transform.rotate(90);
     // Use a transformation mode (e.g., Qt::FastTransformation or Qt::SmoothTransformation)
     QImage rotated = image.transformed(transform, Qt::FastTransformation);
-    qDebug() << "Rotated image size:" << rotated.size();
     image = rotated;
 }
 

@@ -28,13 +28,13 @@ void SpriteEditor::setCanvasSize() {
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
-    setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
+    setCanvasContents(layers->getLayer(0).getImage());
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
-        setCanvasContents(QImage(columnCount(), rowCount(), QImage::Format_RGBA8888));
+        setCanvasContents(layers->getLayer(0).getImage());
         changeCellColor(event);
     }
 }
