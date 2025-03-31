@@ -30,8 +30,11 @@ void Layer::mirror() {
 void Layer::rotate() {
     QTransform transform;
     transform.rotate(90);
-    image = image.transformed(transform);
+    // Use a transformation mode (e.g., Qt::FastTransformation or Qt::SmoothTransformation)
+    QImage rotated = image.transformed(transform, Qt::FastTransformation);
+    image = rotated;
 }
+
 
 bool Layer::operator==(const Layer &layer) const {
     // Compare width, height, and image for equality

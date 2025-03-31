@@ -1,7 +1,11 @@
 #include "spriteeditor.h"
 #include <QApplication>
+#include "layermodel.h"
 
-SpriteEditor::SpriteEditor(QWidget *parent) : QTableWidget(parent) { }
+SpriteEditor::SpriteEditor(QWidget *parent)
+    : QTableWidget(parent) { }
+
+
 
 void SpriteEditor::setCanvasSize() {
 
@@ -20,14 +24,17 @@ void SpriteEditor::setCanvasSize() {
 
     for (int col = 0; col < columnCount(); col++)
         setColumnWidth(col, pixelSize);
+
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
+    setCanvasContents(layers->getLayer(0).getImage());
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
+        setCanvasContents(layers->getLayer(0).getImage());
         changeCellColor(event);
     }
 }
@@ -45,16 +52,55 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
 
-        // Set background color
-        item->setBackground(currentColor);
-        // Store border color
-        item->setData(Qt::UserRole, currentColor);  // Store as QColor
+        layers->drawPixel(currentColor, index.column(), index.row());
+
+        setCanvasContents(layers->getLayer(0).getImage());
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
-
-        QApplication::processEvents();
     }
+}
+
+void SpriteEditor::setCanvasContents(QImage image) {
+
+    int width = image.width();
+    int height = image.height();
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            QColor color = image.pixelColor(x, y);  // Get the pixel color
+
+            QModelIndex index = model()->index(y, x);
+
+            // Ensure there is an item at this index
+            QTableWidgetItem *item = itemFromIndex(index);
+            if (!item) {
+                item = new QTableWidgetItem();
+                setItem(index.row(), index.column(), item);
+            }
+
+            // Set the background color of the item to match the pixel color
+            item->setBackground(color);
+            item->setData(Qt::UserRole, color);
+        }
+    }
+}
+
+void SpriteEditor::repaint() {
+    // Refresh the contents of the canvas based on the current image in the layer model
+    setCanvasContents(layers->getLayer(0).getImage());
+
+    // After setting the contents, trigger the widget to repaint itself
+    update();
+}
+
+void SpriteEditor::mirrorLayer() {
+    layers->getLayer(0).mirror();
+    repaint();
+}
+
+void SpriteEditor::setLayerModel(LayerModel *model) {
+    layers.reset(model);
 }
 
 

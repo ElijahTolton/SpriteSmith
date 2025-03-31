@@ -8,7 +8,6 @@
 #include "spriteeditor.h"
 #include <QColorDialog>
 #include <tool.h>
-#include "layerview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,11 +23,8 @@ public:
 public slots:
     void initEditor(int canvasDim);
     void cloneLayer();
-    void removeLayer(int layerIndex);
     void openColor();
     void setColor();
-    void cloneFrame();
-    void removeFrame();
 
 signals:
     void requestMirror(int layerIndex);
@@ -40,16 +36,12 @@ private:
 
     SpriteEditor *editor;  // Pointer to the sprite editor
     LayerModel *layerModel;
-    LayerView *layerView;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();
     void setUpConnections(const int canvasDim);
     void closeEvent(QCloseEvent *event) override;
     void mirror();
-    int lastFrameIndex;
-    int lastLayerIndex;
-
 };
 
 #endif // MAINWINDOW_H
