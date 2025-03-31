@@ -630,7 +630,7 @@ QPushButton:disabled {
      </sizepolicy>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 2px solid black;</string>
+     <string notr="true">border: 1px solid grey;</string>
     </property>
     <property name="text">
      <string/>

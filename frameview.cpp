@@ -7,14 +7,18 @@ FrameView::FrameView(QWidget *parent, int index)
     setMaximumSize(QSize(100, 100));
     setStyleSheet("background-color: rgb(0, 0, 0);");
 
-    preview = new QLabel;
-    preview->setGeometry(this->geometry());
+    preview = new QLabel(this);
+    preview->setGeometry(0, 0, width(), height());
+    preview->setAlignment(Qt::AlignCenter);
+    preview->setAttribute(Qt::WA_TransparentForMouseEvents);
 }
 
 void FrameView::changeIndex(){
     emit getIndex(frameIndex);
 }
 
-void FrameView::displayPreview(QPixmap& image) {
-    preview->setPixmap(image.scaled(100, 100, Qt::AspectRatioMode::KeepAspectRatio));
+void FrameView::displayPreview(QPixmap image) {
+    preview->setPixmap(image.scaled(preview->size()));
+    qDebug() << "requesting: " << frameIndex << "\n";
+    emit repaintSignal(frameIndex);
 }

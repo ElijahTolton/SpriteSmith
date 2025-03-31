@@ -19,6 +19,7 @@
 #include <QColor>
 #include <layermodel.h>
 #include <spriteeditor.h>
+#include <frameview.h>
 
 class Tool : public QObject
 {
@@ -33,6 +34,7 @@ private:
     QColor color;
     SpriteEditor* canvas;
     LayerModel* layers;
+    FrameView* frameWidget;
     int x, y;
 
 signals:

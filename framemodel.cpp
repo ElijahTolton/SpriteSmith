@@ -47,10 +47,6 @@ void FrameModel::sendNextFrame() {
     emit nextFrame(getFrame(nextFrameIndex));
 }
 
-void FrameModel::updateFrame(int index) {
-    emit updateFrame(getFrame(index));
-}
-
 QJsonObject FrameModel::toJSON() {
     QJsonObject json;
     QJsonArray jsonArray;
