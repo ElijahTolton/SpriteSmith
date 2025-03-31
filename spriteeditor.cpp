@@ -6,8 +6,6 @@
 SpriteEditor::SpriteEditor(QWidget *parent)
     : QTableWidget(parent) { }
 
-
-
 void SpriteEditor::setCanvasSize() {
 
     // height or width / rowCount or columnCount can be exchanged since canvas should be square
@@ -40,6 +38,8 @@ void SpriteEditor::mousePressEvent(QMouseEvent *event) {
 
     setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
     changeCellColor(event);
+
+    emit updatePreviews();
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {

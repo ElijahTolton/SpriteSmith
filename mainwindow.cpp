@@ -100,6 +100,8 @@ void MainWindow::cloneFrame() {
     FrameView *newWidget = new FrameView(nullptr, lastFrameIndex);
 
     connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
+    connect(newWidget, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
+    connect(sprite, &Sprite::updateFrame, newWidget, &FrameView::displayPreview);
 
     ui->frameView->addWidget(newWidget);
 }
@@ -149,6 +151,10 @@ void MainWindow::setUpConnections(const int canvasDim) {
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
     connect(sprite, &Sprite::displayFrame, this, &MainWindow::setAnimationPreview);
+
+    connect(ui->canvas, &SpriteEditor::updatePreviews, ui->frame1, &FrameView::requestRepaint);
+    connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
+    connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
 }
 
 MainWindow::~MainWindow() {
@@ -208,12 +214,11 @@ void MainWindow::setAnimationPreview(QPixmap image) {
     if (ui->checkBox->isChecked()) {
         animationPreviewDimensions = image.size();
     }
-
     else {
         animationPreviewDimensions = ui->animationPreview->size();
     }
 
-    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions, Qt::KeepAspectRatio));
+    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

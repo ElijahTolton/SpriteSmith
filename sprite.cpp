@@ -31,14 +31,12 @@ void Sprite::load(QJsonObject json) {
 }
 
 void Sprite::sendFrame(Frame& frame) {
-
-    QImage image = frame.getTopLayer().getImage();
-
+    QImage image  = frame.getTopLayer().getImage();
     emit displayFrame(QPixmap::fromImage(image));
 }
 
-void Sprite::sendFramePreview(Frame& frame) {
-    QImage image = frame.getTopLayer().getImage();
+void Sprite::sendFramePreview(int frameIndex) {
+    QImage image = frames->getFrame(frameIndex).getTopLayer().getImage();
 
     emit updateFrame(QPixmap::fromImage(image));
 }

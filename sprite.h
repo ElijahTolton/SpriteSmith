@@ -37,7 +37,7 @@ public slots:
 
     void sendFrame(Frame& frame);
 
-    void sendFramePreview(Frame& frame);
+    void sendFramePreview(int frameIndex);
 
     void updateFramerate(int framerate);
 

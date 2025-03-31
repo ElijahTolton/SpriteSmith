@@ -19,6 +19,7 @@
 #include <QColor>
 #include <layermodel.h>
 #include <spriteeditor.h>
+#include <frameview.h>
 
 class Tool : public QObject
 {

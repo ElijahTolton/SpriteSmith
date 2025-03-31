@@ -13,7 +13,6 @@ FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     timer = new QTimer;
 
     connect(timer, &QTimer::timeout, this, &FrameModel::sendNextFrame);
-
     timer->start();
 }
 
@@ -52,10 +51,6 @@ void FrameModel::sendNextFrame() {
         nextFrameIndex = 0;
 
     emit nextFrame(getFrame(nextFrameIndex));
-}
-
-void FrameModel::updateFrame(int index) {
-    emit updateFrame(getFrame(index));
 }
 
 QJsonObject FrameModel::toJSON() {

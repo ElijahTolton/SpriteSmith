@@ -26,6 +26,7 @@ public:
 
 signals:
     void pixelCLicked(const QPoint& point);
+    void updatePreviews();
 
 public slots:
     void setColor(QColor color);

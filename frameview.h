@@ -18,7 +18,8 @@ public:
 
 public slots:
     void changeIndex();
-    void displayPreview(QPixmap& image);
+    void displayPreview(QPixmap image);
+    void requestRepaint();
 
 signals:
     // Gives the current index of the frame clicked.
