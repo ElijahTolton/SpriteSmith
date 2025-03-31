@@ -18,5 +18,4 @@ FrameView::FrameView(QWidget *parent)
 
 void FrameView::changeIndex(){
     emit getIndex(frameIndex);
-    qDebug() << frameIndex;
 }

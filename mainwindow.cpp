@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
+#include "sprite.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
@@ -104,8 +105,10 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim);
-    ui->canvas->setLayerModel(layerModel);
+    layerModel = new LayerModel(canvasDim, canvasDim); //TODO remove
+    sprite = new Sprite(canvasDim, lastLayerIndex, this);
+
+    ui->canvas->setSprite(sprite);
 
     setUpConnections(canvasDim);
 }
@@ -115,7 +118,11 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
-    connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
+    connect(ui->rotate, &QPushButton::pressed, [this]() {
+        sprite->frames.getFrame(0).layers.rotateLayer();
+        ui->canvas->repaint();
+    });
+
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
 

@@ -14,12 +14,13 @@
 class Frame
 {
 private:
-    // Container for all layers in a frame
-    LayerModel layers;
-
     // Place frame is located in animation timeline.
     int frameIndex;
 public:
+
+    // Container for all layers in a frame
+    LayerModel layers;
+
     /**
      * @brief Constructs Frame with 1 empty layer
      * @param width - width of layer

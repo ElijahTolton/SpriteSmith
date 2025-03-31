@@ -1,7 +1,7 @@
 #ifndef SPRITEEDITOR_H
 #define SPRITEEDITOR_H
 
-#include "layermodel.h"
+#include "sprite.h"
 #include <QTableWidget>
 #include <QMouseEvent>
 #include <QHeaderView>
@@ -12,12 +12,12 @@ class SpriteEditor : public QTableWidget {
     Q_OBJECT
 
 public:
-    std::unique_ptr<LayerModel> layers;  // Use a smart pointer to fix the weird assignment operator issue
+    Sprite *sprite;
     explicit SpriteEditor(QWidget *parent = nullptr);
     void setCanvasSize();
     void repaint();
     void mirrorLayer();
-    void setLayerModel(LayerModel *model);
+    void setSprite(Sprite *sprite);
 
 
 signals:

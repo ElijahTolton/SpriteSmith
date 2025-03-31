@@ -19,12 +19,12 @@ public:
     // This is a collection of all of the frames associated with this sprite.
     FrameModel frames;
 
+    // The width or height of the canvas
+    int canvasDimension;
 private:
     // The number of layers across each frame.
     int layerCount;
 
-    // The width or height of the canvas
-    int canvasDimension;
 
 public slots:
     // Saves all of the info about this sprite and emits savedSprite.

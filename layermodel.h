@@ -8,6 +8,12 @@ public:
     // Creates a new LayerModel with one layer.
     LayerModel(int width, int height);
 
+    //delete assignemnt operator
+    LayerModel& operator=(const LayerModel& other) = delete;
+
+    // Copy Constructor
+    LayerModel(const LayerModel& other);
+
     // Adds a new blank layer
     void addLayer();
 
@@ -18,7 +24,7 @@ public:
     void removeLayer(int layerIndex);
 
     // Given a layer and a new position, move that layer to be in a new position and return the new vector of layers
-    std::vector<Layer> reorderLayer(const Layer& layer, int newPosition);
+    void reorderLayer(int oldPosition, int newPosition);
 
     // Hides the layer at the given index
     void hideLayer(int layerIndex);
@@ -33,10 +39,10 @@ public:
     const std::vector<Layer>& getLayers() const;
 
     // Get the width
-    int getWidth();
+    int getWidth() const;
 
     // Get the height
-    int getHeight();
+    int getHeight() const;
 
     //draws a pixel in the active layer
     void drawPixel(QColor color, int x, int y);

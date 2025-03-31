@@ -5,6 +5,7 @@
 #include "layermodel.h"
 #include <QMainWindow>
 #include "sizedialog.h"
+#include "sprite.h"
 #include "spriteeditor.h"
 #include <QColorDialog>
 #include <tool.h>
@@ -41,6 +42,7 @@ private:
     SpriteEditor *editor;  // Pointer to the sprite editor
     LayerModel *layerModel;
     LayerView *layerView;
+    Sprite *sprite;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();

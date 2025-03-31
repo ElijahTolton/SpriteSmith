@@ -1,5 +1,4 @@
     #include "layermodel.h"
-    #include <algorithm>  // for std::find
     #include "layermodel.h"
     #include <QJsonObject>
     #include <QJsonArray>
@@ -8,7 +7,18 @@
     LayerModel::LayerModel(int width, int height)
         : width(width), height(height) {
         layers.emplace_back(width, height);
-        activeLayer = &layers[0];
+        activeLayer = &layers.back();
+    }
+
+    LayerModel::LayerModel(const LayerModel& other)
+        : width(other.width), height(other.height), activeLayer(nullptr) {
+        // Copy the layers vector using the default vector copy constructor
+        layers = other.layers;
+
+        // Set the activeLayer pointer to the same layer as the other object
+        if (!layers.empty()) {
+            activeLayer = &layers.front();  // or you can copy the activeLayer logic as needed
+        }
     }
 
     void LayerModel::addLayer() {
@@ -25,18 +35,15 @@
         }
     }
 
-    std::vector<Layer> LayerModel::reorderLayer(const Layer& layer, int newPosition) {
-        auto it = std::find(layers.begin(), layers.end(), layer);  // Find layer
-        if (it == layers.end()) return layers;  // If layer not found, return unchanged list
+    // void LayerModel::reorderLayer(int oldPosition, int newPosition) {
+    //     if (oldPosition < 0 || oldPosition >= static_cast<int>(layers.size())) return;
+    //     if (newPosition < 0 || newPosition >= static_cast<int>(layers.size())) return;
 
-        Layer temp = *it;  // Copy the layer
-        layers.erase(it);  // Remove it from the current position
+    //     Layer temp = std::move(layers[oldPosition]);  // Move instead of copy
+    //     layers.erase(layers.begin() + oldPosition);
+    //     layers.insert(layers.begin() + newPosition, std::move(temp));  // Move back
+    // }
 
-        newPosition = std::max(0, std::min(newPosition, static_cast<int>(layers.size())));  // Clamp position
-        layers.insert(layers.begin() + newPosition, temp);  // Insert at new position
-
-        return layers;  // Return updated vector
-    }
 
     void LayerModel::hideLayer(int layerIndex) {
         if (layerIndex >= 0 && layerIndex < static_cast<int>(layers.size())) {
@@ -67,11 +74,11 @@
         }
     }
 
-    int LayerModel::getWidth() {
+    int LayerModel::getWidth() const {
         return width;
     }
 
-    int LayerModel::getHeight() {
+    int LayerModel::getHeight() const {
         return height;
     }
 
@@ -116,7 +123,7 @@
                 if (value.isObject()) {
                     Layer layer(value.toObject());
                     layers.push_back(layer);
-                    activeLayer = &layer;
+                    activeLayer = &layers.back();
                 }
             }
         } catch(std::exception e) {
