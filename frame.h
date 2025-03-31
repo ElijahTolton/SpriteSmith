@@ -70,6 +70,13 @@ public:
      */
     void addLayer(const Layer& layer);
 
+
+    /**
+     * @brief Gets layer that is shown
+     * @return the layer to be displayed
+     */
+    Layer& getActiveLayer();
+
     /**
      * @brief Removes layer at given index from model
      * @param layerIndex - index to which layer to delete is located.

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "frame.h"
+#include <QTimer>
 
 /**
  * @brief Class representing a frame object for animation timeline.
@@ -10,18 +11,25 @@
  * @author Canon Curtis & Dean Smith
  * @date March 29, 2025
  */
-class FrameModel
+class FrameModel : public QObject
 {
+    Q_OBJECT
+
 private:
     // Container for all frames in sprite
     std::vector<Frame> frames;
 
+    QTimer* timer;
+
     // Framerate/Time for preview to send information
-    int framerate;
+    int framerate = 0;
+
+    u_int nextFrameIndex = 0;
 
     // size of frame canvas
     int width;
     int height;
+
 public:
     /**
      * @brief Constructs model with empty frame.
@@ -36,6 +44,11 @@ public:
      */
     FrameModel(QJsonObject JSON);
 
+signals:
+
+    void nextFrame(Frame& fame);
+
+public slots:
     /**
      * @brief Adds a frame to the model
      */
@@ -65,6 +78,10 @@ public:
      * @return Reference to vector containing frames.
      */
     std::vector<Frame>& getFrames();
+
+    void updateFramerate(int framerate);
+
+    void sendNextFrame();
 
     /**
      * @brief Returns JSON representation of FrameModel.

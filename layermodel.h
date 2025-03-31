@@ -44,6 +44,9 @@ public:
     //activates the given layer
     void setActiveLayer(int layer);
 
+    //returns activeLayer
+    Layer& getActiveLayer();
+
     // Vector containing all layers in the LayerModel
     std::vector<Layer> layers;
 

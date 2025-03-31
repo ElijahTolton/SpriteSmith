@@ -39,6 +39,10 @@ void Frame::removeLayer(int layerIndex) {
     layers.removeLayer(layerIndex);
 }
 
+Layer& Frame::getActiveLayer() {
+    return layers.getActiveLayer();
+}
+
 QJsonObject Frame:: toJSON() const{
     return layers.ToJSON();
 }

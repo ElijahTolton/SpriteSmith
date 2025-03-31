@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
-#include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
 
@@ -14,19 +13,24 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     colorWindow = new QColorDialog(this);
     colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
     layerView = new LayerView(this);
+
     lastFrameIndex = 0;
     lastLayerIndex = 0;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
     connect(ui->removeLayer, &QPushButton::clicked, ui->layerWidget, &LayerView::removeLayer);
     connect(layerView, &LayerView::removeLayerIndex, this, &MainWindow::removeLayer);
+    connect(layerView, &LayerView::getLayerIndex, this, &MainWindow::removeLayer);
+
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
     connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
     connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
@@ -121,13 +125,16 @@ void MainWindow::initEditor(int canvasDim) {
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
+    sprite = new Sprite(canvasDim, canvasDim);
+
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
     connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
-
+    connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
+    connect(sprite, &Sprite::displayFrame, ui->animationPreview, &QLabel::setPixmap);
 }
 
 MainWindow::~MainWindow() {
@@ -173,13 +180,12 @@ void MainWindow::openColor() {
 }
 
 void MainWindow::setColor() {
-    ui->canvas->setColor(colorWindow->currentColor());
     editTools->setColor(colorWindow->currentColor());
 
-    QPalette pal = ui->colorPreview->palette();
-    pal.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
+    QPalette color = ui->colorPreview->palette();
+    color.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
     ui->colorPreview->setAutoFillBackground(true); // Important to fill the background
-    ui->colorPreview->setPalette(pal);
+    ui->colorPreview->setPalette(color);
     ui->colorPreview->update(); // Refresh the button
 }
 
