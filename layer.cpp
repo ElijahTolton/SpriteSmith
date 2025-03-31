@@ -35,18 +35,12 @@ void Layer::rotate() {
     image = rotated;
 }
 
-
 bool Layer::operator==(const Layer &layer) const {
     // Compare width, height, and image for equality
     return (this->width == layer.width) &&
            (this->height == layer.height) &&
            (this->image == layer.image);
 }
-
-void Layer::setShown(bool active){
-    this->active = active;
-}
-
 
 void Layer::drawPixel(QColor color, int x, int y) {
     if (x >= 0 && x < width && y >= 0 && y < height) {

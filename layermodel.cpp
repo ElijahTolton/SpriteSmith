@@ -38,18 +38,6 @@
         return layers;  // Return updated vector
     }
 
-    void LayerModel::hideLayer(int layerIndex) {
-        if (layerIndex >= 0 && layerIndex < static_cast<int>(layers.size())) {
-            layers[layerIndex].setShown(false);  // Assuming Layer has `setShown(bool)`
-        }
-    }
-
-    void LayerModel::showLayer(int layerIndex) {
-        if (layerIndex >= 0 && layerIndex < static_cast<int>(layers.size())) {
-            layers[layerIndex].setShown(true);  // Set visibility to true
-        }
-    }
-
     Layer& LayerModel::getLayer(int layerIndex) {
         if (layerIndex < 0 || layerIndex >= static_cast<int>(layers.size())) {
             throw std::out_of_range("Layer index out of range");

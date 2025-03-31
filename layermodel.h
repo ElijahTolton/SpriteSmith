@@ -20,12 +20,6 @@ public:
     // Given a layer and a new position, move that layer to be in a new position and return the new vector of layers
     std::vector<Layer> reorderLayer(const Layer& layer, int newPosition);
 
-    // Hides the layer at the given index
-    void hideLayer(int layerIndex);
-
-    // Shows the layer at the given index
-    void showLayer(int layerIndex);
-
     // Gives a reference to the requested layer
     Layer& getLayer(int layerIndex);
 
