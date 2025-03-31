@@ -26,7 +26,6 @@ private:
     // The number of layers across each frame.
     int layerCount;
 
-
     int currentFrame = 0;
 
 public slots:
@@ -37,6 +36,8 @@ public slots:
     void load(QJsonObject JSON);
 
     void sendFrame(Frame& frame);
+
+    void sendFramePreview(Frame& frame);
 
     void updateFramerate(int framerate);
 
@@ -49,6 +50,8 @@ signals:
 
     // Displays frame in animation preview
     void displayFrame(QPixmap pixmap);
+
+    void updateFrame(QPixmap pixmap);
 
     void newFramerateSignal(int framerate);
 };

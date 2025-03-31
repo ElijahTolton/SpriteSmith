@@ -97,9 +97,10 @@ void MainWindow::cloneFrame() {
     lastFrameIndex++;
 
     //Create a new QWidget and copy properties
-    FrameView *newWidget = new FrameView(lastFrameIndex);
+    FrameView *newWidget = new FrameView(nullptr, lastFrameIndex);
 
     connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
+
     ui->frameView->addWidget(newWidget);
 }
 
@@ -127,7 +128,6 @@ void MainWindow::initEditor(int canvasDim) {
     sprite = new Sprite(canvasDim, lastLayerIndex, this);
 
     ui->canvas->setSprite(sprite);
-
     setUpConnections(canvasDim);
 }
 
@@ -203,14 +203,14 @@ void MainWindow::setColor() {
 
 void MainWindow::setAnimationPreview(QPixmap image) {
     if (ui->checkBox->isChecked()) {
-        animationPreviewDimensions = 1;
+        animationPreviewDimensions = image.size();
     }
 
     else {
-        animationPreviewDimensions = ui->animationPreview->height();
+        animationPreviewDimensions = ui->animationPreview->size();
     }
 
-    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions, animationPreviewDimensions, Qt::KeepAspectRatio));
+    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions, Qt::KeepAspectRatio));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

@@ -52,8 +52,9 @@ private:
     void closeEvent(QCloseEvent *event) override;
     void mirror();
     int lastFrameIndex;
+    int activeFrameIndex = 0;
     int lastLayerIndex;
-    int animationPreviewDimensions;
+    QSize animationPreviewDimensions;
 };
 
 #endif // MAINWINDOW_H

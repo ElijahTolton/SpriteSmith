@@ -37,6 +37,12 @@ void Sprite::sendFrame(Frame& frame) {
     emit displayFrame(QPixmap::fromImage(image));
 }
 
+void Sprite::sendFramePreview(Frame& frame) {
+    QImage image = frame.getTopLayer().getImage();
+
+    emit updateFrame(QPixmap::fromImage(image));
+}
+
 void Sprite::updateFramerate(int framerate) {
     emit newFramerateSignal(framerate);
 }
