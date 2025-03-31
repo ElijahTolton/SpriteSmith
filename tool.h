@@ -34,7 +34,6 @@ private:
     QColor color;
     SpriteEditor* canvas;
     LayerModel* layers;
-    FrameView* frameWidget;
     int x, y;
 
 signals:

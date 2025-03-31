@@ -19,6 +19,4 @@ void FrameView::changeIndex(){
 
 void FrameView::displayPreview(QPixmap image) {
     preview->setPixmap(image.scaled(preview->size()));
-    qDebug() << "requesting: " << frameIndex << "\n";
-    emit repaintSignal(frameIndex);
 }

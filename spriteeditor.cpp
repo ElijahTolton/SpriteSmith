@@ -5,8 +5,6 @@
 SpriteEditor::SpriteEditor(QWidget *parent)
     : QTableWidget(parent) { }
 
-
-
 void SpriteEditor::setCanvasSize() {
 
     // height or width / rowCount or columnCount can be exchanged since canvas should be square

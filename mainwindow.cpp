@@ -151,7 +151,6 @@ void MainWindow::setUpConnections(const int canvasDim) {
 
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
-    emit ui->frame1->repaintSignal(0);
 }
 
 MainWindow::~MainWindow() {
