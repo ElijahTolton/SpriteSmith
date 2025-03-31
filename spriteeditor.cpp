@@ -39,8 +39,6 @@ void SpriteEditor::mousePressEvent(QMouseEvent *event) {
 
     setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
     changeCellColor(event);
-
-    emit updatePreviews();
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
@@ -87,6 +85,7 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
+        emit updatePreviews();
     }
 }
 
