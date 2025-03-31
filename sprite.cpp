@@ -27,7 +27,7 @@ void Sprite::save(){
 }
 
 void Sprite::load(QJsonObject json) {
-    //frames = FrameModel(json);
+    frames = new FrameModel(json);
 }
 
 void Sprite::sendFrame(Frame& frame) {
