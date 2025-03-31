@@ -9,6 +9,7 @@
 #include <QColorDialog>
 #include <tool.h>
 #include "layerview.h"
+#include <sprite.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,6 +40,7 @@ private:
     Tool* editTools;
 
     SpriteEditor *editor;  // Pointer to the sprite editor
+    Sprite *sprite;
     LayerModel *layerModel;
     LayerView *layerView;
 

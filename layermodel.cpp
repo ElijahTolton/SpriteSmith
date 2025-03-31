@@ -67,6 +67,10 @@
         }
     }
 
+    Layer& LayerModel::getActiveLayer() {
+        return *activeLayer;
+    }
+
     int LayerModel::getWidth() {
         return width;
     }
@@ -74,7 +78,6 @@
     int LayerModel::getHeight() {
         return height;
     }
-
 
     void LayerModel::drawPixel(QColor color, int x, int y){
         activeLayer->drawPixel(color, x, y);

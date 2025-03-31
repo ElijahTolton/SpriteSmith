@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
-#include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
 
@@ -18,15 +17,18 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
     layerView = new LayerView(this);
+
     lastFrameIndex = 0;
     lastLayerIndex = 0;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
+
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
     connect(ui->removeLayer, &QPushButton::clicked, ui->layerWidget, &LayerView::removeLayer);
     connect(layerView, &LayerView::getLayerIndex, this, &MainWindow::removeLayer);
+
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
     connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
     connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
@@ -113,13 +115,16 @@ void MainWindow::initEditor(int canvasDim) {
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
+    sprite = new Sprite(canvasDim, canvasDim);
+
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
     connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
-
+    connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
+    connect(sprite, &Sprite::displayFrame, ui->animationPreview, &QLabel::setPixmap);
 }
 
 MainWindow::~MainWindow() {
