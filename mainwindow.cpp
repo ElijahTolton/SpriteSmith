@@ -27,6 +27,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
     connect(ui->removeLayer, &QPushButton::clicked, ui->layerWidget, &LayerView::removeLayer);
+    connect(layerView, &LayerView::removeLayerIndex, this, &MainWindow::removeLayer);
     connect(layerView, &LayerView::getLayerIndex, this, &MainWindow::removeLayer);
 
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
@@ -63,13 +64,13 @@ void MainWindow::cloneLayer() {
     }
     ui->layerView->addWidget(newLayer);
 
-    connect(newLayer, &LayerView::getLayerIndex, this, &MainWindow::removeLayer);
+    connect(newLayer, &LayerView::removeLayerIndex, this, &MainWindow::removeLayer);
     connect(newButton, &QPushButton::clicked, newLayer, &LayerView::removeLayer);
 }
 
 void MainWindow::removeLayer(int layerIndex) {
     lastLayerIndex--;
-    qDebug() << "removeLayer hit";
+
     if (ui->layerView->count() > 1) {
         QLayoutItem *item = ui->layerView->takeAt(layerIndex);
 

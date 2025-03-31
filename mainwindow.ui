@@ -554,14 +554,24 @@ QPushButton:disabled {
          <height>20</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>24</number>
        </property>
        <property name="value">
+<<<<<<< HEAD
         <number>0</number>
        </property>
        <property name="sliderPosition">
         <number>0</number>
+=======
+        <number>1</number>
+       </property>
+       <property name="sliderPosition">
+        <number>1</number>
+>>>>>>> main
        </property>
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>

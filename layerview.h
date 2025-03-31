@@ -18,6 +18,7 @@ private:
 
 signals:
     void getLayerIndex(int layerIndex);
+    void removeLayerIndex(int layerIndex);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
