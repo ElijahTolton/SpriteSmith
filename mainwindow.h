@@ -31,6 +31,7 @@ public slots:
     void setColor();
     void cloneFrame();
     void removeFrame();
+    void setAnimationPreview(QPixmap image);
 
 signals:
     void requestMirror(int layerIndex);
@@ -52,7 +53,7 @@ private:
     void mirror();
     int lastFrameIndex;
     int lastLayerIndex;
-
+    int animationPreviewDimensions;
 };
 
 #endif // MAINWINDOW_H

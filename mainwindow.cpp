@@ -145,7 +145,7 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
-    connect(sprite, &Sprite::displayFrame, ui->animationPreview, &QLabel::setPixmap);
+    connect(sprite, &Sprite::displayFrame, this, &MainWindow::setAnimationPreview);
 }
 
 MainWindow::~MainWindow() {
@@ -201,6 +201,18 @@ void MainWindow::setColor() {
     ui->colorPreview->update(); // Refresh the button
 }
 
+void MainWindow::setAnimationPreview(QPixmap image) {
+    if (ui->checkBox->isChecked()) {
+        animationPreviewDimensions = 1;
+    }
+
+    else {
+        animationPreviewDimensions = ui->animationPreview->height();
+    }
+
+    ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions, animationPreviewDimensions, Qt::KeepAspectRatio));
+}
+
 void MainWindow::closeEvent(QCloseEvent *event) {
     QMessageBox::StandardButton reply = QMessageBox::question(this, "Quit", "Are you sure you want to quit?",
                                                               QMessageBox::Yes | QMessageBox::No);
@@ -212,3 +224,4 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore();
     }
 }
+

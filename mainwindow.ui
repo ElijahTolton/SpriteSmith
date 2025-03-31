@@ -403,7 +403,7 @@ QPushButton:disabled {
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>126</width>
+       <width>116</width>
        <height>329</height>
       </rect>
      </property>
@@ -617,7 +617,7 @@ QPushButton:disabled {
    <widget class="QLabel" name="animationPreview">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>590</x>
       <y>10</y>
       <width>200</width>
       <height>200</height>

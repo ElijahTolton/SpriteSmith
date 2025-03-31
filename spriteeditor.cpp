@@ -111,9 +111,6 @@ void SpriteEditor::setSprite(Sprite *spriteIn) {
     setColumnCount(sprite->canvasDimension);
 }
 
-
-
-
 void SpriteEditor::calculateCanvasSizeAdjustment() {
 
     double pixelSize = (double)height() / (double)rowCount();

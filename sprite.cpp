@@ -27,12 +27,12 @@ void Sprite::save(){
 }
 
 void Sprite::load(QJsonObject json) {
-    //frames = FrameModel(json);
+    frames = new FrameModel(json);
 }
 
 void Sprite::sendFrame(Frame& frame) {
 
-    QImage image  = frame.getTopLayer().getImage();
+    QImage image = frame.getTopLayer().getImage();
 
     emit displayFrame(QPixmap::fromImage(image));
 }
