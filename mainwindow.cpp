@@ -52,10 +52,12 @@ void MainWindow::cloneLayer() {
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
 
+    QLabel *newLabel = nullptr;
+
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            QLabel *newLabel = new QLabel(label->text(), newLayer);
+            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
             newButton = new QPushButton(button->text(), newLayer);
@@ -77,6 +79,9 @@ void MainWindow::removeLayer(int layerIndex) {
             QLayoutItem *item = ui->layerView->itemAt(layerIndex);
             LayerView *layerView = qobject_cast<LayerView *>(item->widget());
             layerView->layerIndex = layerIndex;
+
+            QLabel *label = layerView->findChild<QLabel *>();
+            label->setText(QString("Layer %1").arg(layerIndex));
         }
 
         delete layer->widget();
