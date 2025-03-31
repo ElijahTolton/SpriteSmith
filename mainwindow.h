@@ -44,7 +44,6 @@ private:
     Sprite *sprite;
     LayerModel *layerModel;
     LayerView *layerView;
-    Sprite *sprite;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();

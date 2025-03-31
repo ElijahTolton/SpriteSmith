@@ -28,18 +28,18 @@ void SpriteEditor::setCanvasSize() {
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
-    QImage image = sprite->frames.getFrame(0).layers.getLayer(0).getImage();
+    QImage image = sprite->frames->getFrame(0).layers.getLayer(0).getImage();
     if (image.isNull()) {
         qDebug() << "Error: getImage() returned a null image!";
         return;
     }
-    setCanvasContents(sprite->frames.getFrame(0).layers.getLayer(0).getImage());
+    setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
-        setCanvasContents(sprite->frames.getFrame(0).layers.getLayer(0).getImage());
+        setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
         changeCellColor(event);
     }
 }
@@ -57,9 +57,9 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
 
-        sprite->frames.getFrame(0).layers.drawPixel(currentColor, index.column(), index.row());
+        sprite->frames->getFrame(0).layers.drawPixel(currentColor, index.column(), index.row());
 
-        setCanvasContents(sprite->frames.getFrame(0).layers.getLayer(0).getImage());
+        setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
@@ -93,14 +93,14 @@ void SpriteEditor::setCanvasContents(QImage image) {
 
 void SpriteEditor::repaint() {
     // Refresh the contents of the canvas based on the current image in the layer model
-    setCanvasContents(sprite->frames.getFrame(0).layers.getLayer(0).getImage());
+    setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
 
     // After setting the contents, trigger the widget to repaint itself
     update();
 }
 
 void SpriteEditor::mirrorLayer() {
-    sprite->frames.getFrame(0).layers.getLayer(0).mirror();
+    sprite->frames->getFrame(0).layers.getLayer(0).mirror();
     repaint();
 }
 

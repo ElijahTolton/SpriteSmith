@@ -89,7 +89,6 @@ void MainWindow::removeLayer(int layerIndex) {
             label->setText(QString("Layer %1").arg(layerIndex));
         }
 
-        delete layer->widget();
         lastLayerIndex = ui->layerView->count() - 1;
     }
 }
@@ -134,13 +133,12 @@ void MainWindow::initEditor(int canvasDim) {
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
-    sprite = new Sprite(canvasDim, canvasDim);
 
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
     connect(ui->rotate, &QPushButton::pressed, [this]() {
-        sprite->frames.getFrame(0).layers.rotateLayer();
+        sprite->frames->getFrame(0).layers.rotateLayer();
         ui->canvas->repaint();
     });
 
