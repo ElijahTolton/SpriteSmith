@@ -1,92 +1,61 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
-#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QPalette>
+#include "tool.h"
 #include "frameview.h"
-#include <QMouseEvent>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     colorWindow = new QColorDialog(this);
     colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
-    layerView = new LayerView(this);
-
     lastFrameIndex = 0;
-    lastLayerIndex = 0;
 
     setUpIcons();
 
     connect(setSizeWindow, &SizeDialog::setSize, this, &MainWindow::initEditor);
-
     connect(ui->addLayer, &QPushButton::clicked, this, &MainWindow::cloneLayer);
-    connect(ui->removeLayer, &QPushButton::clicked, ui->layerWidget, &LayerView::removeLayer);
-    connect(layerView, &LayerView::removeLayerIndex, this, &MainWindow::removeLayer);
-    connect(layerView, &LayerView::getLayerIndex, this, &MainWindow::removeLayer);
-
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
     connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
     connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
 
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
-
 }
 
 void MainWindow::cloneLayer() {
-    lastLayerIndex++;
 
-    LayerView *originalLayer = ui->layerWidget;
-    QPushButton *newButton;
+    QWidget *originalLayer = ui->layerWidget;
 
     // Clone the widget by creating a new instance and copying properties
-    LayerView *newLayer = new LayerView(lastLayerIndex);
+    QWidget *newLayer = new QWidget();
     newLayer->setMinimumSize(originalLayer->minimumSize());
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
 
-    QLabel *newLabel = nullptr;
-
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
+            QLabel *newLabel = new QLabel(label->text(), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
-            newButton = new QPushButton(button->text(), newLayer);
+            QPushButton *newButton = new QPushButton(button->text(), newLayer);
             newButton->setGeometry(button->geometry());
             newButton->setStyleSheet(button->styleSheet());
+        } else if (QCheckBox *checkBox = qobject_cast<QCheckBox *>(child)) {
+            QCheckBox *newCheckBox = new QCheckBox(newLayer);
+            newCheckBox->setGeometry(checkBox->geometry());
+            newCheckBox->setChecked(checkBox->isChecked());
         }
     }
+
     ui->layerView->addWidget(newLayer);
-
-    connect(newLayer, &LayerView::removeLayerIndex, this, &MainWindow::removeLayer);
-    connect(newButton, &QPushButton::clicked, newLayer, &LayerView::removeLayer);
-}
-
-void MainWindow::removeLayer(int layerIndex) {
-    if (ui->layerView->count() > 1) {
-        QLayoutItem *layer = ui->layerView->takeAt(layerIndex);
-
-        for (; layerIndex < ui->layerView->count(); layerIndex++) {
-            QLayoutItem *item = ui->layerView->itemAt(layerIndex);
-            LayerView *layerView = qobject_cast<LayerView *>(item->widget());
-            layerView->layerIndex = layerIndex;
-
-            QLabel *label = layerView->findChild<QLabel *>();
-            label->setText(QString("Layer %1").arg(layerIndex));
-        }
-
-        delete layer->widget();
-        lastLayerIndex = ui->layerView->count() - 1;
-    }
 }
 
 void MainWindow::cloneFrame() {
@@ -105,15 +74,8 @@ void MainWindow::removeFrame(){
 
         delete item->widget(); // Delete the widget
 
-
         lastFrameIndex--;
     }
-}
-
-
-
-void MainWindow::mirror(){
-    emit requestMirror(0);
 }
 
 void MainWindow::initEditor(int canvasDim) {
@@ -122,24 +84,14 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim);
-    ui->canvas->setLayerModel(layerModel);
-
     setUpConnections(canvasDim);
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
     editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
-    sprite = new Sprite(canvasDim, canvasDim);
 
-    connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
     connect(ui->eraser, &QPushButton::pressed, editTools, &Tool::setErase);
-    connect(ui->rotate, &QPushButton::pressed, layerModel, &LayerModel::rotateLayer);
-    connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
-
-    connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
-    connect(sprite, &Sprite::displayFrame, ui->animationPreview, &QLabel::setPixmap);
 }
 
 MainWindow::~MainWindow() {
@@ -185,12 +137,13 @@ void MainWindow::openColor() {
 }
 
 void MainWindow::setColor() {
+    ui->canvas->setColor(colorWindow->currentColor());
     editTools->setColor(colorWindow->currentColor());
 
-    QPalette color = ui->colorPreview->palette();
-    color.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
+    QPalette pal = ui->colorPreview->palette();
+    pal.setColor(QPalette::Button, QColor(colorWindow->currentColor()));
     ui->colorPreview->setAutoFillBackground(true); // Important to fill the background
-    ui->colorPreview->setPalette(color);
+    ui->colorPreview->setPalette(pal);
     ui->colorPreview->update(); // Refresh the button
 }
 

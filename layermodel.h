@@ -2,8 +2,8 @@
 #define LAYERMODEL_H
 #include "layer.h"
 
-class LayerModel : public QObject
-{
+class LayerModel : public QObject{
+    Q_OBJECT
 public:
     // Creates a new LayerModel with one layer.
     LayerModel(int width, int height);
@@ -44,6 +44,9 @@ public:
     //activates the given layer
     void setActiveLayer(int layer);
 
+    //returns activeLayer
+    Layer& getTopLayer();
+
     // Vector containing all layers in the LayerModel
     std::vector<Layer> layers;
 
@@ -51,6 +54,13 @@ public:
     QJsonObject ToJSON() const;
 
     LayerModel(QJsonObject json);
+
+public slots:
+    void mirrorLayer();
+    void rotateLayer();
+
+signals:
+    void layerChanged();
 
 private:
 

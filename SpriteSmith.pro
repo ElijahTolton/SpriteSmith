@@ -14,6 +14,7 @@ SOURCES += \
     frame.cpp \
     framemodel.cpp \
     frameview.cpp \
+    layerview.cpp \
     layereditcommand.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     framemodel.h \
     frameview.h \
     layerdelegate.h \
+    layerview.h \
     layereditcommand.h \
     mainwindow.h \
     sizedialog.h \
