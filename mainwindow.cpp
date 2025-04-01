@@ -107,7 +107,6 @@ void MainWindow::cloneFrame() {
     connect(sprite, &Sprite::updateFrame, newWidget, &FrameView::displayPreview);
 
     sprite->frames->addFrame();
-
     ui->frameView->addWidget(newWidget);
 }
 
@@ -167,7 +166,6 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
 
-    connect(ui->fpsSlider, &QSlider::sliderMoved, this, &up
 }
 
 MainWindow::~MainWindow() {

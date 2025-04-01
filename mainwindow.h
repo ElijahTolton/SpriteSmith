@@ -33,8 +33,6 @@ public slots:
     void removeFrame();
     void setAnimationPreview(QPixmap image);
     void updateCurrentFrame(int index);
-    QTimer *animationTimer;
-    int currentAnimationFrame = 0;
 
 signals:
     void requestMirror(int layerIndex);
@@ -48,6 +46,7 @@ private:
     Sprite *sprite;
     LayerModel *layerModel;
     LayerView *layerView;
+    FrameModel *activeFrame;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();
@@ -55,7 +54,6 @@ private:
     void closeEvent(QCloseEvent *event) override;
     void mirror();
     int lastFrameIndex;
-    int activeFrameIndex = 0;
     int lastLayerIndex;
     QSize animationPreviewDimensions;
 };
