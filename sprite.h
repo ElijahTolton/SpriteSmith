@@ -4,6 +4,7 @@
 #include <QObject>
 #include "framemodel.h"
 #include <QPixmap>
+#include <QFile>
 
 /**
  * @brief The Sprite represents all of the things
@@ -30,7 +31,7 @@ private:
 
 public slots:
     // Saves all of the info about this sprite and emits savedSprite.
-    void save();
+    void save(QString fileName);
 
     // Takes in a Json represnetation of the sprite that will be loaded into the model.
     void load(QJsonObject JSON);
@@ -43,7 +44,7 @@ public slots:
 
 signals:
     // Sends Json of this sprite to the view.
-    void savedSprite(QJsonObject Json);
+    void savedSprite(QString fileName);
 
     // Displays the pixel that was clicked on.
     void displayColor(QColor color);

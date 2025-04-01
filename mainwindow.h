@@ -32,6 +32,8 @@ public slots:
     void cloneFrame();
     void removeFrame();
     void setAnimationPreview(QPixmap image);
+    void saveSprite();
+    //void loadSprite();
 
 signals:
     void requestMirror(int layerIndex);

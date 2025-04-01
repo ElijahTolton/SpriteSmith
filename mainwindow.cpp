@@ -9,6 +9,7 @@
 #include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
+#include <QFileDialog>
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -143,10 +144,10 @@ void MainWindow::setUpConnections(const int canvasDim) {
         sprite->frames->getFrame(0).layers.rotateLayer();
         ui->canvas->repaint();
     });
+    connect(ui->save, &QPushButton::pressed, this, &MainWindow::saveSprite);
 
     connect(ui->undo, &QPushButton::pressed, ui->canvas, &SpriteEditor::undo);
     connect(ui->redo, &QPushButton::pressed, ui->canvas, &SpriteEditor::redo);
-
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
@@ -219,6 +220,22 @@ void MainWindow::setAnimationPreview(QPixmap image) {
     }
 
     ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions));
+}
+
+void MainWindow::saveSprite() {
+    QString* filter = new QString("Sprite Sheet Project (*.ssp);;All Files (*)");
+    QString saveFileName = QFileDialog::getSaveFileName(this, "SpriteSmith - Save",
+                                                       "untitled.ssp", QDir::homePath(), filter);
+
+    if (saveFileName.isEmpty()) {
+        return;
+    }
+
+    if (!saveFileName.endsWith(".ssp", Qt::CaseSensitive)) {
+        saveFileName += ".ssp";
+    }
+
+    sprite->save(saveFileName);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
