@@ -55,8 +55,6 @@ void MainWindow::cloneLayer() {
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
 
-    QLabel *newLabel = nullptr;
-
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
@@ -145,6 +143,7 @@ void MainWindow::setUpConnections(const int canvasDim) {
         ui->canvas->repaint();
     });
     connect(ui->save, &QPushButton::pressed, this, &MainWindow::saveSprite);
+    connect(ui->load, &QPushButton::pressed, this, &MainWindow::loadSprite);
 
     connect(ui->undo, &QPushButton::pressed, ui->canvas, &SpriteEditor::undo);
     connect(ui->redo, &QPushButton::pressed, ui->canvas, &SpriteEditor::redo);
@@ -236,6 +235,18 @@ void MainWindow::saveSprite() {
     }
 
     sprite->save(saveFileName);
+}
+
+void MainWindow::loadSprite() {
+    QString filter = "Sprite Sheet Project (*.ssp);;All Files (*.)";
+    QString loadFile = QFileDialog::getOpenFileName(this, "SpriteSmith - Load;"
+                                                    "", QDir::homePath(), filter);
+
+    if (loadFile.isEmpty()) {
+        return;
+    }
+
+    sprite->load(loadFile);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

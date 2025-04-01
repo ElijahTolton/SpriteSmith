@@ -25,8 +25,29 @@ void Sprite::save(QString fileName){
     }
 }
 
-void Sprite::load(QJsonObject json) {
-    frames = new FrameModel(json);
+void Sprite::load(QString fileName) {
+
+    QByteArray fileData;
+
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        fileData = file.readAll();
+        file.close();
+    } else {
+        qDebug() << "Loading sprite porject file " << fileName << " failed";
+    }
+
+    // Parse JSON data
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+    if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+        qDebug() << "Invalid JSON file!";
+        return;
+    }
+
+    // Convert to QJsonObject
+    QJsonObject jsonObj = jsonDoc.object();
+
+    frames = new FrameModel(jsonObj);
 }
 
 void Sprite::sendFrame(Frame& frame) {

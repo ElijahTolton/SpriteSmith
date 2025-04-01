@@ -34,7 +34,7 @@ public slots:
     void save(QString fileName);
 
     // Takes in a Json represnetation of the sprite that will be loaded into the model.
-    void load(QJsonObject JSON);
+    void load(QString fileName);
 
     void sendFrame(Frame& frame);
 
@@ -55,6 +55,7 @@ signals:
     void updateFrame(QPixmap pixmap);
 
     void newFramerateSignal(int framerate);
+
 };
 
 #endif // SPRITE_H

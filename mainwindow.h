@@ -33,7 +33,7 @@ public slots:
     void removeFrame();
     void setAnimationPreview(QPixmap image);
     void saveSprite();
-    //void loadSprite();
+    void loadSprite();
 
 signals:
     void requestMirror(int layerIndex);
