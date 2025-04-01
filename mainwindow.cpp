@@ -156,7 +156,7 @@ void MainWindow::initEditor(int canvasDim) {
 }
 
 void MainWindow::setUpConnections(const int canvasDim) {
-    editTools = new Tool(ui->canvas, new LayerModel(canvasDim, canvasDim));
+    editTools = new Tool(ui->canvas, &sprite->frames->getFrame(ui->canvas->currentFrame).getLayerModel());
 
     connect(ui->mirror, &QPushButton::pressed, ui->canvas, &SpriteEditor::mirrorLayer);
     connect(ui->pencil, &QPushButton::pressed, this, &MainWindow::setColor);
@@ -177,6 +177,7 @@ void MainWindow::setUpConnections(const int canvasDim) {
 
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
+    connect(ui->canvas, &::SpriteEditor::pixelCLicked, editTools, &Tool::onEdit);
 
 }
 

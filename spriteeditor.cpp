@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "layereditcommand.h"
 #include "layermodel.h"
+#include "qjsondocument.h"
 
 /**
  * @brief The SpriteEditor class manages the pixel editing interface
@@ -47,7 +48,7 @@ void SpriteEditor::mousePressEvent(QMouseEvent *event) {
     }
 
     //copy current JSON for undo stack
-    uneditedJSON = sprite->frames->getFrame(currentFrame).layers.getLayer(0).toJSON();
+    uneditedJSON = sprite->frames->getFrame(currentFrame).layers.getTopLayer().toJSON();
 
     setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
     changeCellColor(event);
@@ -58,15 +59,26 @@ void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
         setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
         changeCellColor(event);
     }
+
 }
+
 
 void SpriteEditor::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() & Qt::LeftButton) {
-        Layer& tempLayer = sprite->frames->getFrame(currentFrame).layers.getLayer(0);
-        LayerEditCommand* undoCommand = new LayerEditCommand(tempLayer, uneditedJSON, tempLayer.toJSON());
+        Layer& activeLayer = sprite->frames->getFrame(currentFrame).layers.getTopLayer();
+        QJsonObject editedJSON = activeLayer.toJSON();
+        // Push an undo command that captures the before and after state
+        QJsonObject deepUnedited = QJsonDocument(uneditedJSON).object();
+        QJsonObject deepEdited = QJsonDocument(editedJSON).object();
+        LayerEditCommand* undoCommand = new LayerEditCommand(activeLayer, deepUnedited, deepEdited);
+
         undoStack.push(undoCommand);
+        // Update uneditedJSON so the next edit cycle starts from the current state
+        uneditedJSON = editedJSON;
     }
 }
+
+
 
 void SpriteEditor::undo() {
     undoStack.undo();

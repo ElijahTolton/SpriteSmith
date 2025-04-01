@@ -87,6 +87,12 @@ public:
     void removeLayer(int layerIndex);
 
     /**
+     * @brief Gets the active layer model
+     * @return the current layer model
+     */
+    LayerModel& getLayerModel();
+
+    /**
      * @brief Creates a Json representation of the frame and its subsequent layers.
      * @return QJsonObject containing Json information to reconstruct Frame.
      */

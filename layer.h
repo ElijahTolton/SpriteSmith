@@ -61,6 +61,13 @@ public:
     void setActive(bool active);
 
     /**
+     * @brief sets the layer from a JSON
+     * @param the json to set from
+     */
+    void setFromJSON(const QJsonObject& json);
+
+
+    /**
      * @brief mirrors the current layer's image
      */
     void mirror();

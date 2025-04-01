@@ -53,6 +53,10 @@ Layer& Frame::getTopLayer() {
     return layers.getTopLayer();
 }
 
+LayerModel& Frame::getLayerModel() {
+    return layers;
+}
+
 QJsonObject Frame:: toJSON() const{
     return layers.ToJSON();
 }

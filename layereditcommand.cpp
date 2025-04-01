@@ -15,9 +15,9 @@ LayerEditCommand::LayerEditCommand(Layer& editedLayer, QJsonObject uneditedJSON,
 }
 
 void LayerEditCommand::undo() {
-    editedLayer = Layer(uneditedJSON);
+    editedLayer.setFromJSON(uneditedJSON);
 }
 
 void LayerEditCommand::redo() {
-    editedLayer = Layer(editedJSON);
+    editedLayer.setFromJSON(editedJSON);
 }

@@ -56,16 +56,14 @@ bool Layer::operator==(const Layer &layer) const {
 
 void Layer::drawPixel(QColor color, int x, int y) {
     if (x >= 0 && x < width && y >= 0 && y < height) {
-        if (color.alpha() == 0) {  // Erasing
-            QRgb pixel = image.pixel(x, y);
-            QColor currentColor = QColor::fromRgba(pixel);
-            currentColor.setAlpha(0);
-            image.setPixelColor(x, y, currentColor);
-        } else {  // Normal drawing
-            image.setPixelColor(x, y, color);
-        }
+        image.setPixelColor(x, y, color);
     }
 }
+
+void Layer::setFromJSON(const QJsonObject& json) {
+    *this = Layer(json);
+}
+
 
 QJsonObject Layer::toJSON() const {
     // Create a JSON object to hold the layer data
