@@ -71,6 +71,8 @@ FrameModel::FrameModel(QJsonObject JSON){
     // Ensure the JSON object has a "frames" key and it's an array
     if (JSON.contains("frames") && JSON["frames"].isArray()) {
         QJsonArray framesArray = JSON["frames"].toArray();
+        width = JSON["width"].toInt();
+        height = JSON["height"].toInt();
 
         // Loop through each frame in the array and reconstruct each frame
         for (const QJsonValue &value : framesArray) {

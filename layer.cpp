@@ -94,7 +94,7 @@ Layer::Layer(QJsonObject json){
 
         width = json["width"].toInt();
         height = json["height"].toInt();
-        active = json["active"].toBool();
+        //active = json["active"].toBool();
         image = QImage(width, height, QImage::Format_RGBA8888);
 
         // Ensure the image is filled with transparent color initially
@@ -104,6 +104,7 @@ Layer::Layer(QJsonObject json){
         QJsonArray pixelArray = json["pixels"].toArray();
 
         int index = 0;
+        bool first = true;
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 if (index < pixelArray.size()) {
@@ -114,7 +115,13 @@ Layer::Layer(QJsonObject json){
                         pixelObj["b"].toInt(),
                         pixelObj["a"].toInt()
                     );
+                    if(first){
+                        qDebug() << pixelColor;
+                        first = false;
+                    }
                     image.setPixelColor(x, y, pixelColor);
+                    qDebug() << getImage().pixelColor(0,0);
+
                 }
                 ++index;
             }

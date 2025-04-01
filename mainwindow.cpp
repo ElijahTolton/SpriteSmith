@@ -247,6 +247,11 @@ void MainWindow::loadSprite() {
     }
 
     sprite->load(loadFile);
+
+    qDebug() << sprite->frames->getFrames().front().getTopLayer().getImage().pixelColor(0,0);
+    ui->canvas->setSprite(sprite);
+    qDebug() << sprite->frames->getFrames().front().getTopLayer().getImage().pixelColor(0,0);
+    ui->canvas->repaint();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
