@@ -4,6 +4,15 @@
 #include <QFile>
 #include <QJsonDocument>
 
+/**
+ * @brief The Sprite represents all of the things
+ * that are our sprite object. Contains all the Frames
+ * which contain all of the Layers.
+ *
+ * @authors Elijah Tolton, Landon Huking, & Alex Lancaster (documentation)
+ * @date March 31, 2025
+ */
+
 Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
     : QObject{parent}, layerCount(layerCount), canvasDimension(canvasSize)
 {

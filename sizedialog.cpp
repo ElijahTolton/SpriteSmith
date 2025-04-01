@@ -3,6 +3,13 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
+/**
+ * @brief The initial size dialog window which sets the canvas size in pixels
+ *
+ * @author Alex Lancaster
+ * @date March 29, 2025
+ */
+
 SizeDialog::SizeDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::SizeDialog) {

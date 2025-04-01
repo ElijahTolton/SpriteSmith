@@ -1,6 +1,17 @@
 #include "layer.h"
 #include "qjsonarray.h"
 
+/**
+ * @brief The Layer class
+ *
+ * A layer is the current image the user is drawing.
+ * There can be multiple layers, and higher level layers will cover
+ * lower level layers.
+ *
+ * @authors Dean Smith, Elijah Tolton, Alex Lancaster
+ * @date March 30, 2025
+ */
+
 Layer::Layer(int width, int height) :
     image(width, height, QImage::Format_RGBA8888), width(width), height(height) {
     image.fill(Qt::transparent);

@@ -6,6 +6,16 @@
 #include "frameview.h"
 #include <QMouseEvent>
 
+/**
+ * @brief Mainwindow that is displayed to the user
+ *
+ * This class provides functionalities for sprite and layer management, color selection,
+ * animation preview, and interaction with various tools within the pixel editor.
+ *
+ * @authors Landon Huking, Dean Smith, Alex Lancaster, Canon Curtis, & Elijah Tolton
+ * @date March 31, 2025
+ */
+
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
