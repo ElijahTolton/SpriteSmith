@@ -33,6 +33,8 @@ public slots:
     void removeFrame();
     void setAnimationPreview(QPixmap image);
     void updateCurrentFrame(int index);
+    QTimer *animationTimer;
+    int currentAnimationFrame = 0;
 
 signals:
     void requestMirror(int layerIndex);

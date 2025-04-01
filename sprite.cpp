@@ -44,3 +44,4 @@ void Sprite::sendFramePreview(int frameIndex) {
 void Sprite::updateFramerate(int framerate) {
     emit newFramerateSignal(framerate);
 }
+

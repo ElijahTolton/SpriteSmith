@@ -122,11 +122,7 @@ void MainWindow::removeFrame(){
         QLayoutItem *item = ui->frameView->takeAt(ui->frameView->count() - 1); // Get the last item
 
         delete item->widget(); // Delete the widget
-        if(lastFrameIndex == ui->canvas->currentFrame){
 
-        }
-
-        sprite->frames->removeFrame(lastFrameIndex);
         lastFrameIndex--;
     }
 }
@@ -141,6 +137,7 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
+    layerModel = new LayerModel(canvasDim, canvasDim); //TODO remove
     sprite = new Sprite(canvasDim, lastLayerIndex, this);
 
     ui->canvas->setSprite(sprite);
@@ -169,6 +166,8 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(ui->canvas, &SpriteEditor::updatePreviews, ui->frame1, &FrameView::requestRepaint);
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
+
+    connect(ui->fpsSlider, &QSlider::sliderMoved, this, &up
 }
 
 MainWindow::~MainWindow() {
@@ -246,4 +245,3 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore();
     }
 }
-
