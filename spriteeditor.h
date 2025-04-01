@@ -30,110 +30,114 @@ public:
     Sprite *sprite;
 
     /**
-     * @brief SpriteEditor
-     * @param parent
+     * @brief Constructor for SpriteEditor
+     * @param parent QWidget
      */
     explicit SpriteEditor(QWidget *parent = nullptr);
 
     /**
-     * @brief setCanvasSize
+     * @brief Sets the size of the canvas.
      */
     void setCanvasSize();
 
     /**
-     * @brief repaint
+     * @brief Redraws the canvas.
+     *
+     * Refreshes the display of the sprite editor to reflect the current pixel state.
      */
     void repaint();
 
     /**
-     * @brief mirrorLayer
+     * @brief Mirrors the current layer horizontally.
      */
     void mirrorLayer();
 
     /**
-     * @brief setSprite
-     * @param sprite
+     * @brief Sets the sprite object being edited
+     *
+     * Initializes the editor with the provided sprite, adjusting the grid dimensions accordingly.
+     * @param sprite - The sprite to edit
      */
     void setSprite(Sprite *sprite);
 
     /**
-     * @brief undo
+     * @brief Undoes the last action.
      */
     void undo();
 
     /**
-     * @brief redo
+     * @brief Redoes the last undone action.
      */
     void redo();
 
 signals:
     /**
-     * @brief pixelCLicked
-     * @param point
+     * @brief Emitted when a pixel is clicked
+     * @param The position of the clicked pixel
      */
     void pixelCLicked(const QPoint& point);
 
     /**
-     * @brief updatePreviews
+     * @brief Emitted when the sprite editor updates, triggering preview refreshes
      */
     void updatePreviews();
 
 public slots:
     /**
-     * @brief setColor
-     * @param color
+     * @brief Sets the current color selected
+     * @param The new color to use for drawing pixels
      */
     void setColor(QColor color);
 
 protected:
     /**
-     * @brief mousePressEvent
-     * @param event
+     * @brief Handles mouse press events for drawing pixels
+     * @param The mouse event
      */
     void mousePressEvent(QMouseEvent *event) override;
 
     /**
-     * @brief mouseMoveEvent
-     * @param event
+     * @brief Handles mouse movement events for continuous drawing
+     * @param The mouse event
      */
     void mouseMoveEvent(QMouseEvent *event) override;
 
     /**
-     * @brief mouseReleaseEvent
-     * @param event
+     * @brief Handles mouse release events to finalize drawing actions
+     * @param The mouse event
      */
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     /**
-     * @brief currentColor
+     * @brief The currently selected drawing color
      */
     QColor currentColor = Qt::red;  // Default drawing color
 
     /**
-     * @brief uneditedJSON
+     * @brief Stores the JSON state of the layer before an edit for undo functionality
      */
     QJsonObject uneditedJSON; // Unedited JSON of layer that was edited
 
     /**
-     * @brief undoStack
+     * @brief Stack for undo and redo operations
      */
     QUndoStack undoStack; // Stack of undo commands
 
     /**
-     * @brief changeCellColor
-     * @param event
+     * @brief Changes the color of a cell at the given mouse event position
+     * @param The mouse event
      */
     void changeCellColor(QMouseEvent *event);
 
     /**
-     * @brief calculateCanvasSizeAdjustment
+     * @brief Adjusts the canvas size to maintain a consistent pixel grid
      */
     void calculateCanvasSizeAdjustment();
 
     /**
-     * @brief setCanvasContents
-     * @param image
+     * @brief Sets the displayed contents of the canvas
+     * @param The image to apply to the grid
      */
     void setCanvasContents(QImage image);
 };
