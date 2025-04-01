@@ -17,39 +17,39 @@ class SizeDialog : public QDialog
 
 public:
     /**
-     * @brief SizeDialog
-     * @param parent
+     * @brief Constructor for SizeDialog object
+     * @param parent - QWidget parent of SizeDialog
      */
     explicit SizeDialog(QWidget *parent = nullptr);
 
     /**
-     *
+     * @brief Destructor for SizeDialog
      */
     ~SizeDialog();
 
 public slots:
 
     /**
-     * @brief emitSetSize
+     * @brief Called when the apply button is hit when setting canvas dimensions
      */
     void emitSetSize();
 
 signals:
     /**
-     * @brief setSize
-     * @param canvasSize
+     * @brief Emits the size of the canvas
+     * @param canvasSize - The width and height of the canvas in pixels
      */
     void setSize(int canvasSize);
 
 private:
     /**
-     * @brief ui
+     * @brief User interface instance
      */
     Ui::SizeDialog *ui;
 
     /**
-     * @brief closeEvent
-     * @param event
+     * @brief Logic behind user closing the dialog
+     * @param What the user selected
      */
     void closeEvent(QCloseEvent *event) override;
 
