@@ -70,6 +70,7 @@ public:
      */
     void redo();
 
+    int currentFrame;
 signals:
     /**
      * @brief Emitted when a pixel is clicked

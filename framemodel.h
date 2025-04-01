@@ -29,7 +29,7 @@ private:
     /**
      * @brief Framerate/Time for preview to send information
      */
-    int framerate = 0;
+    int framerate = 1000;
 
     /**
      * @brief nextFrameIndex contains the next frame to be displayed

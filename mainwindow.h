@@ -83,7 +83,11 @@ public slots:
      * @param image - The QPixmap representing the frame to be previewed.
      */
     void setAnimationPreview(QPixmap image);
+    
+    void updateCurrentFrame(int index);
+
     void saveSprite();
+    
     void loadSprite();
 
 signals:
@@ -128,6 +132,9 @@ private:
      * @brief The layer view instance displaying available layers
      */
     LayerView *layerView;
+    FrameView *activeFrame;
+
+    std::vector<FrameView*> frameWidgets;
 
     /**
      * @brief Sets up the icons for UI buttons

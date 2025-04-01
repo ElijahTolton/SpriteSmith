@@ -24,6 +24,7 @@ void SpriteEditor::setCanvasSize() {
     calculateCanvasSizeAdjustment();
 
     int pixelSize = height() / rowCount();
+    currentFrame = 0;
 
     // Allows cells to "stretch" to the canvas size
     verticalHeader()->setMinimumSectionSize(0);
@@ -39,29 +40,29 @@ void SpriteEditor::setCanvasSize() {
 }
 
 void SpriteEditor::mousePressEvent(QMouseEvent *event) {
-    QImage image = sprite->frames->getFrame(0).layers.getLayer(0).getImage();
+    QImage image = sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage();
     if (image.isNull()) {
         qDebug() << "Error: getImage() returned a null image!";
         return;
     }
 
     //copy current JSON for undo stack
-    uneditedJSON = sprite->frames->getFrame(0).layers.getLayer(0).toJSON();
+    uneditedJSON = sprite->frames->getFrame(currentFrame).layers.getLayer(0).toJSON();
 
-    setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
+    setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
     changeCellColor(event);
 }
 
 void SpriteEditor::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
-        setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
+        setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
         changeCellColor(event);
     }
 }
 
 void SpriteEditor::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() & Qt::LeftButton) {
-        Layer& tempLayer = sprite->frames->getFrame(0).layers.getLayer(0);
+        Layer& tempLayer = sprite->frames->getFrame(currentFrame).layers.getLayer(0);
         LayerEditCommand* undoCommand = new LayerEditCommand(tempLayer, uneditedJSON, tempLayer.toJSON());
         undoStack.push(undoCommand);
     }
@@ -90,9 +91,9 @@ void SpriteEditor::changeCellColor(QMouseEvent *event) {
             setItem(index.row(), index.column(), item);
         }
 
-        sprite->frames->getFrame(0).layers.drawPixel(currentColor, index.column(), index.row());
+        sprite->frames->getFrame(currentFrame).layers.drawPixel(currentColor, index.column(), index.row());
 
-        setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
+        setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
 
         update();  // Refresh UI to apply changes
         emit pixelCLicked(event->pos());
@@ -127,14 +128,14 @@ void SpriteEditor::setCanvasContents(QImage image) {
 
 void SpriteEditor::repaint() {
     // Refresh the contents of the canvas based on the current image in the layer model
-    setCanvasContents(sprite->frames->getFrame(0).layers.getTopLayer().getImage());
+    setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getTopLayer().getImage());
 
     // After setting the contents, trigger the widget to repaint itself
     update();
 }
 
 void SpriteEditor::mirrorLayer() {
-    sprite->frames->getFrame(0).layers.getLayer(0).mirror();
+    sprite->frames->getFrame(currentFrame).layers.getLayer(0).mirror();
     repaint();
 }
 

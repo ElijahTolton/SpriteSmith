@@ -15,7 +15,7 @@ FrameModel::FrameModel(int width, int height) : width{width}, height{height} {
     timer = new QTimer;
 
     connect(timer, &QTimer::timeout, this, &FrameModel::sendNextFrame);
-    timer->start();
+    timer->start(framerate);
 }
 
 void FrameModel::addFrame() {
@@ -44,15 +44,19 @@ std::vector<Frame>& FrameModel::getFrames() {
 }
 
 void FrameModel::updateFramerate(int framerate) {
-    this->framerate = framerate;
+    this->framerate = (framerate/100);
     timer->setInterval(framerate);
 }
 
 void FrameModel::sendNextFrame() {
+
     if (nextFrameIndex > frames.size() - 1)
         nextFrameIndex = 0;
 
     emit nextFrame(getFrame(nextFrameIndex));
+    qDebug() << "nextFrame:" << nextFrameIndex;
+
+    nextFrameIndex++;
 }
 
 QJsonObject FrameModel::toJSON() {
