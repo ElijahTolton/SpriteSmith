@@ -102,7 +102,7 @@
     }
 
     LayerModel::LayerModel::LayerModel(QJsonObject json)
-        : width(json["width"].toInt()), height(json["width"].toInt()), activeLayer(nullptr) // Set a default layer
+        : width(json["width"].toInt()), height(json["height"].toInt()), activeLayer(nullptr) // Set a default layer
     {
         try{
             width = json["width"].toInt();

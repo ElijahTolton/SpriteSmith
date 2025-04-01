@@ -55,17 +55,20 @@ void FrameModel::sendNextFrame() {
 
 QJsonObject FrameModel::toJSON() {
     QJsonObject json;
+    // Save canvas dimensions
+    json["width"] = width;
+    json["height"] = height;
+
     QJsonArray jsonArray;
     int numberFrames = frames.size();
-
-    for( int i = 0; i < numberFrames; i++){
+    for (int i = 0; i < numberFrames; i++){
         jsonArray.append(frames[i].toJSON());
     }
-
     json.insert("frames", jsonArray);
 
     return json;
 }
+
 
 FrameModel::FrameModel(QJsonObject JSON){
     // Ensure the JSON object has a "frames" key and it's an array

@@ -3,14 +3,13 @@
 #include <QImage>
 
 Layer::Layer(int width, int height) :
-    image(width, height, QImage::Format_RGBA8888), width(width), height(height) {
+    image(width, height, QImage::Format_ARGB32), width(width), height(height) {
     image.fill(Qt::transparent);
 }
 
 
 Layer::Layer(Layer const &layer) :
     image(layer.image), width(layer.width), height(layer.height){
-    image.fill(Qt::transparent);
 }
 
 Layer& Layer::operator=(const Layer &layer) {
@@ -45,7 +44,14 @@ bool Layer::operator==(const Layer &layer) const {
 
 void Layer::drawPixel(QColor color, int x, int y) {
     if (x >= 0 && x < width && y >= 0 && y < height) {
-        image.setPixelColor(x, y, color);
+        if (color.alpha() == 0) {  // Erasing
+            QRgb pixel = image.pixel(x, y);
+            QColor currentColor = QColor::fromRgba(pixel);
+            currentColor.setAlpha(0);
+            image.setPixelColor(x, y, currentColor);
+        } else {  // Normal drawing
+            image.setPixelColor(x, y, color);
+        }
     }
 }
 
@@ -95,7 +101,7 @@ Layer::Layer(QJsonObject json){
         width = json["width"].toInt();
         height = json["height"].toInt();
         //active = json["active"].toBool();
-        image = QImage(width, height, QImage::Format_RGBA8888);
+        image = QImage(width, height, QImage::Format_ARGB32);
 
         // Ensure the image is filled with transparent color initially
         image.fill(Qt::transparent);
