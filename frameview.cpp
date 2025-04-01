@@ -7,6 +7,7 @@ FrameView::FrameView(QWidget *parent, int index)
     setMinimumSize(QSize(100, 100));
     setMaximumSize(QSize(100, 100));
     setStyleSheet("background-color: rgb(0, 0, 0);");
+    frameIndex = index;
 
     preview = new QLabel(this);
     preview->setGeometry(0, 0, width(), height());

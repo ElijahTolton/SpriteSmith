@@ -22,7 +22,7 @@ public:
     void setSprite(Sprite *sprite);
     void undo();
     void redo();
-
+    int currentFrame;
 
 signals:
     void pixelCLicked(const QPoint& point);

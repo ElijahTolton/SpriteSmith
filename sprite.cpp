@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 
 Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
-    : QObject{parent}, layerCount(layerCount), canvasDimension(canvasSize)
+    : QObject{parent}, canvasDimension(canvasSize), layerCount(layerCount)
 {
     frames = new FrameModel(canvasSize, canvasSize);
 

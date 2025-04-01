@@ -36,6 +36,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
     connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
     connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
+    connect(ui->frame1, &FrameView::getIndex, this, &MainWindow::updateCurrentFrame);
 
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
     connect(colorWindow, &QColorDialog::currentColorChanged, this, &MainWindow::setColor);
@@ -95,15 +96,25 @@ void MainWindow::removeLayer(int layerIndex) {
 
 void MainWindow::cloneFrame() {
     lastFrameIndex++;
+    qDebug() << lastFrameIndex;
 
     //Create a new QWidget and copy properties
     FrameView *newWidget = new FrameView(nullptr, lastFrameIndex);
 
     connect(newWidget, &QPushButton::clicked, newWidget, &FrameView::changeIndex);
+    connect(newWidget, &FrameView::getIndex, this, &MainWindow::updateCurrentFrame);
     connect(newWidget, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, newWidget, &FrameView::displayPreview);
 
+    sprite->frames->addFrame();
+
     ui->frameView->addWidget(newWidget);
+}
+
+void MainWindow::updateCurrentFrame(int index){
+    ui->canvas->currentFrame = index;
+    ui->canvas->repaint();
+    qDebug() << index;
 }
 
 void MainWindow::removeFrame(){
@@ -111,7 +122,11 @@ void MainWindow::removeFrame(){
         QLayoutItem *item = ui->frameView->takeAt(ui->frameView->count() - 1); // Get the last item
 
         delete item->widget(); // Delete the widget
+        if(lastFrameIndex == ui->canvas->currentFrame){
 
+        }
+
+        sprite->frames->removeFrame(lastFrameIndex);
         lastFrameIndex--;
     }
 }
@@ -126,7 +141,6 @@ void MainWindow::initEditor(int canvasDim) {
     ui->canvas->setCanvasSize();
     ui->canvas->setItemDelegate(new LayerDelegate(ui->canvas));
 
-    layerModel = new LayerModel(canvasDim, canvasDim); //TODO remove
     sprite = new Sprite(canvasDim, lastLayerIndex, this);
 
     ui->canvas->setSprite(sprite);
