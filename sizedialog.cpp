@@ -8,6 +8,8 @@
  *
  * @author Alex Lancaster
  * @date March 29, 2025
+ *
+ * Checked by Alex Lancaster
  */
 
 SizeDialog::SizeDialog(QWidget *parent)

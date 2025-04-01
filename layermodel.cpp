@@ -7,6 +7,8 @@
  *
  * @author Dean Smith, Landon Huking, & Alex Lancaster (Documentation)
  * @date March 31, 2025
+ *
+ * Checked by Landon Huking
  */
 
 LayerModel::LayerModel(int width, int height)

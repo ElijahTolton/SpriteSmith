@@ -5,6 +5,8 @@
  *
  * @author Canon Curtis
  * @date March 30, 2025
+ *
+ * Checked by Canon Curtis
  */
 LayerEditCommand::LayerEditCommand(Layer& editedLayer, QJsonObject uneditedJSON, QJsonObject editedJSON) :
     uneditedJSON{uneditedJSON}, editedJSON{editedJSON}, editedLayer{editedLayer}

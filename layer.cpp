@@ -10,6 +10,8 @@
  *
  * @authors Dean Smith, Elijah Tolton, Alex Lancaster
  * @date March 30, 2025
+ *
+ * Checked by Alex Lancaster
  */
 
 Layer::Layer(int width, int height) :

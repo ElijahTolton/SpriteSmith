@@ -6,6 +6,8 @@
  *
  * @authors Canon Curtis and Elijah Tolton
  * @date March 29, 2025
+ *
+ * Checked by Canon Curtis
  */
 
 FrameModel::FrameModel(int width, int height) : width{width}, height{height} {

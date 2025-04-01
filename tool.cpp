@@ -5,6 +5,8 @@
  *
  * @authors Landon Huking & Alex Lancaster (documentation)
  * @date March 27, 2025
+ *
+ * Checked by Landon Huking
  */
 
 Tool::Tool(SpriteEditor* canvas, LayerModel* layers)

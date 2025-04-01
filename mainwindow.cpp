@@ -14,6 +14,8 @@
  *
  * @authors Landon Huking, Dean Smith, Alex Lancaster, Canon Curtis, & Elijah Tolton
  * @date March 31, 2025
+ *
+ * Checked by Elijah Tolton
  */
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)

@@ -11,6 +11,8 @@
  *
  * @authors Dean Smith, Alex Lancaster, Canon Curtis, & Landon Huking
  * @date March 31, 2025
+ *
+ * Checked by Dean Smith
  */
 
 SpriteEditor::SpriteEditor(QWidget *parent)

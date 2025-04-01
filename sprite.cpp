@@ -11,6 +11,8 @@
  *
  * @authors Elijah Tolton, Landon Huking, & Alex Lancaster (documentation)
  * @date March 31, 2025
+ *
+ * Checked by Elijah Tolton
  */
 
 Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)

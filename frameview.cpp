@@ -7,6 +7,8 @@
  *
  * @author Elijah Tolton & Alex Lancaster (documentation)
  * @date March 30, 2025
+ *
+ * Checked by Elijah Tolton
  */
 
 FrameView::FrameView(QWidget *parent, int index)
