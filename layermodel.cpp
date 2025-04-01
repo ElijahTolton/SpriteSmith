@@ -36,16 +36,6 @@
         }
     }
 
-    // void LayerModel::reorderLayer(int oldPosition, int newPosition) {
-    //     if (oldPosition < 0 || oldPosition >= static_cast<int>(layers.size())) return;
-    //     if (newPosition < 0 || newPosition >= static_cast<int>(layers.size())) return;
-
-    //     Layer temp = std::move(layers[oldPosition]);  // Move instead of copy
-    //     layers.erase(layers.begin() + oldPosition);
-    //     layers.insert(layers.begin() + newPosition, std::move(temp));  // Move back
-    // }
-
-
     Layer& LayerModel::getLayer(int layerIndex) {
         if (layerIndex < 0 || layerIndex >= static_cast<int>(layers.size())) {
             throw std::out_of_range("Layer index out of range");

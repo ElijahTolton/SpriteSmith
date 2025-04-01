@@ -1,71 +1,140 @@
 #ifndef LAYERMODEL_H
 #define LAYERMODEL_H
+
 #include "layer.h"
 
-class LayerModel : public QObject{
+/**
+ * @brief The LayerModel class contains the logic behind manipulating the layer class
+ *
+ * @author Dean Smith, Landon Huking, & Alex Lancaster (Documentation)
+ * @date
+ */
+class LayerModel : public QObject {
     Q_OBJECT
 public:
-    // Creates a new LayerModel with one layer.
+    /**
+     * @brief Constructs a new LayerModel with one layer
+     * @param width - The width of the initial layer
+     * @param height - The height of the initial layer
+     */
     LayerModel(int width, int height);
 
-    //delete assignemnt operator
-    LayerModel& operator=(const LayerModel& other) = delete;
-
-    // Copy Constructor
+    /**
+     * @brief Copy Constructor for LayerModel
+     * @param other - Layer to be copied
+     */
     LayerModel(const LayerModel& other);
 
-    // Adds a new blank layer
+    /**
+     * @brief Adds a new blank layer
+     */
     void addLayer();
 
-    // Creates a new layer that is the duplicate of another layer
+    /**
+     * @brief Creates a new layer that is the duplicate of another layer
+     * @param layer - Layer used for duplication
+     */
     void duplicateLayer(const Layer& layer);
 
-    // Given a layer index (0 = bottom), remove that layer
+    /**
+     * @brief Removes a layer at a given index
+     * @param layerIndex - Index of layer to be removed (0 = bottom)
+     */
     void removeLayer(int layerIndex);
 
-    // Given a layer and a new position, move that layer to be in a new position and return the new vector of layers
-    void reorderLayer(int oldPosition, int newPosition);
-
-    // Gives a reference to the requested layer
+    /**
+     * @brief Gives a reference to the requested layer
+     * @param layerIndex - Index of desired layer
+     * @return A Layer at the layerIndex
+     */
     Layer& getLayer(int layerIndex);
 
-    // Gives the full vector of layers in the LayerModel
+    /**
+     * @brief Gives the full vector of layers in the LayerModel
+     * @return A vector of all Layers
+     */
     const std::vector<Layer>& getLayers() const;
 
-    // Get the width
+    /**
+     * @brief Gets the width
+     * @return The width of the layer
+     */
     int getWidth() const;
 
-    // Get the height
+    /**
+     * @brief Gets the height
+     * @return  The height of the layer
+     */
     int getHeight() const;
 
-    //draws a pixel in the active layer
+    /**
+     * @brief Draws a pixel in the active layer
+     * @param color - Color of the pixel to draw
+     * @param x - X position in the canvas
+     * @param y - Y position in the canvas
+     */
     void drawPixel(QColor color, int x, int y);
 
-    //activates the given layer
+    /**
+     * @brief Activates the given layer
+     * @param layer - Index of the layer to activate
+     */
     void setActiveLayer(int layer);
 
-    //returns activeLayer
+    /**
+     * @brief Gets the top (highest index) layer
+     * @return returns the active layer
+     */
     Layer& getTopLayer();
 
-    // Vector containing all layers in the LayerModel
+    /**
+     * @brief Vector containing all layers in the LayerModel
+     */
     std::vector<Layer> layers;
 
-    // JSON Serializer
+    /**
+     * @brief JSON Serializer
+     * @return A QJsonObject representation of all layers
+     */
     QJsonObject ToJSON() const;
 
+    /**
+     * @brief Deserializer for LayerModel
+     * @param QJsonObject json representation of Layers
+     */
     LayerModel(QJsonObject json);
 
 public slots:
+    /**
+     * @brief Mirrors the first layer
+     */
     void mirrorLayer();
+
+    /**
+     * @brief Rotates the first layer
+     */
     void rotateLayer();
 
 signals:
+    /**
+     * @brief Emits when a layer has been changed (mirrored or rotated)
+     */
     void layerChanged();
 
 private:
-
+    /**
+     * @brief width of the layer
+     */
     int width;
+
+    /**
+     * @brief height of the layer
+     */
     int height;
+
+    /**
+     * @brief The current active layer
+     */
     Layer* activeLayer;
 };
 

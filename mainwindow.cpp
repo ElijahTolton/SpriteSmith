@@ -59,7 +59,7 @@ void MainWindow::cloneLayer() {
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            QLabel *newLabel = new QLabel(label->text(), newLayer);
+            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
             newButton = new QPushButton(button->text(), newLayer);

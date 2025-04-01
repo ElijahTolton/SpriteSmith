@@ -1,6 +1,5 @@
 #include "layer.h"
 #include "qjsonarray.h"
-#include <QImage>
 
 Layer::Layer(int width, int height) :
     image(width, height, QImage::Format_RGBA8888), width(width), height(height) {
