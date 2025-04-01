@@ -5,6 +5,8 @@
  *
  * @author Canon Curtis
  * @date March 30, 2025
+ *
+ * Checked by Canon Curtis
  */
 
 AddLayerCommand::AddLayerCommand(LayerModel& layerModel, QJsonObject layerJSON, int layerIndex) :

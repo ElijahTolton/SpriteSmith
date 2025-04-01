@@ -1,14 +1,23 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
-#include "sprite.h"
-#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include <QColorDialog>
 #include <QPalette>
-#include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
+#include <QFileDialog>
+
+/**
+ * @brief Mainwindow that is displayed to the user
+ *
+ * This class provides functionalities for sprite and layer management, color selection,
+ * animation preview, and interaction with various tools within the pixel editor.
+ *
+ * @authors Landon Huking, Dean Smith, Alex Lancaster, Canon Curtis, & Elijah Tolton
+ * @date March 31, 2025
+ *
+ * Checked by Elijah Tolton
+ */
 
 MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     : QMainWindow(parent)
@@ -60,7 +69,7 @@ void MainWindow::cloneLayer() {
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
         if (QLabel *label = qobject_cast<QLabel *>(child)) {
-            QLabel *newLabel = new QLabel(label->text(), newLayer);
+            newLabel = new QLabel(QString("Layer %1").arg(lastLayerIndex), newLayer);
             newLabel->setGeometry(label->geometry());
         } else if (QPushButton *button = qobject_cast<QPushButton *>(child)) {
             newButton = new QPushButton(button->text(), newLayer);
@@ -156,10 +165,11 @@ void MainWindow::setUpConnections(const int canvasDim) {
         sprite->frames->getFrame(0).layers.rotateLayer();
         ui->canvas->repaint();
     });
+    connect(ui->save, &QPushButton::pressed, this, &MainWindow::saveSprite);
+    connect(ui->load, &QPushButton::pressed, this, &MainWindow::loadSprite);
 
     connect(ui->undo, &QPushButton::pressed, ui->canvas, &SpriteEditor::undo);
     connect(ui->redo, &QPushButton::pressed, ui->canvas, &SpriteEditor::redo);
-
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
@@ -232,6 +242,39 @@ void MainWindow::setAnimationPreview(QPixmap image) {
     }
 
     ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions));
+}
+
+void MainWindow::saveSprite() {
+    QString* filter = new QString("Sprite Sheet Project (*.ssp);;All Files (*)");
+    QString saveFileName = QFileDialog::getSaveFileName(this, "SpriteSmith - Save",
+                                                       "untitled.ssp", QDir::homePath(), filter);
+
+    if (saveFileName.isEmpty()) {
+        return;
+    }
+
+    if (!saveFileName.endsWith(".ssp", Qt::CaseSensitive)) {
+        saveFileName += ".ssp";
+    }
+
+    sprite->save(saveFileName);
+}
+
+void MainWindow::loadSprite() {
+    QString filter = "Sprite Sheet Project (*.ssp);;All Files (*.)";
+    QString loadFile = QFileDialog::getOpenFileName(this, "SpriteSmith - Load;"
+                                                    "", QDir::homePath(), filter);
+
+    if (loadFile.isEmpty()) {
+        return;
+    }
+
+    sprite->load(loadFile);
+
+    qDebug() << sprite->frames->getFrames().front().getTopLayer().getImage().pixelColor(0,0);
+    ui->canvas->setSprite(sprite);
+    qDebug() << sprite->frames->getFrames().front().getTopLayer().getImage().pixelColor(0,0);
+    ui->canvas->repaint();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

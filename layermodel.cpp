@@ -4,6 +4,14 @@
     #include <QJsonObject>
     #include <QJsonArray>
 
+/**
+ * @brief The LayerModel class contains the logic behind manipulating the layer class
+ *
+ * @author Dean Smith, Landon Huking, & Alex Lancaster (Documentation)
+ * @date March 31, 2025
+ *
+ * Checked by Landon Huking
+ */
 
     LayerModel::LayerModel(int width, int height)
         : width(width), height(height) {

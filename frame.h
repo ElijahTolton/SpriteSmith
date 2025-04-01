@@ -8,7 +8,7 @@
 /**
  * @brief Class representing a single instance of an animation Frame
  *
- * @author Canon Curtis & Alex Lancaster
+ * @author Canon Curtis & Alex Lancaster (documentation)
  * @date March 29, 2025
  */
 class Frame
@@ -73,7 +73,6 @@ public:
      * @param layer - Layer to add to Model
      */
     void addLayer(const Layer& layer);
-
 
     /**
      * @brief Gets layer that is shown

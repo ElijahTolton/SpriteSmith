@@ -1,5 +1,14 @@
 #include "layerview.h"
 
+/**
+ * @brief The LayerView class handles the logic for layer GUI elements
+ *
+ * @author Alex Lancaster
+ * @date March 30, 2025
+ *
+ * Checked by Alex Lancaster
+ */
+
 LayerView::LayerView(QWidget *parent) : QWidget(parent), layerIndex(0) {}
 
 LayerView::LayerView(int index, QWidget *parent) : QWidget(parent), layerIndex(index) {}
@@ -17,10 +26,8 @@ void LayerView::mouseReleaseEvent(QMouseEvent *event) {
     }
 
     emit getLayerIndex(layerIndex);
-    qDebug() << layerIndex;
 }
 
 void LayerView::removeLayer() {
     emit removeLayerIndex(layerIndex);
-    qDebug() << layerIndex;
 }

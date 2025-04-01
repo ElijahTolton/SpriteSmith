@@ -1,6 +1,16 @@
 #include "frameview.h"
 #include <QDebug>
 
+/**
+ * @brief The FrameView
+ * Class that allows the user to click on each frame and change which frame is selected.
+ *
+ * @author Elijah Tolton & Alex Lancaster (documentation)
+ * @date March 30, 2025
+ *
+ * Checked by Elijah Tolton
+ */
+
 FrameView::FrameView(QWidget *parent, int index)
     : QPushButton{parent}, frameIndex(index)
 {
@@ -20,7 +30,6 @@ void FrameView::changeIndex(){
 }
 
 void FrameView::requestRepaint() {
-    qDebug() << "requesting " << frameIndex;
     emit repaintSignal(frameIndex);
 }
 

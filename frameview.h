@@ -8,7 +8,7 @@
  * @brief The FrameView
  * Class that allows the user to click on each frame and change which frame is selected.
  *
- * @author Elijah Tolton & Alex Lancaster
+ * @author Elijah Tolton & Alex Lancaster (documentation)
  * @date March 30, 2025
  */
 class FrameView : public QPushButton
@@ -27,6 +27,7 @@ public slots:
      * @brief changeIndex is called whenever a frame in the frame preview is clicked
      */
     void changeIndex();
+
     void displayPreview(QPixmap image);
     void requestRepaint();
 

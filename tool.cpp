@@ -1,17 +1,13 @@
-/**
- * @brief
- * Implementation file for Tool model class that handles all
- * tool actions from MainWindow class
- *
- * @authors
- * Landon Huking
- *
- * @date
- * Created:         3/25/25
- * Last modified:   3/29/25
- */
-
 #include "tool.h"
+
+/**
+ * @brief Handles all tool actions from MainWindow class
+ *
+ * @authors Landon Huking & Alex Lancaster (documentation)
+ * @date March 27, 2025
+ *
+ * Checked by Landon Huking
+ */
 
 Tool::Tool(SpriteEditor* canvas, LayerModel* layers)
     : canvas(canvas), layers(layers)

@@ -6,6 +6,8 @@
  *
  * @author Canon Curtis
  * @date March 29, 2025
+ *
+ * Checked by Canon Curtis
  */
 
 Frame::Frame(int width, int height) : layers(width, height) {

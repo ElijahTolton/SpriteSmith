@@ -3,6 +3,18 @@
 #include "layereditcommand.h"
 #include "layermodel.h"
 
+/**
+ * @brief The SpriteEditor class manages the pixel editing interface
+ *
+ * SpriteEditor is responsible for rendering a grid-based pixel canvas, handling user input,
+ * and facilitating editing operations such as painting, mirroring, undoing, and redoing changes
+ *
+ * @authors Dean Smith, Alex Lancaster, Canon Curtis, & Landon Huking
+ * @date March 31, 2025
+ *
+ * Checked by Dean Smith
+ */
+
 SpriteEditor::SpriteEditor(QWidget *parent)
     : QTableWidget(parent) { }
 
@@ -18,7 +30,7 @@ void SpriteEditor::setCanvasSize() {
     verticalHeader()->setMinimumSectionSize(0);
     horizontalHeader()->setMinimumSectionSize(0);
 
-    // Must manually set the size of each row and col
+    // Must manually set the size of each row andd col
     for (int row = 0; row < rowCount(); row++)
         setRowHeight(row, pixelSize);
 
