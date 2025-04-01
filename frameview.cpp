@@ -29,7 +29,6 @@ void FrameView::changeIndex(){
 }
 
 void FrameView::requestRepaint() {
-    qDebug() << "requesting " << frameIndex;
     emit repaintSignal(frameIndex);
 }
 
