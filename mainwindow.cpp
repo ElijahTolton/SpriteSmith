@@ -20,6 +20,8 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
     colorWindow->setOption(QColorDialog::ShowAlphaChannel);
     editTools = new Tool;
     layerView = new LayerView(this);
+    frameWidgets.push_back(ui->frame1);
+    activeFrame = ui->frame1;
 
     lastFrameIndex = 0;
     lastLayerIndex = 0;
@@ -35,7 +37,7 @@ MainWindow::MainWindow(SizeDialog *setSizeWindow, QWidget *parent)
 
     connect(ui->addFrame, &QPushButton::clicked, this, &MainWindow::cloneFrame);
     connect(ui->removeFrame, &QPushButton::clicked, this, &MainWindow::removeFrame);
-    connect(ui->frame1, &QPushButton::clicked, ui->frame1, &FrameView::changeIndex);
+    connect(ui->frame1, &QPushButton::pressed, ui->frame1, &FrameView::changeIndex);
     connect(ui->frame1, &FrameView::getIndex, this, &MainWindow::updateCurrentFrame);
 
     connect(ui->colorPicker, &QPushButton::pressed, this, &MainWindow::openColor);
@@ -54,8 +56,6 @@ void MainWindow::cloneLayer() {
     newLayer->setMinimumSize(originalLayer->minimumSize());
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
-
-    QLabel *newLabel = nullptr;
 
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
@@ -108,11 +108,14 @@ void MainWindow::cloneFrame() {
 
     sprite->frames->addFrame();
     ui->frameView->addWidget(newWidget);
+    frameWidgets.push_back(newWidget);
 }
 
 void MainWindow::updateCurrentFrame(int index){
     ui->canvas->currentFrame = index;
     ui->canvas->repaint();
+
+    activeFrame = frameWidgets[index];
     qDebug() << index;
 }
 
@@ -162,7 +165,6 @@ void MainWindow::setUpConnections(const int canvasDim) {
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
     connect(sprite, &Sprite::displayFrame, this, &MainWindow::setAnimationPreview);
 
-    connect(ui->canvas, &SpriteEditor::updatePreviews, ui->frame1, &FrameView::requestRepaint);
     connect(ui->frame1, &FrameView::repaintSignal, sprite, &Sprite::sendFramePreview);
     connect(sprite, &Sprite::updateFrame, ui->frame1, &FrameView::displayPreview);
 

@@ -46,7 +46,9 @@ private:
     Sprite *sprite;
     LayerModel *layerModel;
     LayerView *layerView;
-    FrameModel *activeFrame;
+    FrameView *activeFrame;
+
+    std::vector<FrameView*> frameWidgets;
 
     // Get the tool tips and the icons for each of the buttons.
     void setUpIcons();

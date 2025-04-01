@@ -116,7 +116,7 @@ void SpriteEditor::setCanvasContents(QImage image) {
 
 void SpriteEditor::repaint() {
     // Refresh the contents of the canvas based on the current image in the layer model
-    setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getLayer(0).getImage());
+    setCanvasContents(sprite->frames->getFrame(currentFrame).layers.getTopLayer().getImage());
 
     // After setting the contents, trigger the widget to repaint itself
     update();
