@@ -29,7 +29,7 @@ void SpriteEditor::setCanvasSize() {
     verticalHeader()->setMinimumSectionSize(0);
     horizontalHeader()->setMinimumSectionSize(0);
 
-    // Must manually set the size of each row and col
+    // Must manually set the size of each row andd col
     for (int row = 0; row < rowCount(); row++)
         setRowHeight(row, pixelSize);
 
@@ -127,7 +127,7 @@ void SpriteEditor::setCanvasContents(QImage image) {
 
 void SpriteEditor::repaint() {
     // Refresh the contents of the canvas based on the current image in the layer model
-    setCanvasContents(sprite->frames->getFrame(0).layers.getLayer(0).getImage());
+    setCanvasContents(sprite->frames->getFrame(0).layers.getTopLayer().getImage());
 
     // After setting the contents, trigger the widget to repaint itself
     update();
