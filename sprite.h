@@ -4,6 +4,7 @@
 #include <QObject>
 #include "framemodel.h"
 #include <QPixmap>
+#include <QFile>
 
 /**
  * @brief The Sprite represents all of the things
@@ -50,13 +51,13 @@ public slots:
     /**
      * @brief Saves all the infomation contained in Sprite
      */
-    void save();
+    void save(QString fileName);
 
     /**
      * @brief Takes in a Json representation of the sprite that will be loaded into the model
      * @param The JSON representation to load into the model
      */
-    void load(QJsonObject JSON);
+    void load(QString fileName);
 
     /**
      * @brief Listens when to send a frame to the animation preview
@@ -81,7 +82,7 @@ signals:
      * @brief Sends Json of this sprite to the view
      * @param The JSON representation of Sprite
      */
-    void savedSprite(QJsonObject Json);
+    void savedSprite(QString fileName);
 
     /**
      * @brief Displays the pixel that was clicked on
@@ -97,6 +98,7 @@ signals:
 
     void updateFrame(QPixmap pixmap);
     void newFramerateSignal(int framerate);
+
 };
 
 #endif // SPRITE_H

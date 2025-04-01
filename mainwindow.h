@@ -83,6 +83,8 @@ public slots:
      * @param image - The QPixmap representing the frame to be previewed.
      */
     void setAnimationPreview(QPixmap image);
+    void saveSprite();
+    void loadSprite();
 
 signals:
     /**

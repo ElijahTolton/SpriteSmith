@@ -1,7 +1,5 @@
 #include "sprite.h"
 #include "qevent.h"
-#include "qjsonobject.h"
-#include <QFile>
 #include <QJsonDocument>
 
 /**
@@ -24,21 +22,43 @@ Sprite::Sprite(int canvasSize, int layerCount, QObject *parent)
     connect(this, &Sprite::newFramerateSignal, frames, &FrameModel::updateFramerate);
 }
 
-void Sprite::save(){
+void Sprite::save(QString fileName){
     QJsonObject json = frames->toJSON();
 
     QJsonDocument doc(json);
 
     // Create File and load.
-    QFile file("sprite.json");
+    QFile file(fileName);
     if (file.open(QIODevice::WriteOnly)) {
         file.write(doc.toJson());
         file.close();
+        qDebug() << "Saved file: " << fileName;
     }
 }
 
-void Sprite::load(QJsonObject json) {
-    frames = new FrameModel(json);
+void Sprite::load(QString fileName) {
+
+    QByteArray fileData;
+
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        fileData = file.readAll();
+        file.close();
+    } else {
+        qDebug() << "Loading sprite porject file " << fileName << " failed";
+    }
+
+    // Parse JSON data
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+    if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+        qDebug() << "Invalid JSON file!";
+        return;
+    }
+
+    // Convert to QJsonObject
+    QJsonObject jsonObj = jsonDoc.object();
+
+    frames = new FrameModel(jsonObj);
 }
 
 void Sprite::sendFrame(Frame& frame) {

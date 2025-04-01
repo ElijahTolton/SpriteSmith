@@ -5,6 +5,7 @@
 #include <QPalette>
 #include "frameview.h"
 #include <QMouseEvent>
+#include <QFileDialog>
 
 /**
  * @brief Mainwindow that is displayed to the user
@@ -61,8 +62,6 @@ void MainWindow::cloneLayer() {
     newLayer->setMinimumSize(originalLayer->minimumSize());
     newLayer->setMaximumSize(originalLayer->maximumSize());
     newLayer->setStyleSheet(originalLayer->styleSheet());
-
-    QLabel *newLabel = nullptr;
 
     // Copy the child widgets (labels, buttons, checkboxes)
     for (QObject *child : originalLayer->children()) {
@@ -151,10 +150,11 @@ void MainWindow::setUpConnections(const int canvasDim) {
         sprite->frames->getFrame(0).layers.rotateLayer();
         ui->canvas->repaint();
     });
+    connect(ui->save, &QPushButton::pressed, this, &MainWindow::saveSprite);
+    connect(ui->load, &QPushButton::pressed, this, &MainWindow::loadSprite);
 
     connect(ui->undo, &QPushButton::pressed, ui->canvas, &SpriteEditor::undo);
     connect(ui->redo, &QPushButton::pressed, ui->canvas, &SpriteEditor::redo);
-
     connect(layerModel, &LayerModel::layerChanged, ui->canvas, &SpriteEditor::repaint);
 
     connect(ui->fpsSlider, &QSlider::valueChanged, sprite, &Sprite::updateFramerate);
@@ -227,6 +227,34 @@ void MainWindow::setAnimationPreview(QPixmap image) {
     }
 
     ui->animationPreview->setPixmap(image.scaled(animationPreviewDimensions));
+}
+
+void MainWindow::saveSprite() {
+    QString* filter = new QString("Sprite Sheet Project (*.ssp);;All Files (*)");
+    QString saveFileName = QFileDialog::getSaveFileName(this, "SpriteSmith - Save",
+                                                       "untitled.ssp", QDir::homePath(), filter);
+
+    if (saveFileName.isEmpty()) {
+        return;
+    }
+
+    if (!saveFileName.endsWith(".ssp", Qt::CaseSensitive)) {
+        saveFileName += ".ssp";
+    }
+
+    sprite->save(saveFileName);
+}
+
+void MainWindow::loadSprite() {
+    QString filter = "Sprite Sheet Project (*.ssp);;All Files (*.)";
+    QString loadFile = QFileDialog::getOpenFileName(this, "SpriteSmith - Load;"
+                                                    "", QDir::homePath(), filter);
+
+    if (loadFile.isEmpty()) {
+        return;
+    }
+
+    sprite->load(loadFile);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
