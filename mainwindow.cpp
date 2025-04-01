@@ -1,12 +1,8 @@
 #include "mainwindow.h"
 #include "layerdelegate.h"
-#include "sprite.h"
-#include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include <QColorDialog>
 #include <QPalette>
-#include "tool.h"
 #include "frameview.h"
 #include <QMouseEvent>
 
